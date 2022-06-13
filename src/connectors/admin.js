@@ -23,7 +23,7 @@ export default function (fetch, apiUrl ){
     return `/v1/admins/${params.userId}/access-token`
   }
 
-  const generateConfigRoute = (params) => {
+  const generateConfigRoute = () => {
     return `/v1/config`
   }
   const getConfig = createGetConnector(fetch, apiUrl, generateConfigRoute)
@@ -38,27 +38,27 @@ export default function (fetch, apiUrl ){
   }
   const updatePassword = createPatchConnector(fetch, apiUrl, generatePatchPasswordRoute, generateAdditionalHeaders)
 
-  const generateLoginRoute = (params) => {
+  const generateLoginRoute = () => {
     return `/v1/login`
   }
   const postLogin = createPostConnector(fetch, apiUrl, generateLoginRoute)
 
-  const generateSendInvitationRoute = (params) => {
+  const generateSendInvitationRoute = () => {
     return `/v1/invitation/send`
   }
   const postSendInvitation = createPostConnector(fetch, apiUrl, generateSendInvitationRoute, generateAdditionalHeaders)
 
-  const generateAcceptInvitationRoute = (params) => {
+  const generateAcceptInvitationRoute = () => {
     return `/v1/invitation/accept`
   }
   const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, generateAdditionalHeaders)
 
-  const generateSendForgotPasswordRoute = (params) => {
+  const generateSendForgotPasswordRoute = () => {
     return `/v1/forgot-password/send`
   }
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateForgotPasswordRoute)
 
-  const generateResetForgotPasswordRoute = (params) => {
+  const generateResetForgotPasswordRoute = () => {
     return `/v1/forgot-password/reset`
   }
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, generateAdditionalHeaders)
