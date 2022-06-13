@@ -15,7 +15,7 @@ export default function (fetch, apiUrl ){
   const generateAccountsRoute = () => {
     return `/v1/accounts`
   }
-  const getAccounts = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
+  const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 
 
   const list = function (){
