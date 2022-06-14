@@ -3,7 +3,7 @@ import {
   createPostConnector,
   createPatchConnector,
   createDeleteConnector
-} from 'standard-json-api-connectors'
+} from 'standard-json-api-connectors';
 
 
 export default function (fetch, apiUrl ){
@@ -26,7 +26,7 @@ export default function (fetch, apiUrl ){
   const generateConfigRoute = () => {
     return `/v1/config`
   }
-  const getConfig = createGetConnector(fetch, apiUrl, generateConfigRoute)
+  const getAdminConfig = createGetConnector(fetch, apiUrl, generateConfigRoute)
 
   const generatePatchNameRoute = (params) => {
     return `/v1/admins/${params.id}/name`
@@ -64,37 +64,40 @@ export default function (fetch, apiUrl ){
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, generateAdditionalHeaders)
 
 
-  const list = function (){
+  const list = async function (){
     const res = await getAdmin();
     return res;
   }
 
-  const readOne = function (id){
+  const readOne = async function (id){
     const res = await getAdmin({ id: id })
     return res;
   }
 
 
-  const getAccessToken = function (id){
+  const getAccessToken = async function (id){
     const res = await getToken({ id: id })
+    if(res.accessToken){
+      localStorage.setItem("accessToken", res.accessToken);
+    }
     return res;
   }
 
-  const deletedOne = function(id){
+  const deletedOne = async function(id){
     const res = await del({ id: id })
     return res
   }
 
-  const patchName = function(id, name){
+  const patchName = async function(id, name){
     const res = await updateName({ id: id }, {name: name})
     return res
   }
-  const patchPassword = function(id, password){
+  const patchPassword = async function(id, password){
     const res = await patchPassword({ id: id }, {password: password})
     return res
   }
 
-  const login = function(formData){
+  const login = async function(formData){
     const res = await postLogin({},{ email:formData.email, password: formData.password})
     if(res.loginToken){
       localStorage.setItem("accessToken", res.loginToken);
@@ -102,28 +105,28 @@ export default function (fetch, apiUrl ){
     return res
   }
 
-  const sendInvitation = function(email){
+  const sendInvitation = async function(email){
     const res = await postSendInvitation({},{ email: email })
     return res
   }
 
-  const accept = function(formData){
+  const accept = async function(formData){
     const res = await postAcceptedInvitaion({},{ password: formData.password, passwordAgain: formData.passwordAgain })
     return res
   }
 
-  const sendForgotPassword = function(email){
+  const sendForgotPassword = async function(email){
     const res = await postSendForgetPassword({},{ email: email })
     return res
   }
 
-  const reset = function(){
+  const reset = async function(){
     const resetForgotPassword = await postResetForgetPassword({},{ password: formData.password, passwordAgain: formData.passwordAgain })
     return res
   }
 
-  const getConfig = function (){
-    const res = await getConfig()
+  const getConfig = async function (){
+    const res = await getAdminConfig()
     return res;
   }
 
