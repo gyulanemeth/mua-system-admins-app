@@ -1,6 +1,7 @@
 {
   "name": "mua-system-admins-app",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
