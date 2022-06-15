@@ -9,7 +9,7 @@ import {
 export default function (fetch, apiUrl ){
 
   const generateAdditionalHeaders = (params) => {
-    return { Authorization: 'Bearer mybearertoken' }
+    return { Authorization: 'Bearer  '+ localStorage.getItem("accessToken") }
   }
 
   const generateAccountsRoute = () => {
@@ -18,7 +18,7 @@ export default function (fetch, apiUrl ){
   const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 
 
-  const list = function (){
+  const list = async function (){
     const res = await getAccounts();
     return res;
   }

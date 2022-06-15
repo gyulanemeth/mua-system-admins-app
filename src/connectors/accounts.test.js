@@ -8,7 +8,17 @@ describe("test admin connectors", () => {
   fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
   json: () => Promise.resolve({ result: { items: [{_id:"123",name:"account1",urlFriendlyName:"accountFriendlyUrlName"}], count: 1 } }) })
 
-  const res = await accounts(fetch, apiUrl).account.list();
+  const spy = vi.spyOn(fetch,'impl')
+  const res = await accounts(fetch,"https:/mua/accounts").account.list();
+
+  expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/accounts/v1/accounts',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json',
+        Authorization: 'Bearer  '+ localStorage.getItem("accessToken")  }
+      })
+
   expect(res).toEqual( { items: [{_id:"123",name:"account1",urlFriendlyName:"accountFriendlyUrlName"}], count: 1 } )
 
   })
