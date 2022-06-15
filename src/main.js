@@ -6,6 +6,10 @@ import { loadFonts } from './plugins/webfontloader'
 
 loadFonts()
 
+async () => {
+  const config = await import('/config.js')
+}
+
 createApp(App)
   .use(router)
   .use(vuetify)

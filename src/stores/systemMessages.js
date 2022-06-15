@@ -12,17 +12,17 @@ export const systemMessagesStore = defineStore('systemMessages', {
       setTimeout(() => (item.state = 'fading-out'), fadingOurAfter)
       setTimeout(() => (item.state.splice(this.items.indexOf(item), 1)), removeAfter)
     },
-    addErrorMessage ({ status, name, message }, { fullyVisibleAfter = 250, fadingOurAfter = 4500, removeAfter = 250 }) {
-      this.addSystemMessage({ type: 'error', status, name, message })
+    addError ({ status, name, message }, { fullyVisibleAfter = 250, fadingOurAfter = 4750, removeAfter = 5000 }) {
+      this.addSystemMessage({ type: 'error', status, name, message }, { fullyVisibleAfter, fadingOurAfter, removeAfter })
     },
-    addWarning ({ status, name, message }) {
-      this.items.push({ type: 'warning', name, message })
+    addWarning ({ status, name, message }, { fullyVisibleAfter = 250, fadingOurAfter = 4750, removeAfter = 5000 }) {
+      this.addSystemMessage({ type: 'warning', status, name, message }, { fullyVisibleAfter, fadingOurAfter, removeAfter })
     },
-    addInfo ({ status, name, message }) {
-      this.items.push({ type: 'info', name, message })
+    addInfo ({ status, name, message }, { fullyVisibleAfter = 250, fadingOurAfter = 4750, removeAfter = 5000 }) {
+      this.addSystemMessage({ type: 'info', status, name, message }, { fullyVisibleAfter, fadingOurAfter, removeAfter })
     },
-    addSuccess ({ status, name, message }) {
-      this.items.push({ type: 'success', name, message })
+    addSuccess ({ status, name, message }, { fullyVisibleAfter = 250, fadingOurAfter = 4750, removeAfter = 5000 }) {
+      this.addSystemMessage({ type: 'success', status, name, message }, { fullyVisibleAfter, fadingOurAfter, removeAfter })
     }
   }
 })
