@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const systemMessagesStore = defineStore('systemMessages', {
+export default defineStore('systemMessages', {
   state: () => ({
     items: []
   }),
