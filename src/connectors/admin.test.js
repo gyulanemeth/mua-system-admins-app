@@ -9,7 +9,7 @@ describe("test admin connectors", () => {
   test("test list admins", async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { items: [{_id:"123",name:"user1",email:"user1@gamil.com"}], count: 1 } }) })
+      json: () => Promise.resolve({ result: { items: [{id:"123",name:"user1",email:"user1@gamil.com"}], count: 1 } }) })
 
     const spy = vi.spyOn(fetch,'impl')
     const res = await admin(fetch, apiUrl).admins.list();
@@ -21,13 +21,13 @@ describe("test admin connectors", () => {
         headers: { 'Content-Type': 'application/json',
         Authorization: 'Bearer '+ localStorage.getItem("accessToken")  }
       })
-    expect(res).toEqual({ items:  [{_id:"123",name:"user1",email:"user1@gamil.com"}], count: 1 })
+    expect(res).toEqual({ items:  [{id:"123",name:"user1",email:"user1@gamil.com"}], count: 1 })
   })
 
   test("test readOne admin", async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: {_id:"123",name:"user1",email:"user1@gamil.com"} }) })
+      json: () => Promise.resolve({ result: {id:"123",name:"user1",email:"user1@gamil.com"} }) })
 
     const spy = vi.spyOn(fetch,'impl')
     const res = await admin(fetch, apiUrl).admins.readOne({id:"123"});
@@ -39,7 +39,7 @@ describe("test admin connectors", () => {
         headers: { 'Content-Type': 'application/json',
         Authorization: 'Bearer '+ localStorage.getItem("accessToken")  }
       })
-    expect(res).toEqual({_id:"123",name:"user1",email:"user1@gamil.com"})
+    expect(res).toEqual({id:"123",name:"user1",email:"user1@gamil.com"})
   })
 
 
@@ -64,7 +64,7 @@ describe("test admin connectors", () => {
   test("test delete admin", async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { _id: "123" , name: "user1", email: "user1@gamil.com" } }) })
+      json: () => Promise.resolve({ result: { id: "123" , name: "user1", email: "user1@gamil.com" } }) })
 
     const spy = vi.spyOn(fetch,'impl')
     const res = await admin(fetch, apiUrl).admins.deleteOne({id: "123"});
@@ -76,13 +76,13 @@ describe("test admin connectors", () => {
         headers: { 'Content-Type': 'application/json',
         Authorization: 'Bearer '+ localStorage.getItem("accessToken")  }
       })
-    expect(res).toEqual({ _id: "123" , name: "user1", email: "user1@gamil.com" })
+    expect(res).toEqual({ id: "123" , name: "user1", email: "user1@gamil.com" })
   })
 
   test("test delete without id admin", async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { _id: "123" , name: "user1", email: "user1@gamil.com" } }) })
+      json: () => Promise.resolve({ result: { id: "123" , name: "user1", email: "user1@gamil.com" } }) })
 
     const res = await admin(fetch, apiUrl).admins.deleteOne();
     expect(res.name).toEqual('BAD_REQUEST')
@@ -125,12 +125,12 @@ describe("test admin connectors", () => {
       json: () => Promise.resolve({ result: { success: true }})})
 
     const spy = vi.spyOn(fetch,'impl')
-    const res = await admin(fetch, apiUrl).admins.patchPassword({id:"123", newPassword:"newPassword", newPasswordAgain:"newPassword"});
+    const res = await admin(fetch, apiUrl).admins.patchPassword({id:"123", oldPassword:"oldPassword", newPassword:"newPassword", newPasswordAgain:"newPassword"});
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/admins/123/password',
       {
         method: 'PATCH',
-        body:JSON.stringify({ newPassword: "newPassword", newPasswordAgain: "newPassword" }),
+        body:JSON.stringify({ oldPassword:"oldPassword", newPassword: "newPassword", newPasswordAgain: "newPassword" }),
         headers: { 'Content-Type': 'application/json',
         Authorization: 'Bearer '+ localStorage.getItem("accessToken")  }
       })

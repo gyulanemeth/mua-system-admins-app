@@ -102,10 +102,10 @@ export default function (fetch, apiUrl ){
     return res
   }
   const patchPassword = async function(formData){
-    if(formData === undefined || formData.id === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+    if(formData === undefined || formData.id === undefined || formData.oldPassword === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
         return new RouteError("Admin ID And New Password Is Required")
       }
-    const res = await updatePassword({ id: formData.id }, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain})
+    const res = await updatePassword({ id: formData.id }, {oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain})
     return res
   }
 

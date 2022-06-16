@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "jwt-decode": "^3.1.2",
     "pinia": "^2.0.14",
     "roboto-fontface": "*",
     "standard-json-api-connectors": "^0.1.2",

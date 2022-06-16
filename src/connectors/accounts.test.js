@@ -6,7 +6,7 @@ describe("test admin connectors", () => {
   test("test list accounts", async () => {
   const fetch = vi.fn()
   fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-  json: () => Promise.resolve({ result: { items: [{_id:"123",name:"account1",urlFriendlyName:"accountFriendlyUrlName"}], count: 1 } }) })
+  json: () => Promise.resolve({ result: { items: [{id:"123",name:"account1",urlFriendlyName:"accountFriendlyUrlName"}], count: 1 } }) })
 
   const spy = vi.spyOn(fetch,'impl')
   const res = await accounts(fetch,"https:/mua/accounts").account.list();
@@ -19,7 +19,7 @@ describe("test admin connectors", () => {
         Authorization: 'Bearer  '+ localStorage.getItem("accessToken")  }
       })
 
-  expect(res).toEqual( { items: [{_id:"123",name:"account1",urlFriendlyName:"accountFriendlyUrlName"}], count: 1 } )
+  expect(res).toEqual( { items: [{id:"123",name:"account1",urlFriendlyName:"accountFriendlyUrlName"}], count: 1 } )
 
   })
 })
