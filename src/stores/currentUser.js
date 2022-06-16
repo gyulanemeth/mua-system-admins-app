@@ -13,7 +13,9 @@ export default (connectors) => {
       user: null // id, name, email, later: profilePic
     }),
     getters: {
-      loggedIn: () => !!this.user
+      loggedIn () {
+        return !!this.user
+      }
     },
     actions: {
       login (email, password, passwordAgain) {
@@ -23,18 +25,21 @@ export default (connectors) => {
         // user id -> fetch user data. (now it would be enough to use the user data, but later, we will need to fetch anyways, coz for example, the user's profile pic's url is not in the token)
       },
       logout () {
+        // delete token from localstorage
+        // forward to /
       },
       sendForgotPassword (email) {
       },
       resetForgotPassword (forgotPasswordToken, password, passwordAgain) {
+        // I'm thinking about how we should handle these kind of tokens...
       },
-      sendInvitation () {},
-      acceptInvitation () {},
+      sendInvitation (email) {},
+      acceptInvitation (acceptInvitationToken, password, passwordAgain) {},
 
       refreshAccessToken () {},
 
-      patchName () {},
-      patchPassword () {}
+      patchName (name) {},
+      patchPassword (oldPassword, newPassword, newPasswordAgain) {}
     }
   })
 
