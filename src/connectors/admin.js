@@ -117,7 +117,7 @@ export default function (fetch, apiUrl ){
     if(res.loginToken){
       localStorage.setItem("accessToken", res.loginToken);
     }
-    return res
+    return res.loginToken
   }
 
   const sendInvitation = async function(email){
@@ -129,10 +129,10 @@ export default function (fetch, apiUrl ){
   }
 
   const accept = async function(formData){
-    if(formData === undefined || formData.password === undefined || formData.passwordAgain === undefined ){
-        return new RouteError("Admin Password Is Required")
+    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+        return new RouteError("Adminn Password Is Required")
       }
-    const res = await postAcceptedInvitaion({},{password: formData.password, passwordAgain: formData.passwordAgain })
+    const res = await postAcceptedInvitaion({},{newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
@@ -145,10 +145,10 @@ export default function (fetch, apiUrl ){
   }
 
   const reset = async function(formData){
-    if(formData === undefined || formData.password === undefined || formData.passwordAgain === undefined ){
+    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
         return new RouteError("Admin Password Is Required")
       }
-    const res = await postResetForgotPassword({},{ password: formData.password, passwordAgain: formData.passwordAgain })
+    const res = await postResetForgotPassword({},{ newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
@@ -158,9 +158,9 @@ export default function (fetch, apiUrl ){
   }
 
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login },
-    forgotPassword: { send: sendForgotPassword, reset },
+    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login }, //in testing currentUser : patchPassword backend issue
     invitation: { send: sendInvitation, accept },
+    forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }
   }
 }
