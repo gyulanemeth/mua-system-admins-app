@@ -162,7 +162,7 @@ describe("test admin connectors", () => {
         body:JSON.stringify({email:"user1@gmail.com", password:"user1Password"}),
         headers: { 'Content-Type': 'application/json'}
       })
-    expect(res).toEqual({ loginToken: "Token" })
+    expect(res).toEqual( "Token" )
   })
 
   test("test login with undefined input admin", async () => {
@@ -210,12 +210,12 @@ describe("test admin connectors", () => {
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
     const spy = vi.spyOn(fetch,'impl')
-    const res = await admin(fetch, apiUrl).invitation.accept({password:"newPassword", passwordAgain:"newPassword"});
+    const res = await admin(fetch, apiUrl).invitation.accept({newPassword:"newPassword", newPasswordAgain:"newPassword"});
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/invitation/accept',
       {
         method: 'POST',
-        body: JSON.stringify({password:"newPassword", passwordAgain:"newPassword"}),
+        body: JSON.stringify({newPassword:"newPassword", newPasswordAgain:"newPassword"}),
         headers: { 'Content-Type': 'application/json',
         Authorization: 'Bearer '+ localStorage.getItem("accessToken")  }
       })
@@ -270,12 +270,12 @@ describe("test admin connectors", () => {
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
     const spy = vi.spyOn(fetch,'impl')
-    const res = await admin(fetch, apiUrl).forgotPassword.reset({password:"newPassword", passwordAgain:"newPassword"});
+    const res = await admin(fetch, apiUrl).forgotPassword.reset({newPassword:"newPassword", newPasswordAgain:"newPassword"});
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/forgot-password/reset',
       {
         method: 'POST',
-        body:JSON.stringify({password:"newPassword", passwordAgain:"newPassword"}),
+        body:JSON.stringify({newPassword:"newPassword", newPasswordAgain:"newPassword"}),
         headers: { 'Content-Type': 'application/json',
         Authorization: 'Bearer '+ localStorage.getItem("accessToken")  }
       })

@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import { defineStore } from 'pinia'
-
+import RouteError from '../errors/RouteError.js'
 // this one will be a generic store representing the actual user sitting in front of any of the apps.
 // in this case it is a system-admin user
 
@@ -85,6 +85,9 @@ export default (connectors) => {
 
       async refreshAccessToken () {//email
         try {
+          if(this.user === null || this.user._id === undefined ){
+            throw new RouteError("Admin ID Is Required")
+          }
           this.accessToken = await connectors.admins.getAccessToken({id:this.user._id})
         } catch (e) {
           return e
@@ -93,6 +96,9 @@ export default (connectors) => {
 
       async patchName (name) {
         try {
+          if(this.user === null || this.user._id === undefined ){
+            throw new RouteError("Admin ID Is Required")
+          }
            await connectors.admins.patchName({id: this.user._id, name:name})
           this.user.name = name
           return "success"
@@ -103,6 +109,9 @@ export default (connectors) => {
 
       async patchPassword (oldPassword, newPassword, newPasswordAgain) {
         try {
+          if(this.user === null || this.user._id === undefined ){
+            throw new RouteError("Admin ID Is Required")
+          }
            await connectors.admins.patchPassword({id: this.user._id, oldPassword:oldPassword, newPassword: newPassword, newPasswordAgain: newPasswordAgain})
            return "success"
         } catch (e) {
