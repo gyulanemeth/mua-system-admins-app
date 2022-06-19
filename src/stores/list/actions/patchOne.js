@@ -23,7 +23,6 @@ export default (connector, settings) => {
       const result = await connector({ ...this.params, id }, body)
       if (!settings.optimistic) {
         item.data = result
-      } else {
         item.status = 'ready'
       }
       return result

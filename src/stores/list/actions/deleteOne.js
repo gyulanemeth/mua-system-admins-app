@@ -14,6 +14,8 @@ export default (connector, settings) => {
       if (settings.optimistic) {
         previousIdx = this.items.indexOf(item)
         this.items.splice(this.items.indexOf(item), 1)
+      } else {
+        item.status = 'delete-in-progress'
       }
       const result = await connector({ ...this.params, id })
       if (!settings.optimistic) {
