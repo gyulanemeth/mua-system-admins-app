@@ -1,4 +1,4 @@
-import {ConnectorError} from './ConnectorError.js'
+import { ConnectorError } from './ConnectorError.js'
 
 export default class NotFoundError extends ConnectorError {
   constructor (message) {
