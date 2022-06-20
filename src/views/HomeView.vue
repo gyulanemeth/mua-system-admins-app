@@ -1,18 +1,9 @@
-<template>
-  <HelloWorld />
-</template>
-
-<script>
+<script setup>
 import { defineComponent } from 'vue'
+import AdminList from '../components/AdminList.vue'
 
-// Components
-import HelloWorld from '../components/HelloWorld.vue'
-
-export default defineComponent({
-  name: 'HomeView',
-
-  components: {
-    HelloWorld
-  }
-})
 </script>
+
+<template>
+  <AdminList />
+</template>

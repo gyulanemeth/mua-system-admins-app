@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '../components/Login.vue'
-import ListAdmins from '../components/ListAdmins.vue'
 import NavBar from '../components/NavBar.vue'
 import Invite from '../components/Invite.vue'
 import SetPassword from '../components/SetPassword.vue'
@@ -17,11 +16,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    {
-      path: '/list',
-      name: 'list',
-      component: ListAdmins
-    },
+
     {
       path: '/updateName',
       name: 'updateName',

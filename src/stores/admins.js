@@ -8,7 +8,10 @@ import deleteOne from './list/actions/deleteOne.js'
 const db = [
   { _id: 1, name: 'admin1' },
   { _id: 2, name: 'admin2' },
-  { _id: 3, name: 'admin3' }
+  { _id: 3, name: 'admin3' },
+  { _id: 4, name: 'admin4' },
+  { _id: 5, name: 'admin5' },
+  { _id: 6, name: 'admin6' }
 ]
 function list () {
   return {
