@@ -73,7 +73,7 @@ export default function (fetch, apiUrl ){
 
   const readOne = async function (id){
     if(id === undefined ){
-      return new RouteError("Admin ID Is Required")
+      throw new RouteError("Admin ID Is Required")
     }
     const res = await getAdmin(id)
     return res;
@@ -82,7 +82,7 @@ export default function (fetch, apiUrl ){
 
   const getAccessToken = async function (data){
     if(data === undefined || data.id == undefined){
-      return new RouteError("Admin ID Is Required")
+      throw new RouteError("Admin ID Is Required")
     }
     const res = await getToken({id:data.id})
     if(res.accessToken){
@@ -93,7 +93,7 @@ export default function (fetch, apiUrl ){
 
   const deleteOne = async function(id){
     if(id === undefined){
-      return new RouteError("Admin ID Is Required")
+      throw new RouteError("Admin ID Is Required")
     }
     const res = await del(id)
     return res
@@ -101,14 +101,14 @@ export default function (fetch, apiUrl ){
 
   const patchName = async function(formData){
     if(formData === undefined || formData.id === undefined || formData.name === undefined ){
-        return new RouteError("Admin ID And New Name Is Required")
+        throw new RouteError("Admin ID And New Name Is Required")
       }
     const res = await updateName({ id: formData.id }, {name: formData.name})
     return res
   }
   const patchPassword = async function(formData){
     if(formData === undefined || formData.id === undefined || formData.oldPassword === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
-        return new RouteError("Admin ID And New Password Is Required")
+        throw new RouteError("Admin ID And New Password Is Required")
       }
     const res = await updatePassword({ id: formData.id }, {oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain})
     return res
@@ -116,7 +116,7 @@ export default function (fetch, apiUrl ){
 
   const login = async function(formData){
     if(formData === undefined || formData.email === undefined || formData.password === undefined ){
-        return new RouteError("Admin Email And Password Is Required")
+        throw new RouteError("Admin Email And Password Is Required")
       }
     const res = await postLogin({},{ email:formData.email, password: formData.password})
     if(res.loginToken){
@@ -127,7 +127,7 @@ export default function (fetch, apiUrl ){
 
   const sendInvitation = async function(data){
     if(data === undefined || data.email === undefined){
-        return new RouteError("Email Is Required")
+        throw new RouteError("Email Is Required")
       }
     const res = await postSendInvitation({}, {email:data.email})
     return res
@@ -135,7 +135,7 @@ export default function (fetch, apiUrl ){
 
   const accept = async function(formData){
     if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
-        return new RouteError("Admin Password Is Required")
+        throw new RouteError("Admin Password Is Required")
       }
     const res = await postAcceptedInvitaion({},{newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
@@ -143,7 +143,7 @@ export default function (fetch, apiUrl ){
 
   const sendForgotPassword = async function(data){
     if(data === undefined || data.email === undefined){
-        return new RouteError("Email Is Required")
+        throw new RouteError("Email Is Required")
       }
     const res = await postSendForgotPassword({}, {email:data.email})
     return res
@@ -151,7 +151,7 @@ export default function (fetch, apiUrl ){
 
   const reset = async function(formData){
     if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
-        return new RouteError("Admin Password Is Required")
+        throw new RouteError("Admin Password Is Required")
       }
     const res = await postResetForgotPassword({},{ newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res

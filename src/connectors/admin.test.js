@@ -84,9 +84,7 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { id: "123" , name: "user1", email: "user1@gamil.com" } }) })
 
-    const res = await admin(fetch, apiUrl).admins.deleteOne();
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
+    await expect(admin(fetch, apiUrl).admins.deleteOne()).rejects.toThrowError('Admin ID Is Required')
   })
 
   test("test patchName admin", async () => {
@@ -113,11 +111,8 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: {success: true} }) })
 
-    const res = await admin(fetch, apiUrl).admins.patchName({id:"123"});
-
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
-  })
+    await expect(admin(fetch, apiUrl).admins.patchName({id:"123"})).rejects.toThrowError('Admin ID And New Name Is Required')
+})
 
   test("test patchPassword admin", async () => {
     const fetch = vi.fn()
@@ -142,10 +137,8 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { success: true }})})
 
-    const res = await admin(fetch, apiUrl).admins.patchPassword({id:"123", newPasswordAgain:"newPassword"});
+    await expect(admin(fetch, apiUrl).admins.patchPassword({id:"123", newPasswordAgain:"newPassword"})).rejects.toThrowError('Admin ID And New Password Is Required')
 
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
   })
 
   test("test login admin", async () => {
@@ -170,9 +163,7 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
-    const res = await admin(fetch, apiUrl).admins.login();
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
+    await expect(admin(fetch, apiUrl).admins.login()).rejects.toThrowError('Admin Email And Password Is Required')
   })
 
 
@@ -199,9 +190,7 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { success: true }})})
 
-    const res = await admin(fetch, apiUrl).invitation.send();
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
+    await expect(admin(fetch, apiUrl).invitation.send()).rejects.toThrowError('Email Is Required')
   })
 
   test("test accept invitation admin", async () => {
@@ -228,9 +217,7 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
-    const res = await admin(fetch, apiUrl).invitation.accept();
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
+    await expect(admin(fetch, apiUrl).invitation.accept()).rejects.toThrowError('Admin Password Is Required')
   })
 
   test("test forgotPassword send admin", async () => {
@@ -255,10 +242,7 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { success: true }})})
 
-    const res = await admin(fetch, apiUrl).forgotPassword.send();
-
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
+    await expect(admin(fetch, apiUrl).forgotPassword.send()).rejects.toThrowError('Email Is Required')
 
   })
 
@@ -288,10 +272,7 @@ describe("test admin connectors", () => {
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
-    const res = await admin(fetch, apiUrl).forgotPassword.reset();
-
-    expect(res.name).toEqual('BAD_REQUEST')
-    expect(res.status).toEqual(400)
+    await expect(admin(fetch, apiUrl).forgotPassword.reset()).rejects.toThrowError('Admin Password Is Required')
   })
 
 
