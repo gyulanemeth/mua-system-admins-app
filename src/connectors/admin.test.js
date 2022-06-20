@@ -10,7 +10,7 @@ describe('test admin connectors', () => {
     const fetch = vi.fn()
 
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { items: [{id:"123",name:"user1",email:"user1@gamil.com"}], count: 1 } }) })
+      json: () => Promise.resolve({ result: { items: [{_id:"123",name:"user1",email:"user1@gamil.com"}], count: 1 } }) })
 
     const spy = vi.spyOn(fetch, 'impl')
     const res = await admin(fetch, apiUrl).admins.list()
@@ -33,7 +33,7 @@ describe('test admin connectors', () => {
     const fetch = vi.fn()
 
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: {id:"123",name:"user1",email:"user1@gamil.com"} }) })
+      json: () => Promise.resolve({ result: {_id:"123",name:"user1",email:"user1@gamil.com"} }) })
 
     const spy = vi.spyOn(fetch, 'impl')
     const res = await admin(fetch, apiUrl).admins.readOne({ id: '123' })
@@ -77,7 +77,7 @@ describe('test admin connectors', () => {
     const fetch = vi.fn()
 
     fetch.mockResolvedValue({ ok: true, headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { id: "123" , name: "user1", email: "user1@gamil.com" } }) })
+      json: () => Promise.resolve({ result: { _id: "123" , name: "user1", email: "user1@gamil.com" } }) })
 
     const spy = vi.spyOn(fetch, 'impl')
     const res = await admin(fetch, apiUrl).admins.deleteOne({ id: '123' })
