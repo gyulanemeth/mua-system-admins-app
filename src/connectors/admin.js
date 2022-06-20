@@ -68,82 +68,90 @@ export default function (fetch, apiUrl) {
     return res
   }
 
-  const readOne = async function (id) {
+
+  const readOne = async function (id){
+    if(id === undefined ){
+      throw new RouteError("Admin ID Is Required")
+    }
     const res = await getAdmin(id)
     return res
   }
 
-  const getAccessToken = async function (id) {
-    const res = await getToken(id)
-    if (res.accessToken) {
-      localStorage.setItem('accessToken', res.accessToken)
+  const getAccessToken = async function (data){
+    if(data === undefined || data.id == undefined){
+      throw new RouteError("Admin ID Is Required")
+    }
+    const res = await getToken({id:data.id})
+    if(res.accessToken){
+      localStorage.setItem("accessToken", res.accessToken);
     }
     return res
   }
 
-  const deleteOne = async function (id) {
-    if (id === undefined) {
-      return new RouteError('Admin ID Is Required')
+  const deleteOne = async function(id){
+    if(id === undefined){
+      throw new RouteError("Admin ID Is Required")
     }
     const res = await del(id)
     return res
   }
 
-  const patchName = async function (formData) {
-    if (formData === undefined || formData.id === undefined || formData.name === undefined) {
-      return new RouteError('Admin ID And New Name Is Required')
-    }
-    const res = await updateName({ id: formData.id }, { name: formData.name })
+
+  const patchName = async function(formData){
+    if(formData === undefined || formData.id === undefined || formData.name === undefined ){
+        throw new RouteError("Admin ID And New Name Is Required")
+      }
+    const res = await updateName({ id: formData.id }, {name: formData.name})
     return res
   }
-  const patchPassword = async function (formData) {
-    if (formData === undefined || formData.id === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined) {
-      return new RouteError('Admin ID And New Password Is Required')
-    }
-    const res = await updatePassword({ id: formData.id }, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
+  const patchPassword = async function(formData){
+    if(formData === undefined || formData.id === undefined || formData.oldPassword === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+        throw new RouteError("Admin ID And New Password Is Required")
+      }
+    const res = await updatePassword({ id: formData.id }, {oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain})
     return res
   }
 
-  const login = async function (formData) {
-    if (formData === undefined || formData.email === undefined || formData.password === undefined) {
-      return new RouteError('Admin Email And Password Is Required')
+  const login = async function(formData){
+    if(formData === undefined || formData.email === undefined || formData.password === undefined ){
+        throw new RouteError("Admin Email And Password Is Required")
+      }
+    const res = await postLogin({},{ email:formData.email, password: formData.password})
+    if(res.loginToken){
+      localStorage.setItem("accessToken", res.loginToken);
     }
-    const res = await postLogin({}, { email: formData.email, password: formData.password })
-    if (res.loginToken) {
-      localStorage.setItem('accessToken', res.loginToken)
-    }
+    return res.loginToken
+  }
+
+  const sendInvitation = async function(data){
+    if(data === undefined || data.email === undefined){
+        throw new RouteError("Email Is Required")
+      }
+    const res = await postSendInvitation({}, {email:data.email})
     return res
   }
 
-  const sendInvitation = async function (email) {
-    if (email === undefined) {
-      return new RouteError('Email Is Required')
-    }
-    const res = await postSendInvitation({}, email)
+  const accept = async function(formData){
+    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+        throw new RouteError("Admin Password Is Required")
+      }
+    const res = await postAcceptedInvitaion({},{newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
-  const accept = async function (formData) {
-    if (formData === undefined || formData.password === undefined || formData.passwordAgain === undefined) {
-      return new RouteError('Admin Password Is Required')
-    }
-    const res = await postAcceptedInvitaion({}, { password: formData.password, passwordAgain: formData.passwordAgain })
+  const sendForgotPassword = async function(data){
+    if(data === undefined || data.email === undefined){
+        throw new RouteError("Email Is Required")
+      }
+    const res = await postSendForgotPassword({}, {email:data.email})
     return res
   }
 
-  const sendForgotPassword = async function (email) {
-    if (email === undefined) {
-      return new RouteError('Admin Email Is Required')
-    }
-    const res = await postSendForgotPassword({}, email)
-    return res
-  }
-
-  const reset = async function (formData) {
-    if (formData === undefined || formData.password === undefined || formData.passwordAgain === undefined) {
-      return new RouteError('Admin Password Is Required')
-    }
-    const res = await postResetForgotPassword({}, { password: formData.password, passwordAgain: formData.passwordAgain })
+  const reset = async function(formData){
+    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+        throw new RouteError("Admin Password Is Required")
+      }
+    const res = await postResetForgotPassword({},{ newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
@@ -153,9 +161,9 @@ export default function (fetch, apiUrl) {
   }
 
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login },
-    forgotPassword: { send: sendForgotPassword, reset },
+    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login }, //in testing currentUser : patchPassword backend issue
     invitation: { send: sendInvitation, accept },
+    forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }
   }
 }
