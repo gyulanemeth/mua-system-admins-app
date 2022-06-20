@@ -1,6 +1,6 @@
-import systemMessages from './systemMessages.js'
+import useSystemMessages from '../../systemMessages.js'
 
-export default (connector) => {
+export default (getConnector) => {
   return async function getOne (id) {
     try {
       const item = this.items.find(item => item._id === id)
@@ -10,11 +10,11 @@ export default (connector) => {
       // what about reading it from indexed db and in the meantime send a get request with select.updatedAt: 1
       // if the cached updatedAt differs from the real one, then we can send the real request
       // also, it's a possibility to send it in paralell
-      const result = await connector({ ...this.params, id })
+      const result = await getConnector({ ...this.params, id })
       item.data = result
       return result
     } catch (e) {
-      systemMessages.addError(e)
+      useSystemMessages().addError(e)
     }
   }
 }

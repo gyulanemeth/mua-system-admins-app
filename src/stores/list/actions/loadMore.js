@@ -1,6 +1,6 @@
-import systemMessages from './systemMessages.js'
+import useSystemMessages from '../../systemMessages.js'
 
-export default (connector, settings) => {
+export default (getConnector, settings) => {
   return async function loadMore () {
     if (this.count <= this.items.length) {
       return
@@ -8,7 +8,7 @@ export default (connector, settings) => {
     try {
       this.isLoading = true
       this.skip = this.items.length
-      const result = await connector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
+      const result = await getConnector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
       this.items = [...this.items, ...result.items.map(item => {
         return {
           _id: item._id,
@@ -25,7 +25,7 @@ export default (connector, settings) => {
         })
       }
     } catch (e) {
-      systemMessages.addError(e)
+      useSystemMessages().addError(e)
     }
   }
 }

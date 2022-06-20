@@ -1,18 +1,18 @@
-import systemMessages from './systemMessages.js'
+import useSystemMessages from '../../systemMessages.js'
 
-export default (connector) => {
+export default (postConnector) => {
   return async function createOne (body) {
+    let newItem
     try {
-      const newItem = { _id: 'unknown', status: 'creation-in-progress', body }
+      newItem = { _id: 'unknown', status: 'creation-in-progress', data: body }
       this.items.unshift(newItem)
-      const newItemData = await connector(body)
+      const newItemData = await postConnector(body)
       newItem._id = newItemData._id
       newItem.data = newItemData
       newItem.status = 'ready'
     } catch (e) {
-      // might add status flag like unsuccessful-create... so the user can retry the save, or we can automatically do that
-      // introduce lastError prop on items?
-      systemMessages.addError(e)
+      this.items.splice(this.items.indexOf(newItem), 1)
+      useSystemMessages().addError(e)
     }
   }
 }

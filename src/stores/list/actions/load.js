@@ -1,4 +1,4 @@
-import systemMessages from './systemMessages.js'
+import useSystemMessages from '../../systemMessages.js'
 
 // there can be a setting for this function to not load the whole objects just the metadata.
 // after loading the list, it can call get getOne functions, to load the items one by one
@@ -6,13 +6,13 @@ import systemMessages from './systemMessages.js'
 // and load the whole objects later on (settings.metaFirst)
 
 // there might be another setting for paged/infinite behaviour
-export default (connector, settings) => {
+export default (getConnector, settings) => {
   return async function load () {
     try {
       this.isLoading = true
       this.items = []
       this.count = 0
-      const result = await connector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
+      const result = await getConnector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
       this.items = result.items.map(item => {
         return {
           _id: item._id,
@@ -30,7 +30,7 @@ export default (connector, settings) => {
         })
       }
     } catch (e) {
-      systemMessages.addError(e)
+      useSystemMessages().addError(e)
     }
   }
 }

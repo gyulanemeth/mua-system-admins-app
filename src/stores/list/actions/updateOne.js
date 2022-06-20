@@ -1,11 +1,11 @@
-import systemMessages from './systemMessages.js'
+import useSystemMessages from '../../systemMessages.js'
 
 // in this case we might introduce a setting that does the following
 // either puts the returned data on the object
 // or it puts it before calling the connector assuming that the operation will be successful
 // in the second case, whenever there is an error, we will have to restore the previous state
 
-export default (connector, settings) => {
+export default (putConnector, settings) => {
   return async function updateOne (id, body) {
     let item
     let previousState
@@ -20,7 +20,7 @@ export default (connector, settings) => {
       } else {
         item.status = 'update-in-progress'
       }
-      const result = await connector({ ...this.params, id }, body)
+      const result = await putConnector({ ...this.params, id }, body)
       if (!settings.optimistic) {
         item.data = result
         item.status = 'ready'
@@ -30,7 +30,7 @@ export default (connector, settings) => {
       if (settings.optimistic) {
         item.data = previousState
       }
-      systemMessages.addError(e)
+      useSystemMessages().addError(e)
     }
   }
 }
