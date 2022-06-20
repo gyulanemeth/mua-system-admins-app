@@ -3,18 +3,16 @@ import {
   createPostConnector,
   createPatchConnector,
   createDeleteConnector
-} from 'standard-json-api-connectors';
+} from 'standard-json-api-connectors'
 import RouteError from '../errors/RouteError.js'
 
-
-export default function (fetch, apiUrl ){
-
+export default function (fetch, apiUrl) {
   const generateAdditionalHeaders = (params) => {
-    return { Authorization: 'Bearer '+ localStorage.getItem("accessToken") }
+    return { Authorization: 'Bearer ' + localStorage.getItem('accessToken') }
   }
 
   const generateAdminRoute = (params) => {
-    return `/v1/admins${params.id? '/'+params.id : ''}`
+    return `/v1/admins${params.id ? '/' + params.id : ''}`
   }
 
   const generateTokenRoute = (params) => {
@@ -22,7 +20,7 @@ export default function (fetch, apiUrl ){
   }
 
   const generateConfigRoute = () => {
-    return `/v1/config`
+    return '/v1/config'
   }
 
   const generatePatchNameRoute = (params) => {
@@ -34,23 +32,23 @@ export default function (fetch, apiUrl ){
   }
 
   const generateLoginRoute = () => {
-    return `/v1/login`
+    return '/v1/login'
   }
 
   const generateSendInvitationRoute = () => {
-    return `/v1/invitation/send`
+    return '/v1/invitation/send'
   }
 
   const generateAcceptInvitationRoute = () => {
-    return `/v1/invitation/accept`
+    return '/v1/invitation/accept'
   }
 
   const generateSendForgotPasswordRoute = () => {
-    return `/v1/forgot-password/send`
+    return '/v1/forgot-password/send'
   }
 
   const generateResetForgotPasswordRoute = () => {
-    return `/v1/forgot-password/reset`
+    return '/v1/forgot-password/reset'
   }
 
   const getAdmin = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
@@ -65,20 +63,19 @@ export default function (fetch, apiUrl ){
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, generateAdditionalHeaders)
 
-
-  const list = async function (){
-    const res = await getAdmin({});
-    return res;
+  const list = async function () {
+    const res = await getAdmin({})
+    return res
   }
+
 
   const readOne = async function (id){
     if(id === undefined ){
       throw new RouteError("Admin ID Is Required")
     }
     const res = await getAdmin(id)
-    return res;
+    return res
   }
-
 
   const getAccessToken = async function (data){
     if(data === undefined || data.id == undefined){
@@ -88,7 +85,7 @@ export default function (fetch, apiUrl ){
     if(res.accessToken){
       localStorage.setItem("accessToken", res.accessToken);
     }
-    return res;
+    return res
   }
 
   const deleteOne = async function(id){
@@ -98,6 +95,7 @@ export default function (fetch, apiUrl ){
     const res = await del(id)
     return res
   }
+
 
   const patchName = async function(formData){
     if(formData === undefined || formData.id === undefined || formData.name === undefined ){
@@ -157,9 +155,9 @@ export default function (fetch, apiUrl ){
     return res
   }
 
-  const getConfig = async function (){
+  const getConfig = async function () {
     const res = await getAdminConfig()
-    return res;
+    return res
   }
 
   return {
