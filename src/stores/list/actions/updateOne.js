@@ -30,6 +30,7 @@ export default (putConnector, settings) => {
       if (settings.optimistic) {
         item.data = previousState
       }
+      // should handle not found separately
       useSystemMessages().addError(e)
     }
   }

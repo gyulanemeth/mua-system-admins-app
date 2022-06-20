@@ -15,6 +15,7 @@ export default (getConnector) => {
       return result
     } catch (e) {
       useSystemMessages().addError(e)
+      // shall we re-throw the errors? might be useful where they are used
     }
   }
 }

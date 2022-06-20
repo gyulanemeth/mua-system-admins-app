@@ -26,6 +26,8 @@ export default (deleteConnector, settings) => {
       if (item && settings.optimistic) {
         this.items.splice(previousIdx, 0, item)
       }
+
+      // if there is a not found error, then we actually could remove the element, since that is already non-existent in the db
       useSystemMessages().addError(e)
     }
   }
