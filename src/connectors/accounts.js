@@ -4,7 +4,7 @@ import {
 
 export default function (fetch, apiUrl) {
   const generateAdditionalHeaders = (params) => {
-    return { Authorization: 'Bearer  ' + localStorage.getItem('accessToken') }
+    return { Authorization: 'Bearer ' + localStorage.getItem('accessToken') }
   }
 
   const generateAccountsRoute = () => {

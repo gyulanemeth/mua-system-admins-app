@@ -1,37 +1,40 @@
-import useSystemMessages from '../../systemMessages.js'
-
-// in this case we might introduce a setting that does the following
-// either puts the returned data on the object
-// or it puts it before calling the connector assuming that the operation will be successful
-// in the second case, whenever there is an error, we will have to restore the previous state
-
-export default (patchConnector, settings) => {
+export default (patchConnector, onError = () => {}, settings = {}) => {
   return async function patchOne (id, body) {
     let item
     let previousState
     try {
       item = this.items.find(item => item._id === id)
       if (!item) {
-        throw new Error('what store errors shall we introduce?')
+        throw new Error(`Item with _id: ${id} was not found in the store.`)
       }
       if (settings.optimistic) {
         previousState = JSON.parse(JSON.stringify(item.data))
-        Object.assign(item.data, body)
+        item.data = { ...item.data, ...body }
       } else {
         item.status = 'patch-in-progress'
       }
       const result = await patchConnector({ ...this.params, id }, body)
+      const retVal = JSON.parse(JSON.stringify(result)) // result will be a reactive vue obj after adding it to the state, that is why we need to copy the object
       if (!settings.optimistic) {
-        item.data = result
+        item.data = { ...item.data, ...result }
         item.status = 'ready'
       }
-      return result
+      return retVal
     } catch (e) {
-      if (settings.optimistic) {
-        item.data = previousState
+      if (item) {
+        item.status = 'encountered-an-error'
+        item.errors.push(e)
+
+        if (settings.optimistic) {
+          item.data = previousState
+        }
+      } else {
+        this.status = 'encountered-an-error'
+        this.errors.push(e)
       }
-      // should handle not found separately
-      useSystemMessages().addError(e)
+
+      onError(e)
+      throw e
     }
   }
 }

@@ -1,6 +1,6 @@
 export default () => {
   return {
-    isLoading: false,
+    status: 'ready',
 
     params: {},
     filter: {},
@@ -10,6 +10,8 @@ export default () => {
     limit: 10,
 
     items: [],
-    count: 0
+    count: 0,
+
+    errors: []
   }
 }

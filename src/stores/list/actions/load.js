@@ -1,15 +1,7 @@
-import useSystemMessages from '../../systemMessages.js'
-
-// there can be a setting for this function to not load the whole objects just the metadata.
-// after loading the list, it can call get getOne functions, to load the items one by one
-// this way we can show the list very quickly if the objects in the list contain a lot of data
-// and load the whole objects later on (settings.metaFirst)
-
-// there might be another setting for paged/infinite behaviour
-export default (getConnector, settings) => {
+export default (getConnector, onError = () => {}, settings = {}) => {
   return async function load () {
     try {
-      this.isLoading = true
+      this.status = 'loading-in-progress'
       this.items = []
       this.count = 0
       const result = await getConnector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
@@ -30,7 +22,10 @@ export default (getConnector, settings) => {
         })
       }
     } catch (e) {
-      useSystemMessages().addError(e)
+      this.status = 'encountered-an-error'
+      this.errors.push(e)
+      onError(e)
+      throw e
     }
   }
 }

@@ -1,12 +1,10 @@
-import useSystemMessages from '../../systemMessages.js'
-
-export default (getConnector, settings) => {
+export default (getConnector, onError = () => {}, settings = {}) => {
   return async function loadMore () {
     if (this.count <= this.items.length) {
       return
     }
     try {
-      this.isLoading = true
+      this.status = 'loading-more-in-progress'
       this.skip = this.items.length
       const result = await getConnector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
       this.items = [...this.items, ...result.items.map(item => {
@@ -25,7 +23,10 @@ export default (getConnector, settings) => {
         })
       }
     } catch (e) {
-      useSystemMessages().addError(e)
+      this.status = 'encountered-an-error'
+      this.errors.push(e)
+      onError(e)
+      throw e
     }
   }
 }

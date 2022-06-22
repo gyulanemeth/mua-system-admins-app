@@ -1,41 +1,37 @@
 <script setup>
 import useSystemMessages from '../stores/systemMessages.js'
 import stores from '../stores/index.js'
-const adminStore = stores().adminsStore()
+const accountStore = stores().accountStore()
 const systemMessages = useSystemMessages()
-adminStore.load()
+accountStore.load()
 </script>
 
 <template>
 
 <v-container>
+
     <v-layout class="d-flex flex-wrap">
-      <v-card class="mx-2 my-5 pa-2 " min-width="275"  v-for="admin in adminStore.items" :key="admin._id" >
+      <v-card class="mx-2 my-5 pa-2 " min-width="275"  v-for="account in accountStore.items" :key="account._id" >
         <v-img
           src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
           height="150px"
           cover
         ></v-img>
         <v-card-title>
-        {{admin.data.name}}
+        {{account.data.name}}
         <v-card-subtitle>
-          - {{admin.status}}
+          - {{account.status}}
         </v-card-subtitle >
       </v-card-title>
         <v-card-actions>
           <v-btn
-            color="red-lighten-2"
+            color="primary"
             variant="text"
-            @click="adminStore.deleteOne(admin._id)"
           >
-            Delete
+            Details
           </v-btn>
-
         </v-card-actions>
-
       </v-card>
-
-
 </v-layout>
 </v-container>
 </template>
