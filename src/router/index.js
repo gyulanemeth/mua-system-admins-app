@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import AccountList from '../components/AccountList.vue'
 import Login from '../components/Login.vue'
 import NavBar from '../components/NavBar.vue'
 import Invite from '../components/Invite.vue'
@@ -14,13 +13,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'admins',
       component: HomeView
     },
     {
       path: '/accounts',
       name: 'accounts',
-      component: AccountList
+      component: HomeView
     },
     {
       path: '/updateName',
@@ -62,11 +61,6 @@ const router = createRouter({
       path: '/invitation/accept',
       name: 'accept-invitation',
       component: SetPassword
-    },
-    {
-      path: '/admins',
-      name: 'admins',
-      component: HomeView
     },
     {
       path: '/admins/:id',
