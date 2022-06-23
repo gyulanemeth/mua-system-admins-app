@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import systemMessages from './systemMessages.js'
-import infiniteListState from './list/state/infinite.js'
-import load from './list/actions/load.js'
-import deleteOne from './list/actions/deleteOne.js'
+import infiniteListState from 'pinia-list-store/src/state/infinite.js'
+import deleteOne from 'pinia-list-store/src/actions/deleteOne.js'
+import load from 'pinia-list-store/src/actions/load.js'
 
 export default (connectors) => {
 
