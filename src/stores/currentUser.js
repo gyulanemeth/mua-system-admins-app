@@ -1,6 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { defineStore } from 'pinia'
 import RouteError from '../errors/RouteError.js'
+
 // this one will be a generic store representing the actual user sitting in front of any of the apps.
 // in this case it is a system-admin user
 
@@ -42,8 +43,8 @@ export default (connectors) => {
 
     async  sendForgotPassword (email) {
         try {
-          const status = await connectors.forgotPassword.send({email:email})
-          return status
+          await connectors.forgotPassword.send({email:email})
+          return 'success'
         } catch (e) {
           return e
         }
@@ -52,7 +53,7 @@ export default (connectors) => {
     async  resetForgotPassword (forgotPasswordToken, newPassword, newPasswordAgain) {
         // I'm thinking about how we should handle these kind of tokens...
         try {
-          this.accessToken = await connectors.forgotPassword.reset({newPassword: newPassword, newPasswordAgain: newPasswordAgain})
+          this.accessToken = await connectors.forgotPassword.reset({token:forgotPasswordToken, newPassword: newPassword, newPasswordAgain: newPasswordAgain})
           const tokenData = jwt_decode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({id: tokenData.user._id})
           this.user = await connectors.admins.readOne({id: tokenData.user._id})
@@ -65,15 +66,15 @@ export default (connectors) => {
 
     async sendInvitation (email) {
         try {
-          const status = await connectors.invitation.send({email:email})
-          return status
+          await connectors.invitation.send({email:email})
+          return "success"
         } catch (e) {
           return e
         }
       },
       async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain) {
         try {
-          this.accessToken = await connectors.invitation.accept({newPassword: newPassword, newPasswordAgain: newPasswordAgain })
+          this.accessToken = await connectors.invitation.accept({token:acceptInvitationToken, newPassword: newPassword, newPasswordAgain: newPasswordAgain })
           const tokenData = jwt_decode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({id: tokenData.user._id})
           this.user = await connectors.admins.readOne({id: tokenData.user._id})

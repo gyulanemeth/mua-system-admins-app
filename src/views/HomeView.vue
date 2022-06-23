@@ -31,6 +31,15 @@ async function eventHandler(id){
   }
 }
 
+async function searchBarHandler(filter){
+  if(filter === ""){
+    store.filter = {}
+  }else{
+    store.filter = {$text : {$search:`"\" ${filter} "\"`}}
+  }
+  await store.load()
+  data.value = store.items
+}
 
 watchEffect(async () => {
   loadData()
@@ -39,5 +48,5 @@ watchEffect(async () => {
 
 
 <template>
-  <List :items="data" :btn="btn" @buttonEvent="eventHandler" />
+  <List :items="data" :btn="btn" @buttonEvent="eventHandler" @searchEvent="searchBarHandler" />
 </template>

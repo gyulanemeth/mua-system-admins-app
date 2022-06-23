@@ -1,24 +1,20 @@
 <script setup>
 
 const menuItems = [
-       { title: 'Sign In', path: '/login' },
-       { title: 'Invite Admin', path: '/invitation'},
-       { title: 'Set Password', path: '/invitation/accept' },
-       { title: 'Forget Password', path: '/forgot-password' },
-       { title: 'Update Password', path: '/updatePassword' },
+        { title: 'Update Password', path: '/updatePassword' },
         { title: 'Update Name', path: '/UpdateName' },
-        { title: 'Reset Password', path: '/forgot-password/reset' }
   ]
 const model = false
+
+import stores from '../stores/index.js'
+const store = stores().currentUserStore()
 
 </script>
 
 <template>
-  <v-app-bar>
+  <v-app-bar  v-if="store.loggedIn">
     <v-app-bar-title >MUA admin's UI</v-app-bar-title>
-    <v-avatar
-     color="secondary"
-   >
+    <v-avatar color="secondary">
      Pic
    </v-avatar>
       <v-menu
@@ -41,9 +37,17 @@ const model = false
               </v-list-item>
             </v-list>
           </v-menu>
+  </v-app-bar>
 
+  <v-app-bar v-else >
+      <v-app-bar-title >MUA admin's UI</v-app-bar-title>
+    <v-btn
 
-
+      variant="text"
+      to="/login"
+    >
+      Login
+    </v-btn>
   </v-app-bar>
 </template>
 

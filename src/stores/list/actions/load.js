@@ -4,6 +4,7 @@ export default (getConnector, onError = () => {}, settings = {}) => {
       this.status = 'loading-in-progress'
       this.items = []
       this.count = 0
+      console.log(this.filter);
       const result = await getConnector(this.params, { filter: this.filter, select: this.select, sort: this.sort, skip: this.skip, limit: this.limit })
       this.items = result.items.map(item => {
         return {

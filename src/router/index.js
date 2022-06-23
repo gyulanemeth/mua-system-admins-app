@@ -1,13 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Login from '../components/Login.vue'
-import NavBar from '../components/NavBar.vue'
-import Invite from '../components/Invite.vue'
-import SetPassword from '../components/SetPassword.vue'
-import ForgetPassword from '../components/ForgetPassword.vue'
 import UpdatePassword from '../components/UpdatePassword.vue'
-import UpdateName from '../components/UpdateName.vue'
-import ResetPassword from '../components/ResetPassword.vue'
+import EmailAndNameFormView from '../views/EmailAndNameFormView.vue'
+import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
+import Login from '../components/Login.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,7 +20,7 @@ const router = createRouter({
     {
       path: '/updateName',
       name: 'updateName',
-      component: UpdateName
+      component: EmailAndNameFormView
     },
     {
       path: '/updatePassword',
@@ -45,22 +41,22 @@ const router = createRouter({
     {
       path: '/forgot-password',
       name: 'forgot-password',
-      component: ForgetPassword
+      component: EmailAndNameFormView
     },
     {
       path: '/forgot-password/reset',
       name: 'forgot-password-reset',
-      component: ResetPassword
+      component: SetAndReSetPasswordView
     },
     {
       path: '/invitation',
       name: 'invite',
-      component: Invite
+      component: EmailAndNameFormView
     },
     {
       path: '/invitation/accept',
       name: 'accept-invitation',
-      component: SetPassword
+      component: SetAndReSetPasswordView
     },
     {
       path: '/admins/:id',

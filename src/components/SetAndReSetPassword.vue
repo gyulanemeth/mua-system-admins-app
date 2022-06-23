@@ -1,17 +1,16 @@
 <script setup >
 import { ref } from 'vue'
+import { useRoute } from 'vue-router';
 import stores from '../stores/index.js'
 
-const userStore = stores().currentUserStore()
+const props = defineProps({
+  formData: Object
+})
 
+const route = useRoute()
 const newPassword = ref('')
 const newPasswordAgain = ref('')
-const acceptInvitationToken = ref('')
-async function submit(){
 
- const res = await userStore.acceptInvitation(acceptInvitationToken.value, newPassword.value, newPasswordAgain.value)
-console.log(res);
-}
 
 </script>
 
@@ -22,17 +21,9 @@ console.log(res);
         <v-col cols="6">
         <form>
           <v-col>
-            <h1>Set New Password</h1>
+            <h1>{{props.formData.text}}</h1>
           </v-col>
           <v-col>
-            <v-text-field
-              name="acceptInvitationToken"
-              label="accept Invitation Token"
-              id="acceptInvitationToken"
-              v-model="acceptInvitationToken"
-              required></v-text-field>
-          </v-col>
-            <v-col>
               <v-text-field
                 name="newPassword"
                 label="New Password"
@@ -40,8 +31,7 @@ console.log(res);
                 type="password"
                 v-model="newPassword"
                 required></v-text-field>
-            </v-col>
-            <v-col>
+
               <v-text-field
                 name="newPasswordAgain"
                 label="New Password Again"
@@ -51,7 +41,7 @@ console.log(res);
                 required></v-text-field>
             </v-col>
             <v-col>
-              <v-btn color="primary" @click="submit">Set Password</v-btn>
+              <v-btn color="primary" @click="$emit('buttonEvent',{token:route.query.token,newPassword:newPassword,newPasswordAgain:newPasswordAgain})">{{props.formData.text}}</v-btn>
             </v-col>
 
         </form>

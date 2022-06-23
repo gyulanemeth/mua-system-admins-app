@@ -11,8 +11,8 @@ export default function (fetch, apiUrl) {
     return { Authorization: 'Bearer ' + localStorage.getItem('accessToken') }
   }
 
-  const generateAdminRoute = (params) => {
-    return `/v1/admins${params.id ? '/' + params.id : ''}`
+  const generateAdminRoute = (params, query) => {
+    return `/v1/admins${params.id ? '/' + params.id : '' }${query ? '?' + query : ''}`
   }
 
   const generateTokenRoute = (params) => {
@@ -63,8 +63,8 @@ export default function (fetch, apiUrl) {
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, generateAdditionalHeaders)
 
-  const list = async function () {
-    const res = await getAdmin({})
+  const list = async function (param,query) {
+    const res = await getAdmin({},query)
     return res
   }
 
@@ -132,9 +132,10 @@ export default function (fetch, apiUrl) {
   }
 
   const accept = async function(formData){
-    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+    if(formData === undefined ||formData.token === undefined ||formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
         throw new RouteError("Admin Password Is Required")
       }
+    localStorage.setItem("accessToken", formData.token);
     const res = await postAcceptedInvitaion({},{newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
@@ -148,9 +149,10 @@ export default function (fetch, apiUrl) {
   }
 
   const reset = async function(formData){
-    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
+    if(formData === undefined ||formData.token === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
         throw new RouteError("Admin Password Is Required")
       }
+    localStorage.setItem("accessToken", formData.token);
     const res = await postResetForgotPassword({},{ newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }

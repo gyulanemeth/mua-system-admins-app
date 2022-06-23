@@ -7,13 +7,14 @@ export default function (fetch, apiUrl) {
     return { Authorization: 'Bearer ' + localStorage.getItem('accessToken') }
   }
 
-  const generateAccountsRoute = () => {
-    return '/v1/accounts'
+  const generateAccountsRoute = (query) => {
+    return `/v1/accounts${query ? '?' + query : ''}`
   }
+
   const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 
-  const list = async function () {
-    const res = await getAccounts()
+  const list = async function (query) {
+    const res = await getAccounts(query)
     return res
   }
 
