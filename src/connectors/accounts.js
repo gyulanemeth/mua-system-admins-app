@@ -13,8 +13,8 @@ export default function (fetch, apiUrl) {
 
   const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 
-  const list = async function (query) {
-    const res = await getAccounts(query)
+  const list = async function ({},query) {
+    const res = await getAccounts({},query)
     return res
   }
 
