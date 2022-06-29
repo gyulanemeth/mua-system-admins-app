@@ -126,7 +126,7 @@ describe('Current User Store', () => {
     const currentUser = currentUserStore(mokeConnector())
     const userStore = currentUser();
     const res = await userStore.sendForgotPassword("user1@gmail.com")
-    expect(res.success).toEqual(true)
+    expect(res).toEqual("success")
   })
 
   test('test send forgot Password fail email required ', async () => {
@@ -162,7 +162,7 @@ test('test success send admin Invitation', async () => {
   const currentUser = currentUserStore(mokeConnector())
   const userStore = currentUser();
   const res = await userStore.sendInvitation("user1@gmail.com")
-  expect(res.success).toEqual(true)
+  expect(res).toEqual("success")
 })
 
 test('test send admin Invitation fail email required ', async () => {

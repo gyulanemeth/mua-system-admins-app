@@ -242,7 +242,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
     const spy = vi.spyOn(fetch,'impl')
-    const res = await admin(fetch, apiUrl).invitation.accept({newPassword:"newPassword", newPasswordAgain:"newPassword"});
+    const res = await admin(fetch, apiUrl).invitation.accept({token:"token",newPassword:"newPassword", newPasswordAgain:"newPassword"});
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/invitation/accept',
       {
@@ -302,7 +302,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { loginToken: "Token" }})})
 
     const spy = vi.spyOn(fetch,'impl')
-    const res = await admin(fetch, apiUrl).forgotPassword.reset({newPassword:"newPassword", newPasswordAgain:"newPassword"});
+    const res = await admin(fetch, apiUrl).forgotPassword.reset({token:"token",newPassword:"newPassword", newPasswordAgain:"newPassword"});
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/forgot-password/reset',
       {

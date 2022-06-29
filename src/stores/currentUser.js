@@ -32,6 +32,7 @@ export default (connectors) => {
           // forward to /
         } catch (e) {
           systemMessages().addError(e)
+           return e
         }
       },
 
@@ -48,6 +49,7 @@ export default (connectors) => {
           return 'success'
         } catch (e) {
             systemMessages().addError(e)
+             return e
         }
       },
 
@@ -62,6 +64,7 @@ export default (connectors) => {
           // forward to /
         } catch (e) {
             systemMessages().addError(e)
+            return e
         }
       },
 
@@ -71,6 +74,7 @@ export default (connectors) => {
           return "success"
         } catch (e) {
             systemMessages().addError(e)
+             return e
         }
       },
       async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain) {
@@ -82,6 +86,7 @@ export default (connectors) => {
           return "success"
         } catch (e) {
             systemMessages().addError(e)
+             return e
         }
       },
 
@@ -93,6 +98,7 @@ export default (connectors) => {
           this.accessToken = await connectors.admins.getAccessToken({id:this.user._id})
         } catch (e) {
             systemMessages().addError(e)
+             return e
         }
       },
 
@@ -106,6 +112,7 @@ export default (connectors) => {
           return "success"
         } catch (e) {
             systemMessages().addError(e)
+             return e
         }
       },
 
@@ -118,6 +125,7 @@ export default (connectors) => {
            return "success"
         } catch (e) {
             systemMessages().addError(e)
+            return e
         }
       }
     }
