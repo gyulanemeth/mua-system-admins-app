@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '../views/HomeView.vue'
-import UpdatePassword from '../components/UpdatePassword.vue'
 import EmailAndNameFormView from '../views/EmailAndNameFormView.vue'
 import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
-import Login from '../components/Login.vue'
+import UpdatePassword from '../components/UpdatePassword.vue'
+import AdminLogin from '../components/AdminLogin.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -36,7 +38,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: AdminLogin
     },
     {
       path: '/forgot-password',

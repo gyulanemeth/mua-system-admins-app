@@ -1,5 +1,6 @@
-import jwt_decode from "jwt-decode";
 import { defineStore } from 'pinia'
+import jwtDecode from 'jwt-decode'
+
 import RouteError from '../errors/RouteError.js'
 import systemMessages from './systemMessages.js'
 
@@ -24,108 +25,108 @@ export default (connectors) => {
 
       async login (email, password) {
         try {
-          this.accessToken = await connectors.admins.login({email: email, password: password})
-          const tokenData = jwt_decode(this.accessToken)
-          this.accessToken = await connectors.admins.getAccessToken({id: tokenData.user._id})
-          this.user = await connectors.admins.readOne({id: tokenData.user._id})
+          this.accessToken = await connectors.admins.login({ email, password })
+          const tokenData = jwtDecode(this.accessToken)
+          this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
+          this.user = await connectors.admins.readOne({ id: tokenData.user._id })
           return this.user
           // forward to /
         } catch (e) {
           systemMessages().addError(e)
-           return e
+          return e
         }
       },
 
       logout () {
-         localStorage.removeItem("accessToken");
-         this.accessToken = null
-         this.user = null
+        localStorage.removeItem('accessToken')
+        this.accessToken = null
+        this.user = null
         // forward to /
       },
 
-    async  sendForgotPassword (email) {
+      async  sendForgotPassword (email) {
         try {
-          await connectors.forgotPassword.send({email:email})
+          await connectors.forgotPassword.send({ email })
           return 'success'
         } catch (e) {
-            systemMessages().addError(e)
-             return e
+          systemMessages().addError(e)
+          return e
         }
       },
 
-    async  resetForgotPassword (forgotPasswordToken, newPassword, newPasswordAgain) {
+      async  resetForgotPassword (forgotPasswordToken, newPassword, newPasswordAgain) {
         // I'm thinking about how we should handle these kind of tokens...
         try {
-          this.accessToken = await connectors.forgotPassword.reset({token:forgotPasswordToken, newPassword: newPassword, newPasswordAgain: newPasswordAgain})
-          const tokenData = jwt_decode(this.accessToken)
-          this.accessToken = await connectors.admins.getAccessToken({id: tokenData.user._id})
-          this.user = await connectors.admins.readOne({id: tokenData.user._id})
-          return "success"
+          this.accessToken = await connectors.forgotPassword.reset({ token: forgotPasswordToken, newPassword, newPasswordAgain })
+          const tokenData = jwtDecode(this.accessToken)
+          this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
+          this.user = await connectors.admins.readOne({ id: tokenData.user._id })
+          return 'success'
           // forward to /
         } catch (e) {
-            systemMessages().addError(e)
-            return e
+          systemMessages().addError(e)
+          return e
         }
       },
 
-    async sendInvitation (email) {
+      async sendInvitation (email) {
         try {
-          await connectors.invitation.send({email:email})
-          return "success"
+          await connectors.invitation.send({ email })
+          return 'success'
         } catch (e) {
-            systemMessages().addError(e)
-             return e
+          systemMessages().addError(e)
+          return e
         }
       },
       async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain) {
         try {
-          this.accessToken = await connectors.invitation.accept({token:acceptInvitationToken, newPassword: newPassword, newPasswordAgain: newPasswordAgain })
-          const tokenData = jwt_decode(this.accessToken)
-          this.accessToken = await connectors.admins.getAccessToken({id: tokenData.user._id})
-          this.user = await connectors.admins.readOne({id: tokenData.user._id})
-          return "success"
+          this.accessToken = await connectors.invitation.accept({ token: acceptInvitationToken, newPassword, newPasswordAgain })
+          const tokenData = jwtDecode(this.accessToken)
+          this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
+          this.user = await connectors.admins.readOne({ id: tokenData.user._id })
+          return 'success'
         } catch (e) {
-            systemMessages().addError(e)
-             return e
+          systemMessages().addError(e)
+          return e
         }
       },
 
-      async refreshAccessToken () {//email
+      async refreshAccessToken () { // email
         try {
-          if(this.user === null || this.user._id === undefined ){
-            throw new RouteError("Admin ID Is Required")
+          if (this.user === null || this.user._id === undefined) {
+            throw new RouteError('Admin ID Is Required')
           }
-          this.accessToken = await connectors.admins.getAccessToken({id:this.user._id})
+          this.accessToken = await connectors.admins.getAccessToken({ id: this.user._id })
         } catch (e) {
-            systemMessages().addError(e)
-             return e
+          systemMessages().addError(e)
+          return e
         }
       },
 
       async patchName (name) {
         try {
-          if(this.user === null || this.user._id === undefined ){
-            throw new RouteError("Admin ID Is Required")
+          if (this.user === null || this.user._id === undefined) {
+            throw new RouteError('Admin ID Is Required')
           }
-           await connectors.admins.patchName({id: this.user._id, name:name})
+          await connectors.admins.patchName({ id: this.user._id, name })
           this.user.name = name
-          return "success"
+          return 'success'
         } catch (e) {
-            systemMessages().addError(e)
-             return e
+          systemMessages().addError(e)
+          return e
         }
       },
 
       async patchPassword (oldPassword, newPassword, newPasswordAgain) {
         try {
-          if(this.user === null || this.user._id === undefined ){
-            throw new RouteError("Admin ID Is Required")
+          if (this.user === null || this.user._id === undefined) {
+            throw new RouteError('Admin ID Is Required')
           }
-           await connectors.admins.patchPassword({id: this.user._id, oldPassword:oldPassword, newPassword: newPassword, newPasswordAgain: newPasswordAgain})
-           return "success"
+          await connectors.admins.patchPassword({ id: this.user._id, oldPassword, newPassword, newPasswordAgain })
+          return 'success'
         } catch (e) {
-            systemMessages().addError(e)
-            return e
+          systemMessages().addError(e)
+          return e
         }
       }
     }

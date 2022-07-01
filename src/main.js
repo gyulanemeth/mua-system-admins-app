@@ -7,7 +7,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 loadFonts()
-const pinia = createPinia();
+const pinia = createPinia()
 
 /*
 

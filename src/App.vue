@@ -2,8 +2,7 @@
 <script setup>
 import NavBar from './components/NavBar.vue'
 import SideBar from './components/SideBar.vue'
-import Message from './components/Message.vue'
-
+import ErrorMessage from './components/ErrorMessage.vue'
 
 </script>
 <template>
@@ -11,7 +10,7 @@ import Message from './components/Message.vue'
     <NavBar/>
     <SideBar/>
     <v-main >
-      <Message/>
+      <ErrorMessage/>
       <router-view/>
     </v-main>
   </v-app>

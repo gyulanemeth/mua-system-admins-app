@@ -1,13 +1,13 @@
 <script setup>
 
-const menuItems = [
-        { title: 'Update Password', path: '/updatePassword' },
-        { title: 'Update Name', path: '/UpdateName' },
-  ]
-const model = false
-
 import stores from '../stores/index.js'
+
 const store = stores().currentUserStore()
+
+const menuItems = [
+  { title: 'Update Password', path: '/updatePassword' },
+  { title: 'Update Name', path: '/UpdateName' }
+]
 
 </script>
 
@@ -53,23 +53,3 @@ const store = stores().currentUserStore()
     </v-btn>
   </v-app-bar>
 </template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<v-list color="transparent">
-  <v-list-item prepend-icon="mdi-account-group" title="Admins List" ></v-list-item>
-  <v-list-item prepend-icon="mdi-file-document" title="Accounts List"></v-list-item>
-</v-list>
--->

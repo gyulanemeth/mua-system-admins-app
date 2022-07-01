@@ -1,19 +1,20 @@
 <script setup >
 import { ref } from 'vue'
-import stores from '../stores/index.js'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-const userStore = stores().currentUserStore()
+import stores from '../stores/index.js'
 
 const router = useRouter()
+const userStore = stores().currentUserStore()
+
 const email = ref('')
 const password = ref('')
-async function submit(){
 
- const res = await userStore.login(email.value, password.value)
- if(res.email === email.value){
-   router.push("/")
- }
+async function submit () {
+  const res = await userStore.login(email.value, password.value)
+  if (res.email === email.value) {
+    router.push('/')
+  }
 }
 
 </script>

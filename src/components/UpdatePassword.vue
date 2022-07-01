@@ -1,23 +1,24 @@
 <script setup >
 import { ref } from 'vue'
-import stores from '../stores/index.js'
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { useRouter } from 'vue-router'
 
+import stores from '../stores/index.js'
+
+const router = useRouter()
 const userStore = stores().currentUserStore()
 
 const oldPassword = ref('')
 const newPassword = ref('')
 const newPasswordAgain = ref('')
-async function submit(){
- const res = await userStore.patchPassword(oldPassword.value, newPassword.value, newPasswordAgain.value)
- if(res === 'success'){
-   router.push('/')
- }
+
+async function submit () {
+  const res = await userStore.patchPassword(oldPassword.value, newPassword.value, newPasswordAgain.value)
+  if (res === 'success') {
+    router.push('/')
+  }
 }
 
 </script>
-
 
 <template>
   <v-container>

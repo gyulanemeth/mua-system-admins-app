@@ -1,19 +1,16 @@
 <script setup >
 import { ref } from 'vue'
-import { useRoute } from 'vue-router';
-import stores from '../stores/index.js'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const props = defineProps({
   formData: Object
 })
 
-const route = useRoute()
 const newPassword = ref('')
 const newPasswordAgain = ref('')
 
-
 </script>
-
 
 <template>
   <v-container>

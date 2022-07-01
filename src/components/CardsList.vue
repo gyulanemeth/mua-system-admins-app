@@ -1,10 +1,13 @@
 <script setup>
-import {ref} from 'vue'
+import { ref } from 'vue'
+
 const props = defineProps({
   items: Array,
   btn: Object
 })
-const filter = ref("")
+
+const filter = ref('')
+
 </script>
 
 <template>
