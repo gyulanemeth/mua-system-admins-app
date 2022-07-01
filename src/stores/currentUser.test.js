@@ -6,7 +6,22 @@ import jwt from 'jsonwebtoken'
 import currentUserStore from './currentUser.js'
 import RouteError from '../errors/RouteError.js'
 
+
 describe('Current User Store', () => {
+
+  global.localStorage = {
+    data: {},
+    getItem(key) {
+      return this.data[key];
+    },
+    setItem(key, value) {
+      this.data[key] = value;
+    },
+    removeItem(key) {
+      delete this.data[key];
+    }
+  };
+
   const app = createApp({})
   const secrets = 'verylongsecret1'
 
@@ -154,7 +169,7 @@ describe('Current User Store', () => {
     const res = await userStore.resetForgotPassword('forgotPasswordToken', 'newPassword')
     expect(res.message).toEqual('Admin Password Is Required')
   })
-  /* ------------------------------------------------------- */
+
 
   test('test success send admin Invitation', async () => {
     const currentUser = currentUserStore(mokeConnector())
@@ -191,7 +206,7 @@ describe('Current User Store', () => {
     const currentUser = currentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
-    userStore.refreshAccessToken()
+    await userStore.refreshAccessToken()
     const token = jwt.sign({ type: 'admin', user: { _id: '12test12', email: 'user1@gmail.com' } }, secrets)
     expect(userStore.accessToken).toEqual(token)
   })

@@ -3,6 +3,19 @@ import { test, expect, describe, vi } from 'vitest'
 import accounts from './accounts.js'
 
 describe('test admin connectors', () => {
+
+  global.localStorage = {
+    data: {},
+    getItem(key) {
+      return this.data[key];
+    },
+    setItem(key, value) {
+      this.data[key] = value;
+    },
+    removeItem(key) {
+      delete this.data[key];
+    }
+  };
   // const apiUrl = 'https:/mua/accounts/'
 
   test('test list accounts', async () => {

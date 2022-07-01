@@ -3,6 +3,20 @@ import { test, beforeEach, expect, describe, vi } from 'vitest'
 import admin from './admin.js'
 
 describe('test admin connectors', () => {
+
+  global.localStorage = {
+    data: {},
+    getItem(key) {
+      return this.data[key];
+    },
+    setItem(key, value) {
+      this.data[key] = value;
+    },
+    removeItem(key) {
+      delete this.data[key];
+    }
+  };
+
   const apiUrl = 'https:/mua/admin'
   beforeEach(async () => {
     localStorage.setItem('accessToken', 'Token')
@@ -33,6 +47,33 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ items: [{ _id: '123', name: 'user1', email: 'user1@gamil.com' }], count: 1 })
   })
 
+
+test('test list admins with query', async () => {
+  const fetch = vi.fn()
+
+  fetch.mockResolvedValue({
+    ok: true,
+    headers: { get: () => 'application/json' },
+    json: () => Promise.resolve({ result: { items: [{ _id: '123', name: 'user1', email: 'user1@gamil.com' }], count: 1 } })
+  })
+
+  const spy = vi.spyOn(fetch, 'impl')
+  const res = await admin(fetch, apiUrl).admins.list({},{ $text: { $search: `user1` } })
+
+  expect(spy).toHaveBeenLastCalledWith(
+    'https:/mua/admin/v1/admins?$text[$search]=user1',
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    })
+
+  expect(res).toEqual({ items: [{ _id: '123', name: 'user1', email: 'user1@gamil.com' }], count: 1 })
+})
+
+
   test('test readOne admin', async () => {
     const fetch = vi.fn()
 
@@ -57,6 +98,19 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ _id: '123', name: 'user1', email: 'user1@gamil.com' })
   })
 
+  test('test readOne admin Error no Id', async () => {
+    const fetch = vi.fn()
+
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { _id: '123', name: 'user1', email: 'user1@gamil.com' } })
+    })
+
+    await expect(admin(fetch, apiUrl).admins.readOne()).rejects.toThrowError('Admin ID Is Required')
+
+  })
+
   test('test getAccessToken admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -78,6 +132,18 @@ describe('test admin connectors', () => {
         }
       })
     expect(res).toEqual({ accessToken: 'Token' })
+  })
+
+  test('test getAccessToken admin id Error', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { accessToken: 'Token' } })
+    })
+
+  await expect(admin(fetch, apiUrl).admins.getAccessToken()).rejects.toThrowError('Admin ID Is Required')
+
   })
 
   test('test delete admin', async () => {
