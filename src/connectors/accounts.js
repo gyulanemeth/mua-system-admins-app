@@ -5,7 +5,7 @@ export default function (fetch, apiUrl) {
     return { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
   }
 
-  const generateAccountsRoute = () => '/v1/accounts/'
+  const generateAccountsRoute = () => '/v1/accounts'
 
   const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 

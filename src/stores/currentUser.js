@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import jwtDecode from 'jwt-decode'
 
 import RouteError from '../errors/RouteError.js'
-import systemMessages from './systemMessages.js'
+import useSystemMessagesStore from './systemMessages.js'
 
 // this one will be a generic store representing the actual user sitting in front of any of the apps.
 // in this case it is a system-admin user
@@ -32,7 +32,7 @@ export default (connectors) => {
           return this.user
           // forward to /
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -49,7 +49,7 @@ export default (connectors) => {
           await connectors.forgotPassword.send({ email })
           return 'success'
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -64,7 +64,7 @@ export default (connectors) => {
           return 'success'
           // forward to /
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -74,7 +74,7 @@ export default (connectors) => {
           await connectors.invitation.send({ email })
           return 'success'
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -86,7 +86,7 @@ export default (connectors) => {
           this.user = await connectors.admins.readOne({ id: tokenData.user._id })
           return 'success'
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -98,7 +98,7 @@ export default (connectors) => {
           }
           this.accessToken = await connectors.admins.getAccessToken({ id: this.user._id })
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -112,7 +112,7 @@ export default (connectors) => {
           this.user.name = name
           return 'success'
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       },
@@ -125,7 +125,7 @@ export default (connectors) => {
           await connectors.admins.patchPassword({ id: this.user._id, oldPassword, newPassword, newPasswordAgain })
           return 'success'
         } catch (e) {
-          systemMessages().addError(e)
+          useSystemMessagesStore().addError(e)
           return e
         }
       }

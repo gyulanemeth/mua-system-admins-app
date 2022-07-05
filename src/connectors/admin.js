@@ -52,7 +52,7 @@ export default function (fetch, apiUrl) {
   }
 
   const getAccessToken = async function (data) {
-    if (!data && !data.id) {
+    if (!data || !data.id) {
       throw new RouteError('Admin ID Is Required')
     }
     const res = await getToken({ id: data.id })
@@ -71,14 +71,14 @@ export default function (fetch, apiUrl) {
   }
 
   const patchName = async function (formData) {
-    if (formData === undefined || formData.id === undefined || formData.name === undefined) {
+    if (!formData || !formData.id || !formData.name) {
       throw new RouteError('Admin ID And New Name Is Required')
     }
     const res = await updateName({ id: formData.id }, { name: formData.name })
     return res
   }
   const patchPassword = async function (formData) {
-    if (formData === undefined || formData.id === undefined || formData.oldPassword === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined) {
+    if (!formData || !formData.id || !formData.oldPassword || !formData.newPassword || !formData.newPasswordAgain) {
       throw new RouteError('Admin ID And New Password Is Required')
     }
     const res = await updatePassword({ id: formData.id }, { oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
@@ -86,7 +86,7 @@ export default function (fetch, apiUrl) {
   }
 
   const login = async function (formData) {
-    if (formData === undefined || formData.email === undefined || formData.password === undefined) {
+    if (!formData || !formData.email || !formData.password ) {
       throw new RouteError('Admin Email And Password Is Required')
     }
     const res = await postLogin({}, { email: formData.email, password: formData.password })
@@ -97,7 +97,7 @@ export default function (fetch, apiUrl) {
   }
 
   const sendInvitation = async function (data) {
-    if (data === undefined || data.email === undefined) {
+    if (!data || !data.email) {
       throw new RouteError('Email Is Required')
     }
     const res = await postSendInvitation({}, { email: data.email })
@@ -105,7 +105,7 @@ export default function (fetch, apiUrl) {
   }
 
   const accept = async function (formData) {
-    if (formData === undefined || formData.token === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined) {
+    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
       throw new RouteError('Admin Password Is Required')
     }
     localStorage.setItem('accessToken', formData.token)
@@ -114,7 +114,7 @@ export default function (fetch, apiUrl) {
   }
 
   const sendForgotPassword = async function (data) {
-    if (data === undefined || data.email === undefined) {
+    if (!data || !data.email) {
       throw new RouteError('Email Is Required')
     }
     const res = await postSendForgotPassword({}, { email: data.email })
@@ -122,7 +122,7 @@ export default function (fetch, apiUrl) {
   }
 
   const reset = async function (formData) {
-    if (formData === undefined || formData.token === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined) {
+    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
       throw new RouteError('Admin Password Is Required')
     }
     localStorage.setItem('accessToken', formData.token)
