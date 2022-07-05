@@ -86,7 +86,7 @@ export default function (fetch, apiUrl) {
   }
 
   const login = async function (formData) {
-    if (!formData || !formData.email || !formData.password ) {
+    if (!formData || !formData.email || !formData.password) {
       throw new RouteError('Admin Email And Password Is Required')
     }
     const res = await postLogin({}, { email: formData.email, password: formData.password })
