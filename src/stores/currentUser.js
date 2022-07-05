@@ -93,7 +93,7 @@ export default (connectors) => {
 
       async refreshAccessToken () { // email
         try {
-          if (this.user === null || this.user._id === undefined) {
+          if (!this.user || !this.user._id) {
             throw new RouteError('Admin ID Is Required')
           }
           this.accessToken = await connectors.admins.getAccessToken({ id: this.user._id })
@@ -105,7 +105,7 @@ export default (connectors) => {
 
       async patchName (name) {
         try {
-          if (this.user === null || this.user._id === undefined) {
+          if (!this.user || !this.user._id) {
             throw new RouteError('Admin ID Is Required')
           }
           await connectors.admins.patchName({ id: this.user._id, name })
@@ -119,7 +119,7 @@ export default (connectors) => {
 
       async patchPassword (oldPassword, newPassword, newPasswordAgain) {
         try {
-          if (this.user === null || this.user._id === undefined) {
+          if (!this.user || !this.user._id) {
             throw new RouteError('Admin ID Is Required')
           }
           await connectors.admins.patchPassword({ id: this.user._id, oldPassword, newPassword, newPasswordAgain })
