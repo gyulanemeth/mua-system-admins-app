@@ -1,20 +1,24 @@
 <script setup >
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 import stores from '../stores/index.js'
 
+const router = useRouter()
 const userStore = stores().currentUserStore()
 
 const oldPassword = ref('')
 const newPassword = ref('')
 const newPasswordAgain = ref('')
-async function submit(){
-console.log(userStore.user);
- const res = await userStore.patchPassword(oldPassword.value, newPassword.value, newPasswordAgain.value)
-console.log(res);
+
+async function submit () {
+  const res = await userStore.patchPassword(oldPassword.value, newPassword.value, newPasswordAgain.value)
+  if (res === 'success') {
+    router.push('/')
+  }
 }
 
 </script>
-
 
 <template>
   <v-container>
@@ -32,8 +36,7 @@ console.log(res);
               type="password"
               v-model="oldPassword"
               required></v-text-field>
-          </v-col>
-            <v-col>
+
               <v-text-field
                 name="newPassword"
                 label="New Password"
@@ -41,8 +44,7 @@ console.log(res);
                 type="password"
                 v-model="newPassword"
                 required></v-text-field>
-            </v-col>
-            <v-col>
+
               <v-text-field
                 name="newPasswordAgain"
                 label="New Password Again"

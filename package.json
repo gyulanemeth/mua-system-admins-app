@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
-    "test:unit": "vitest --environment jsdom",
+    "test:unit": "vitest --coverage -- --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 --environment jsdom",
     "test:e2e": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress open --e2e'",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "dev": "vite",
@@ -16,6 +16,8 @@
     "@mdi/font": "5.9.55",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.14",
+    "pinia-list-store": "^0.0.1",
+    "pinia-system-messages-store": "^0.0.1",
     "roboto-fontface": "*",
     "standard-json-api-connectors": "^0.1.2",
     "vue": "^3.2.36",
@@ -28,6 +30,7 @@
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/test-utils": "^2.0.0",
+    "c8": "^7.11.3",
     "cypress": "^10.0.2",
     "eslint": "^8.17.0",
     "eslint-config-standard": "^17.0.0",
@@ -41,6 +44,7 @@
     "prettier": "^2.5.1",
     "start-server-and-test": "^1.14.0",
     "vite": "^2.9.9",
+    "vite-plugin-static-copy": "^0.6.1",
     "vite-plugin-vuetify": "^1.0.0-alpha.0",
     "vitest": "^0.13.0",
     "vue-cli-plugin-vuetify": "~2.5.1"

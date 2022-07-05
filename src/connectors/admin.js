@@ -4,52 +4,27 @@ import {
   createPatchConnector,
   createDeleteConnector
 } from 'standard-json-api-connectors'
+
 import RouteError from '../errors/RouteError.js'
 
 export default function (fetch, apiUrl) {
-  const generateAdditionalHeaders = (params) => {
-    return { Authorization: 'Bearer ' + localStorage.getItem('accessToken') }
+  const generateAdditionalHeaders = () => {
+    return { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
   }
 
-  const generateAdminRoute = (params) => {
-    return `/v1/admins${params.id ? '/' + params.id : ''}`
-  }
+  const generateAdminRoute = (params) => `/v1/admins${params.id ? '/' + params.id : ''}`
+  const generateTokenRoute = (params) => `/v1/admins/${params.id}/access-token`
 
-  const generateTokenRoute = (params) => {
-    return `/v1/admins/${params.id}/access-token`
-  }
+  const generateConfigRoute = () => '/v1/config'
 
-  const generateConfigRoute = () => {
-    return '/v1/config'
-  }
+  const generatePatchNameRoute = (params) => `/v1/admins/${params.id}/name`
+  const generatePatchPasswordRoute = (params) => `/v1/admins/${params.id}/password`
 
-  const generatePatchNameRoute = (params) => {
-    return `/v1/admins/${params.id}/name`
-  }
-
-  const generatePatchPasswordRoute = (params) => {
-    return `/v1/admins/${params.id}/password`
-  }
-
-  const generateLoginRoute = () => {
-    return '/v1/login'
-  }
-
-  const generateSendInvitationRoute = () => {
-    return '/v1/invitation/send'
-  }
-
-  const generateAcceptInvitationRoute = () => {
-    return '/v1/invitation/accept'
-  }
-
-  const generateSendForgotPasswordRoute = () => {
-    return '/v1/forgot-password/send'
-  }
-
-  const generateResetForgotPasswordRoute = () => {
-    return '/v1/forgot-password/reset'
-  }
+  const generateLoginRoute = () => '/v1/login'
+  const generateSendInvitationRoute = () => '/v1/invitation/send'
+  const generateAcceptInvitationRoute = () => '/v1/invitation/accept'
+  const generateSendForgotPasswordRoute = () => '/v1/forgot-password/send'
+  const generateResetForgotPasswordRoute = () => '/v1/forgot-password/reset'
 
   const getAdmin = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
   const del = createDeleteConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
@@ -63,95 +38,95 @@ export default function (fetch, apiUrl) {
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, generateAdditionalHeaders)
 
-  const list = async function () {
-    const res = await getAdmin({})
+  const list = async function (param, query) {
+    const res = await getAdmin({}, query)
     return res
   }
 
-
-  const readOne = async function (id){
-    if(id === undefined ){
-      throw new RouteError("Admin ID Is Required")
+  const readOne = async function (id) {
+    if (!id) {
+      throw new RouteError('Admin ID Is Required')
     }
     const res = await getAdmin(id)
     return res
   }
 
-  const getAccessToken = async function (data){
-    if(data === undefined || data.id == undefined){
-      throw new RouteError("Admin ID Is Required")
+  const getAccessToken = async function (data) {
+    if (!data || !data.id) {
+      throw new RouteError('Admin ID Is Required')
     }
-    const res = await getToken({id:data.id})
-    if(res.accessToken){
-      localStorage.setItem("accessToken", res.accessToken);
+    const res = await getToken({ id: data.id })
+    if (res.accessToken) {
+      localStorage.setItem('accessToken', res.accessToken)
     }
     return res
   }
 
-  const deleteOne = async function(id){
-    if(id === undefined){
-      throw new RouteError("Admin ID Is Required")
+  const deleteOne = async function (id) {
+    if (!id) {
+      throw new RouteError('Admin ID Is Required')
     }
     const res = await del(id)
     return res
   }
 
-
-  const patchName = async function(formData){
-    if(formData === undefined || formData.id === undefined || formData.name === undefined ){
-        throw new RouteError("Admin ID And New Name Is Required")
-      }
-    const res = await updateName({ id: formData.id }, {name: formData.name})
+  const patchName = async function (formData) {
+    if (!formData || !formData.id || !formData.name) {
+      throw new RouteError('Admin ID And New Name Is Required')
+    }
+    const res = await updateName({ id: formData.id }, { name: formData.name })
     return res
   }
-  const patchPassword = async function(formData){
-    if(formData === undefined || formData.id === undefined || formData.oldPassword === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
-        throw new RouteError("Admin ID And New Password Is Required")
-      }
-    const res = await updatePassword({ id: formData.id }, {oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain})
+  const patchPassword = async function (formData) {
+    if (!formData || !formData.id || !formData.oldPassword || !formData.newPassword || !formData.newPasswordAgain) {
+      throw new RouteError('Admin ID And New Password Is Required')
+    }
+    const res = await updatePassword({ id: formData.id }, { oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
-  const login = async function(formData){
-    if(formData === undefined || formData.email === undefined || formData.password === undefined ){
-        throw new RouteError("Admin Email And Password Is Required")
-      }
-    const res = await postLogin({},{ email:formData.email, password: formData.password})
-    if(res.loginToken){
-      localStorage.setItem("accessToken", res.loginToken);
+  const login = async function (formData) {
+    if (!formData || !formData.email || !formData.password) {
+      throw new RouteError('Admin Email And Password Is Required')
+    }
+    const res = await postLogin({}, { email: formData.email, password: formData.password })
+    if (res.loginToken) {
+      localStorage.setItem('accessToken', res.loginToken)
     }
     return res.loginToken
   }
 
-  const sendInvitation = async function(data){
-    if(data === undefined || data.email === undefined){
-        throw new RouteError("Email Is Required")
-      }
-    const res = await postSendInvitation({}, {email:data.email})
+  const sendInvitation = async function (data) {
+    if (!data || !data.email) {
+      throw new RouteError('Email Is Required')
+    }
+    const res = await postSendInvitation({}, { email: data.email })
     return res
   }
 
-  const accept = async function(formData){
-    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
-        throw new RouteError("Admin Password Is Required")
-      }
-    const res = await postAcceptedInvitaion({},{newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
+  const accept = async function (formData) {
+    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
+      throw new RouteError('Admin Password Is Required')
+    }
+    localStorage.setItem('accessToken', formData.token)
+    const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
-  const sendForgotPassword = async function(data){
-    if(data === undefined || data.email === undefined){
-        throw new RouteError("Email Is Required")
-      }
-    const res = await postSendForgotPassword({}, {email:data.email})
+  const sendForgotPassword = async function (data) {
+    if (!data || !data.email) {
+      throw new RouteError('Email Is Required')
+    }
+    const res = await postSendForgotPassword({}, { email: data.email })
     return res
   }
 
-  const reset = async function(formData){
-    if(formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined ){
-        throw new RouteError("Admin Password Is Required")
-      }
-    const res = await postResetForgotPassword({},{ newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
+  const reset = async function (formData) {
+    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
+      throw new RouteError('Admin Password Is Required')
+    }
+    localStorage.setItem('accessToken', formData.token)
+    const res = await postResetForgotPassword({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
   }
 
@@ -161,7 +136,7 @@ export default function (fetch, apiUrl) {
   }
 
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login }, //in testing currentUser : patchPassword backend issue
+    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login },
     invitation: { send: sendInvitation, accept },
     forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }
