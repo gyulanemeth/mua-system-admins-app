@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { setActivePinia, createPinia } from 'pinia'
 import { test, beforeEach, expect, describe } from 'vitest'
 
-import accountsStore from './accounts.js'
+import useAccountsStore from './accounts.js'
 
 describe('accounts Store', () => {
   const app = createApp({})
@@ -26,13 +26,13 @@ describe('accounts Store', () => {
   }
 
   beforeEach(() => {
-    const pinia = createPinia().use(accountsStore)
+    const pinia = createPinia().use(useAccountsStore)
     app.use(pinia)
     setActivePinia(createPinia())
   })
 
   test('test success List', async () => {
-    const accountStore = accountsStore(mokeConnector())
+    const accountStore = useAccountsStore(mokeConnector())
     const store = accountStore()
     await store.load()
     expect(store.count).toEqual(3)

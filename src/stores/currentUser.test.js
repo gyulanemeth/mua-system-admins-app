@@ -3,7 +3,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { test, beforeEach, expect, describe } from 'vitest'
 import jwt from 'jsonwebtoken'
 
-import currentUserStore from './currentUser.js'
+import useCurrentUserStore from './currentUser.js'
 import RouteError from '../errors/RouteError.js'
 
 describe('Current User Store', () => {
@@ -95,13 +95,13 @@ describe('Current User Store', () => {
   }
 
   beforeEach(() => {
-    const pinia = createPinia().use(currentUserStore)
+    const pinia = createPinia().use(useCurrentUserStore)
     app.use(pinia)
     setActivePinia(createPinia())
   })
 
   test('test success login', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     await userStore.login('user1@gmail.com', '12123password')
     const token = jwt.sign({ type: 'admin', user: { _id: '12test12', email: 'user1@gmail.com' } }, secrets)
@@ -110,7 +110,7 @@ describe('Current User Store', () => {
   })
 
   test('test success checkLogin', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
     const res = await userStore.loggedIn
@@ -118,7 +118,7 @@ describe('Current User Store', () => {
   })
 
   test('test login error invalid ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.login()
     expect(res.message).toEqual('Admin Email And Password Is Required')
@@ -128,7 +128,7 @@ describe('Current User Store', () => {
 
   test('test logOut', async () => {
     localStorage.setItem('accessToken', 'Token')
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.accessToken = 'token'
     userStore.user = { name: 'test' }
@@ -138,21 +138,21 @@ describe('Current User Store', () => {
   })
 
   test('test success send forgot Password', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendForgotPassword('user1@gmail.com')
     expect(res).toEqual('success')
   })
 
   test('test send forgot Password fail email required ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendForgotPassword()
     expect(res.message).toEqual('Email Is Required')
   })
 
   test('test success reset forgot Password', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.resetForgotPassword('forgotPasswordToken', 'newPassword', 'newPassword')
     const token = jwt.sign({ type: 'admin', user: { _id: '12test12', email: 'user1@gmail.com' } }, secrets)
@@ -162,28 +162,28 @@ describe('Current User Store', () => {
   })
 
   test('test reset forgot Password fail password is required', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.resetForgotPassword('forgotPasswordToken', 'newPassword')
     expect(res.message).toEqual('Admin Password Is Required')
   })
 
   test('test success send admin Invitation', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendInvitation('user1@gmail.com')
     expect(res).toEqual('success')
   })
 
   test('test send admin Invitation fail email required ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendInvitation()
     expect(res.message).toEqual('Email Is Required')
   })
 
   test('test success accept invitation', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.acceptInvitation('acceptInvitationToken', 'newPassword', 'newPassword')
     const token = jwt.sign({ type: 'admin', user: { _id: '12test12', email: 'user1@gmail.com' } }, secrets)
@@ -193,14 +193,14 @@ describe('Current User Store', () => {
   })
 
   test('test accept invitation fail password is required', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.acceptInvitation('acceptInvitationToken', 'newPassword')
     expect(res.message).toEqual('Admin Password Is Required')
   })
 
   test('test success refresh Access Token', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
     await userStore.refreshAccessToken()
@@ -209,14 +209,14 @@ describe('Current User Store', () => {
   })
 
   test('test refresh Access Token fail user id required', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.refreshAccessToken()
     expect(res.message).toEqual('Admin ID Is Required')
   })
 
   test('test success patchName', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12', name: 'user1' }
     const res = await userStore.patchName('user2')
@@ -225,14 +225,14 @@ describe('Current User Store', () => {
   })
 
   test('test patchName fail admin id required ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.patchName('user2')
     expect(res.message).toEqual('Admin ID Is Required')
   })
 
   test('test patchName fail admin new name required ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12', name: 'user1' }
     const res = await userStore.patchName()
@@ -240,7 +240,7 @@ describe('Current User Store', () => {
   })
 
   test('test success patchPassword', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
     const res = await userStore.patchPassword('oldPassword', 'newPassword', 'newPassword')
@@ -248,21 +248,17 @@ describe('Current User Store', () => {
   })
 
   test('test patchPassword fail admin id required ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.patchPassword('oldPassword', 'newPassword')
     expect(res.message).toEqual('Admin ID Is Required')
   })
 
   test('test patchPassword fail admin password required ', async () => {
-    const currentUser = currentUserStore(mokeConnector())
+    const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
     const res = await userStore.patchPassword('oldPassword', 'newPassword')
     expect(res.message).toEqual('Admin ID And New Password Is Required')
   })
 })
-
-// #### test success patchPassword
-// pass passwords
-// mock connector func that return {result:{success:true}}

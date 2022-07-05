@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { setActivePinia, createPinia } from 'pinia'
 import { test, beforeEach, expect, describe } from 'vitest'
 
-import adminsStore from './admins.js'
+import useAdminsStore from './admins.js'
 import RouteError from '../errors/RouteError.js'
 
 describe('admins Store', () => {
@@ -34,20 +34,20 @@ describe('admins Store', () => {
   }
 
   beforeEach(() => {
-    const pinia = createPinia().use(adminsStore)
+    const pinia = createPinia().use(useAdminsStore)
     app.use(pinia)
     setActivePinia(createPinia())
   })
 
   test('test success List', async () => {
-    const adminStore = adminsStore(mokeConnector())
+    const adminStore = useAdminsStore(mokeConnector())
     const store = adminStore()
     await store.load()
     expect(store.count).toEqual(4)
   })
 
   test('test success DeleteOne', async () => {
-    const adminStore = adminsStore(mokeConnector())
+    const adminStore = useAdminsStore(mokeConnector())
     const store = adminStore()
     await store.load()
     await store.deleteOne(store.items[0]._id)
