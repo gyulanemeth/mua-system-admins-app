@@ -8,49 +8,23 @@ import {
 import RouteError from '../errors/RouteError.js'
 
 export default function (fetch, apiUrl) {
-  const generateAdditionalHeaders = (params) => {
-    return { Authorization: 'Bearer ' + localStorage.getItem('accessToken') }
+  const generateAdditionalHeaders = () => {
+    return { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
   }
 
-  const generateAdminRoute = (params, query) => {
-    return `/v1/admins${params.id ? '/' + params.id : ''}${query ? '?' + query : ''}`
-  }
+  const generateAdminRoute = (params) => `/v1/admins${params.id ? '/' + params.id : ''}`
+  const generateTokenRoute = (params) => `/v1/admins/${params.id}/access-token`
 
-  const generateTokenRoute = (params) => {
-    return `/v1/admins/${params.id}/access-token`
-  }
+  const generateConfigRoute = () => '/v1/config'
 
-  const generateConfigRoute = () => {
-    return '/v1/config'
-  }
+  const generatePatchNameRoute = (params) => `/v1/admins/${params.id}/name`
+  const generatePatchPasswordRoute = (params) => `/v1/admins/${params.id}/password`
 
-  const generatePatchNameRoute = (params) => {
-    return `/v1/admins/${params.id}/name`
-  }
-
-  const generatePatchPasswordRoute = (params) => {
-    return `/v1/admins/${params.id}/password`
-  }
-
-  const generateLoginRoute = () => {
-    return '/v1/login'
-  }
-
-  const generateSendInvitationRoute = () => {
-    return '/v1/invitation/send'
-  }
-
-  const generateAcceptInvitationRoute = () => {
-    return '/v1/invitation/accept'
-  }
-
-  const generateSendForgotPasswordRoute = () => {
-    return '/v1/forgot-password/send'
-  }
-
-  const generateResetForgotPasswordRoute = () => {
-    return '/v1/forgot-password/reset'
-  }
+  const generateLoginRoute = () => '/v1/login'
+  const generateSendInvitationRoute = () => '/v1/invitation/send'
+  const generateAcceptInvitationRoute = () => '/v1/invitation/accept'
+  const generateSendForgotPasswordRoute = () => '/v1/forgot-password/send'
+  const generateResetForgotPasswordRoute = () => '/v1/forgot-password/reset'
 
   const getAdmin = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
   const del = createDeleteConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
@@ -70,7 +44,7 @@ export default function (fetch, apiUrl) {
   }
 
   const readOne = async function (id) {
-    if (id === undefined) {
+    if (!id) {
       throw new RouteError('Admin ID Is Required')
     }
     const res = await getAdmin(id)
@@ -78,7 +52,7 @@ export default function (fetch, apiUrl) {
   }
 
   const getAccessToken = async function (data) {
-    if (data === undefined || data.id === undefined) {
+    if (!data && !data.id) {
       throw new RouteError('Admin ID Is Required')
     }
     const res = await getToken({ id: data.id })
@@ -89,7 +63,7 @@ export default function (fetch, apiUrl) {
   }
 
   const deleteOne = async function (id) {
-    if (id === undefined) {
+    if (!id) {
       throw new RouteError('Admin ID Is Required')
     }
     const res = await del(id)
@@ -162,7 +136,7 @@ export default function (fetch, apiUrl) {
   }
 
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login }, // in testing currentUser : patchPassword backend issue
+    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login },
     invitation: { send: sendInvitation, accept },
     forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }

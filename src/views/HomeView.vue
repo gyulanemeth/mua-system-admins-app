@@ -38,7 +38,7 @@ async function searchBarHandler (filter) {
   if (filter === '') {
     store.filter = {}
   } else {
-    store.filter = { $text: { $search: `"\" ${filter} "\"` } }
+    store.filter = { $text: { $search: `"${filter}"` } }
   }
   await store.load()
   data.value = store.items
