@@ -6,7 +6,8 @@ const store = stores().currentUserStore()
 
 const menuItems = [
   { title: 'Update Password', path: '/updatePassword' },
-  { title: 'Update Name', path: '/UpdateName' }
+  { title: 'Update Name', path: '/UpdateName' },
+  { title: 'Create Account', path: '/createAccount' }
 ]
 
 </script>
