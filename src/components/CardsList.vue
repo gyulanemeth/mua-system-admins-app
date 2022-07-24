@@ -1,10 +1,13 @@
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 const props = defineProps({
   items: Array,
   btn: Object
 })
+
+const route = useRoute()
 
 const filter = ref('')
 
@@ -17,8 +20,8 @@ const filter = ref('')
 
   <v-text-field class="my-2 ml-4"
   variant="outlined"
-  label="Prepend inner"
-   prepend-icon="mdi-magnify"
+  label="Search"
+  prepend-inner-icon="mdi-magnify"
   v-model.lazy="filter"
     color="primary"
   @change="$emit('searchEvent',filter)"
@@ -27,9 +30,9 @@ const filter = ref('')
   <v-btn class="py-7 my-2 ml-4"
   variant="outlined"
   color="primary"
-  to="/invitation"
+  :to='route.name === "admins"? "/invitation" : "/createAccount"  '
   >
-  Invite Admin
+   {{route.name === "admins"? "Invite Admin" : "Create Account" }}
 </v-btn>
 </v-layout>
     <v-layout class="d-flex flex-wrap">

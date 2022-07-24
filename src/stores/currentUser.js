@@ -4,33 +4,40 @@ import jwtDecode from 'jwt-decode'
 import RouteError from '../errors/RouteError.js'
 import useSystemMessagesStore from './systemMessages.js'
 
-// this one will be a generic store representing the actual user sitting in front of any of the apps.
-// in this case it is a system-admin user
-
 export default (connectors) => {
-  // check access token in localStorage here.
-  // if there is no access token -> forward to the login page
-  // if the token is expired -> forward to the login page
+  const storage = {}
+  const storedAccessToken = localStorage.getItem('accessToken')
+   if (!storedAccessToken || Date.now() >= jwtDecode(storedAccessToken).exp * 1000) {
+  /*   if (window.location.pathname !== "/") {
+       window.location.href = "/";
+     }*/
+   }else {
+     storage.user = jwtDecode(storedAccessToken).user
+     storage.accessToken = storedAccessToken
+  /*   if (window.location.pathname === "/") {
+       window.location.pathname = "/admins";
+     }*/
+   }
+
   const currentUserStore = defineStore('currentUser', {
     state: () => ({
-      accessToken: null,
-      user: null // _id, name, email, later: profilePic
+      accessToken: storage.accessToken,
+      user: storage.user
     }),
     getters: {
-      loggedIn () {
+     loggedIn () {
         return !!this.user
       }
     },
     actions: {
-
       async login (email, password) {
         try {
           this.accessToken = await connectors.admins.login({ email, password })
           const tokenData = jwtDecode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
           this.user = await connectors.admins.readOne({ id: tokenData.user._id })
+          window.location.pathname = "/admins";
           return this.user
-          // forward to /
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -41,7 +48,7 @@ export default (connectors) => {
         localStorage.removeItem('accessToken')
         this.accessToken = null
         this.user = null
-        // forward to /
+        window.location.href = "/";
       },
 
       async  sendForgotPassword (email) {
@@ -55,7 +62,6 @@ export default (connectors) => {
       },
 
       async  resetForgotPassword (forgotPasswordToken, newPassword, newPasswordAgain) {
-        // I'm thinking about how we should handle these kind of tokens...
         try {
           this.accessToken = await connectors.forgotPassword.reset({ token: forgotPasswordToken, newPassword, newPasswordAgain })
           const tokenData = jwtDecode(this.accessToken)
@@ -78,9 +84,9 @@ export default (connectors) => {
           return e
         }
       },
-      async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain) {
+      async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain, name) {
         try {
-          this.accessToken = await connectors.invitation.accept({ token: acceptInvitationToken, newPassword, newPasswordAgain })
+          this.accessToken = await connectors.invitation.accept({ token: acceptInvitationToken, newPassword, newPasswordAgain, name })
           const tokenData = jwtDecode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
           this.user = await connectors.admins.readOne({ id: tokenData.user._id })
@@ -106,6 +112,7 @@ export default (connectors) => {
       async patchName (name) {
         try {
           if (!this.user || !this.user._id) {
+            console.log(this.user);
             throw new RouteError('Admin ID Is Required')
           }
           await connectors.admins.patchName({ id: this.user._id, name })

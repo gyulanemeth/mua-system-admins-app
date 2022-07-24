@@ -105,11 +105,14 @@ export default function (fetch, apiUrl) {
   }
 
   const accept = async function (formData) {
-    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
+    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain || !formData.name) {
       throw new RouteError('Admin Password Is Required')
     }
     localStorage.setItem('accessToken', formData.token)
-    const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
+    const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain, name: formData.name })
+    if (res.loginToken) {
+      localStorage.setItem('accessToken', res.loginToken)
+    }
     return res
   }
 
@@ -127,6 +130,9 @@ export default function (fetch, apiUrl) {
     }
     localStorage.setItem('accessToken', formData.token)
     const res = await postResetForgotPassword({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
+    if (res.loginToken) {
+      localStorage.setItem('accessToken', res.loginToken)
+    }
     return res
   }
 

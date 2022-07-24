@@ -4,10 +4,12 @@ import { useRoute, useRouter } from 'vue-router'
 
 import EmailAndNameForm from '../components/EmailAndNameForm.vue'
 import stores from '../stores/index.js'
+import alerts from '../alerts/alert.js'
 
 const route = useRoute()
 const router = useRouter()
 const store = stores().currentUserStore()
+const alert = alerts()
 
 const formData = ref()
 
@@ -25,8 +27,14 @@ async function eventHandler (data) {
   let res
   if (formData.value.text === 'Invite') {
     res = await store.sendInvitation(data)
+    if (res.success) {
+      alert.message(`message Send to your email`)
+    }
   } else if (formData.value.text === 'Reset Password') {
     res = await store.sendForgotPassword(data)
+    if (res.success) {
+      alert.message(`message Send to your email`)
+    }
   } else if (formData.value.text === 'Update Name') {
     res = await store.patchName(data)
   }

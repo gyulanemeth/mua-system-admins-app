@@ -4,8 +4,10 @@ import { useRoute } from 'vue-router'
 
 import CardList from '../components/CardsList.vue'
 import stores from '../stores/index.js'
+import alerts from '../alerts/alert.js'
 
 const route = useRoute()
+const alert = alerts()
 
 const data = ref()
 const btn = ref()
@@ -27,11 +29,16 @@ async function loadData () {
 }
 
 async function eventHandler (id) {
-  if (btn.value.text === 'Delete') {
-    store.deleteOne(id)
-  } else if (btn.value.text === 'Details') {
+  if (btn.value.text === 'Details') { // to accounts app
     console.log(id)
   }
+  if (btn.value.text === 'Delete') {
+    const confirm = await alert.confirmAlert(`do you want to Delete the record?`)
+    if (confirm.isConfirmed) {
+    store.deleteOne(id)
+  }
+}
+
 }
 
 async function searchBarHandler (filter) {
