@@ -46,6 +46,7 @@ const data = ref({})
             </v-col>
             <v-col>
               <v-btn color="primary" @click="$emit('buttonEvent',{token:route.query.token,...data})">{{props.formData.text}}</v-btn>
+                <button hidden @click.enter.prevent="$emit('buttonEvent',{token:route.query.token,...data})" />
             </v-col>
 
         </form>

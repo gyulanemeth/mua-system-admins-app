@@ -1,23 +1,27 @@
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 import jwtDecode from 'jwt-decode'
 
 import RouteError from '../errors/RouteError.js'
 import useSystemMessagesStore from './systemMessages.js'
 
 export default (connectors) => {
+  const router = useRouter()
+
   const storage = {}
+
   const storedAccessToken = localStorage.getItem('accessToken')
-   if (!storedAccessToken || Date.now() >= jwtDecode(storedAccessToken).exp * 1000) {
-  /*   if (window.location.pathname !== "/") {
-       window.location.href = "/";
-     }*/
-   }else {
-     storage.user = jwtDecode(storedAccessToken).user
-     storage.accessToken = storedAccessToken
-  /*   if (window.location.pathname === "/") {
-       window.location.pathname = "/admins";
-     }*/
-   }
+  if (!storedAccessToken || Date.now() >= jwtDecode(storedAccessToken).exp * 1000) {
+    if (window.location.pathname !== '/forgot-password/reset' && window.location.pathname !== '/invitation/accept' && window.location.pathname !== '/forgot-password' && window.location.pathname !== '/') {
+      router.push('/')
+    }
+  } else {
+    storage.user = jwtDecode(storedAccessToken).user
+    storage.accessToken = storedAccessToken
+    if (window.location.pathname === '/') {
+      router.push('/admins')
+    }
+  }
 
   const currentUserStore = defineStore('currentUser', {
     state: () => ({
@@ -25,7 +29,7 @@ export default (connectors) => {
       user: storage.user
     }),
     getters: {
-     loggedIn () {
+      loggedIn () {
         return !!this.user
       }
     },
@@ -36,8 +40,7 @@ export default (connectors) => {
           const tokenData = jwtDecode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
           this.user = await connectors.admins.readOne({ id: tokenData.user._id })
-          window.location.pathname = "/admins";
-          return this.user
+          router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -48,13 +51,14 @@ export default (connectors) => {
         localStorage.removeItem('accessToken')
         this.accessToken = null
         this.user = null
-        window.location.href = "/";
+        router.push('/')
       },
 
       async  sendForgotPassword (email) {
         try {
-          await connectors.forgotPassword.send({ email })
-          return 'success'
+          const res = await connectors.forgotPassword.send({ email })
+          router.push('/')
+          return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -67,8 +71,7 @@ export default (connectors) => {
           const tokenData = jwtDecode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
           this.user = await connectors.admins.readOne({ id: tokenData.user._id })
-          return 'success'
-          // forward to /
+          router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -78,6 +81,7 @@ export default (connectors) => {
       async sendInvitation (email) {
         try {
           const res = await connectors.invitation.send({ email })
+          router.push('/admins')
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -90,7 +94,7 @@ export default (connectors) => {
           const tokenData = jwtDecode(this.accessToken)
           this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
           this.user = await connectors.admins.readOne({ id: tokenData.user._id })
-          return 'success'
+          router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -112,12 +116,11 @@ export default (connectors) => {
       async patchName (name) {
         try {
           if (!this.user || !this.user._id) {
-            console.log(this.user);
             throw new RouteError('Admin ID Is Required')
           }
           await connectors.admins.patchName({ id: this.user._id, name })
           this.user.name = name
-          return 'success'
+          router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -130,7 +133,7 @@ export default (connectors) => {
             throw new RouteError('Admin ID Is Required')
           }
           await connectors.admins.patchPassword({ id: this.user._id, oldPassword, newPassword, newPasswordAgain })
-          return 'success'
+          router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e

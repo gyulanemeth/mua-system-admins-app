@@ -1,20 +1,15 @@
 <script setup >
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 import stores from '../stores/index.js'
 
-const router = useRouter()
 const userStore = stores().currentUserStore()
 
 const email = ref('')
 const password = ref('')
 
 async function submit () {
-  const res = await userStore.login(email.value, password.value)
-  if (res.email === email.value) {
-    router.push('/')
-  }
+  await userStore.login(email.value, password.value)
 }
 
 </script>
@@ -47,6 +42,7 @@ async function submit () {
             <v-col>
                 <v-list-item class="d-flex flex-row mb-1 ml-4" title=" Forget password? Reset Password" to="/forgot-password"></v-list-item>
               <v-btn color="primary" @click="submit" >Sign In</v-btn>
+              <button hidden @click.enter.prevent="submit" />
             </v-col>
           </v-row>
         </form>

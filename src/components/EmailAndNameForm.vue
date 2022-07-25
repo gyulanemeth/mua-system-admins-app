@@ -25,6 +25,7 @@ const data = ref('')
                 v-model="data"
                 required></v-text-field>
               <v-btn  class="mx-10 my-1 py-6" color="primary" @click="$emit('buttonEvent',data)">{{props.formData.text}}</v-btn>
+                <button hidden @click.enter.prevent="$emit('buttonEvent',data)" />
             </v-row >
             </v-col>
         </form>

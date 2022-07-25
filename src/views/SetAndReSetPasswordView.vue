@@ -1,13 +1,12 @@
 <script setup>
 import { watchEffect, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import SetAndReSetPassword from '../components/SetAndReSetPassword.vue'
 import stores from '../stores/index.js'
 
 const store = stores().currentUserStore()
 const route = useRoute()
-const router = useRouter()
 
 const formData = ref()
 
@@ -20,14 +19,10 @@ async function loadData () {
 }
 
 async function eventHandler (data) {
-  let res
   if (formData.value.text === 'Reset Password') {
-    res = await store.resetForgotPassword(data.token, data.newPassword, data.newPasswordAgain)
+    await store.resetForgotPassword(data.token, data.newPassword, data.newPasswordAgain)
   } else if (formData.value.text === 'Set Password') {
-    res = await store.acceptInvitation(data.token, data.newPassword, data.newPasswordAgain, data.name)
-  }
-  if (res === 'success') {
-    router.push('/')
+    await store.acceptInvitation(data.token, data.newPassword, data.newPasswordAgain, data.name)
   }
 }
 

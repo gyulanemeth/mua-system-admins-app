@@ -113,7 +113,7 @@ export default function (fetch, apiUrl) {
     if (res.loginToken) {
       localStorage.setItem('accessToken', res.loginToken)
     }
-    return res
+    return res.loginToken
   }
 
   const sendForgotPassword = async function (data) {
@@ -133,7 +133,7 @@ export default function (fetch, apiUrl) {
     if (res.loginToken) {
       localStorage.setItem('accessToken', res.loginToken)
     }
-    return res
+    return res.loginToken
   }
 
   const getConfig = async function () {

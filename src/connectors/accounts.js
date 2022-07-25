@@ -10,7 +10,7 @@ export default function (fetch, apiUrl) {
   const generateAccountsRoute = () => '/v1/accounts'
 
   const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
-  const createAccount = createPostConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders) // admin
+  const createAccount = createPostConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 
   const list = async function (params, query) {
     const res = await getAccounts({}, query)

@@ -12,11 +12,12 @@ export default function () {
     })
   }
 
-  async function message (msg){
+  async function message (msg) {
     return Swal.fire(
       msg,
       '',
       'success'
-    )}
+    )
+  }
   return { confirmAlert, message }
 }

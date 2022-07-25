@@ -33,12 +33,11 @@ async function eventHandler (id) {
     console.log(id)
   }
   if (btn.value.text === 'Delete') {
-    const confirm = await alert.confirmAlert(`do you want to Delete the record?`)
+    const confirm = await alert.confirmAlert('do you want to Delete the record?')
     if (confirm.isConfirmed) {
-    store.deleteOne(id)
+      store.deleteOne(id)
+    }
   }
-}
-
 }
 
 async function searchBarHandler (filter) {
