@@ -77,8 +77,8 @@ export default (connectors) => {
 
       async sendInvitation (email) {
         try {
-          await connectors.invitation.send({ email })
-          return 'success'
+          const res = await connectors.invitation.send({ email })
+          return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e

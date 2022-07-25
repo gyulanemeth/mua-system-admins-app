@@ -27,19 +27,17 @@ async function eventHandler (data) {
   let res
   if (formData.value.text === 'Invite') {
     res = await store.sendInvitation(data)
+    console.log(res);
     if (res.success) {
-      alert.message(`message Send to your email`)
+      await alert.message(`message Send to your email`)
     }
   } else if (formData.value.text === 'Reset Password') {
     res = await store.sendForgotPassword(data)
     if (res.success) {
-      alert.message(`message Send to your email`)
+      await alert.message(`message Send to your email`)
     }
   } else if (formData.value.text === 'Update Name') {
     res = await store.patchName(data)
-  }
-  if (res === 'success') {
-    router.push('/')
   }
 }
 
