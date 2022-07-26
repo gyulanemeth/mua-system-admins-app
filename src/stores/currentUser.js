@@ -6,7 +6,7 @@ import RouteError from '../errors/RouteError.js'
 import useSystemMessagesStore from './systemMessages.js'
 
 export default (connectors) => {
-  const router = useRouter()
+  const router = useRouter() || [] // [] for testing
 
   const storage = {}
 

@@ -15,6 +15,14 @@ describe('test admin connectors', () => {
       delete this.data[key]
     }
   }
+
+  global.window = {
+    config: {
+      adminApiBaseUrl: 'http://admins-api.emailfox.link',
+      accountsApiBaseUrl: 'http://accounts-api.emailfox.link'
+    }
+  }
+
   const apiUrl = 'https:/mua/accounts'
 
   test('test list accounts', async () => {

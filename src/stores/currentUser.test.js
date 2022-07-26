@@ -19,6 +19,15 @@ describe('Current User Store', () => {
       delete this.data[key]
     }
   }
+  global.window = {
+    config: {
+      adminApiBaseUrl: 'http://admins-api.emailfox.link',
+      accountsApiBaseUrl: 'http://accounts-api.emailfox.link'
+    },
+    location: {
+      patchName: ''
+    }
+  }
 
   const app = createApp({})
   const secrets = 'verylongsecret1'
@@ -122,12 +131,13 @@ describe('Current User Store', () => {
     const userStore = currentUser()
     const res = await userStore.login()
     expect(res.message).toEqual('Admin Email And Password Is Required')
-    expect(userStore.user).toEqual(null)
-    expect(userStore.accessToken).toEqual(null)
+    expect(userStore.user).toEqual(undefined)
+    expect(userStore.accessToken).toEqual(undefined)
   })
 
   test('test logOut', async () => {
-    localStorage.setItem('accessToken', 'Token')
+    const token = jwt.sign({ type: 'token', data: 'token' }, secrets)
+    localStorage.setItem('accessToken', token)
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.accessToken = 'token'
@@ -141,7 +151,7 @@ describe('Current User Store', () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendForgotPassword('user1@gmail.com')
-    expect(res).toEqual('success')
+    expect(res.success).toEqual(true)
   })
 
   test('test send forgot Password fail email required ', async () => {
@@ -154,9 +164,8 @@ describe('Current User Store', () => {
   test('test success reset forgot Password', async () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
-    const res = await userStore.resetForgotPassword('forgotPasswordToken', 'newPassword', 'newPassword')
+    await userStore.resetForgotPassword('forgotPasswordToken', 'newPassword', 'newPassword')
     const token = jwt.sign({ type: 'admin', user: { _id: '12test12', email: 'user1@gmail.com' } }, secrets)
-    expect(res).toEqual('success')
     expect(userStore.user).toEqual({ name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
     expect(userStore.accessToken).toEqual(token)
   })
@@ -172,7 +181,7 @@ describe('Current User Store', () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendInvitation('user1@gmail.com')
-    expect(res).toEqual('success')
+    expect(res.success).toEqual(true)
   })
 
   test('test send admin Invitation fail email required ', async () => {
@@ -185,9 +194,8 @@ describe('Current User Store', () => {
   test('test success accept invitation', async () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
-    const res = await userStore.acceptInvitation('acceptInvitationToken', 'newPassword', 'newPassword')
+    await userStore.acceptInvitation('acceptInvitationToken', 'newPassword', 'newPassword')
     const token = jwt.sign({ type: 'admin', user: { _id: '12test12', email: 'user1@gmail.com' } }, secrets)
-    expect(res).toEqual('success')
     expect(userStore.user).toEqual({ name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
     expect(userStore.accessToken).toEqual(token)
   })
@@ -219,8 +227,7 @@ describe('Current User Store', () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12', name: 'user1' }
-    const res = await userStore.patchName('user2')
-    expect(res).toEqual('success')
+    await userStore.patchName('user2')
     expect(userStore.user.name).toEqual('user2')
   })
 
@@ -244,7 +251,7 @@ describe('Current User Store', () => {
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
     const res = await userStore.patchPassword('oldPassword', 'newPassword', 'newPassword')
-    expect(res).toEqual('success')
+    expect(res).toEqual(undefined)
   })
 
   test('test patchPassword fail admin id required ', async () => {
