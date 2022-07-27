@@ -36,10 +36,10 @@ export default (connectors) => {
     actions: {
       async login (email, password) {
         try {
-          this.accessToken = await connectors.admins.login({ email, password })
-          const tokenData = jwtDecode(this.accessToken)
-          this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
-          this.user = await connectors.admins.readOne({ id: tokenData.user._id })
+          const loginToken = await connectors.admins.login({ email, password })
+          const loginTokenData = jwtDecode(loginToken)
+          this.accessToken = await connectors.admins.getAccessToken({ id: loginTokenData.user._id })
+          this.user = await connectors.admins.readOne({ id: loginTokenData.user._id })
           router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -49,6 +49,7 @@ export default (connectors) => {
 
       logout () {
         localStorage.removeItem('accessToken')
+        localStorage.removeItem('loginToken')
         this.accessToken = null
         this.user = null
         router.push('/')
@@ -67,10 +68,10 @@ export default (connectors) => {
 
       async  resetForgotPassword (forgotPasswordToken, newPassword, newPasswordAgain) {
         try {
-          this.accessToken = await connectors.forgotPassword.reset({ token: forgotPasswordToken, newPassword, newPasswordAgain })
-          const tokenData = jwtDecode(this.accessToken)
-          this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
-          this.user = await connectors.admins.readOne({ id: tokenData.user._id })
+          const resetPasswordToken = await connectors.forgotPassword.reset({ token: forgotPasswordToken, newPassword, newPasswordAgain })
+          const resetPasswordTokenData = jwtDecode(resetPasswordToken)
+          this.accessToken = await connectors.admins.getAccessToken({ id: resetPasswordTokenData.user._id })
+          this.user = await connectors.admins.readOne({ id: resetPasswordTokenData.user._id })
           router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -90,10 +91,10 @@ export default (connectors) => {
       },
       async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain, name) {
         try {
-          this.accessToken = await connectors.invitation.accept({ token: acceptInvitationToken, newPassword, newPasswordAgain, name })
-          const tokenData = jwtDecode(this.accessToken)
-          this.accessToken = await connectors.admins.getAccessToken({ id: tokenData.user._id })
-          this.user = await connectors.admins.readOne({ id: tokenData.user._id })
+          const invitationToken = await connectors.invitation.accept({ token: acceptInvitationToken, newPassword, newPasswordAgain, name })
+          const invitationTokenData = jwtDecode(invitationToken)
+          this.accessToken = await connectors.admins.getAccessToken({ id: invitationTokenData.user._id })
+          this.user = await connectors.admins.readOne({ id: invitationTokenData.user._id })
           router.push('/admins')
         } catch (e) {
           useSystemMessagesStore().addError(e)

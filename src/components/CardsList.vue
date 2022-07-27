@@ -30,7 +30,7 @@ const filter = ref('')
   <v-btn class="py-7 my-2 ml-4"
   variant="outlined"
   color="primary"
-  :to='route.name === "admins"? "/invitation" : "/createAccount"  '
+  :to='route.name === "admins"? "/invitation" : "/create-account"  '
   >
    {{route.name === "admins"? "Invite Admin" : "Create Account" }}
 </v-btn>

@@ -17,7 +17,7 @@ async function loadData () {
     formData.value = { inputType: 'Email', inputText: 'Email', text: 'Invite' }
   } else if (route.name === 'forgot-password') {
     formData.value = { inputType: 'Email', inputText: 'Email', text: 'Reset Password' }
-  } else if (route.name === 'updateName') {
+  } else if (route.name === 'update-name') {
     formData.value = { inputType: 'text', inputText: 'New Name', text: 'Update Name' }
   }
 }
@@ -27,12 +27,12 @@ async function eventHandler (data) {
   if (formData.value.text === 'Invite') {
     res = await store.sendInvitation(data)
     if (res.success) {
-      await alert.message('message Send to your email')
+      await alert.message('Message sent to Admin email')
     }
   } else if (formData.value.text === 'Reset Password') {
     res = await store.sendForgotPassword(data)
     if (res.success) {
-      await alert.message('message Send to your email')
+      await alert.message('Message sent to your email')
     }
   } else if (formData.value.text === 'Update Name') {
     await store.patchName(data)

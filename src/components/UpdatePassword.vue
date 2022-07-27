@@ -56,9 +56,7 @@ async function submit () {
             <v-col>
               <v-btn color="primary" @click="submit">Set Password</v-btn>
               <button hidden @click.enter.prevent="submit" />
-
             </v-col>
-
         </form>
       </v-col>
     </v-row >
