@@ -21,17 +21,17 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/updateName',
+      path: '/update-name',
       name: 'update-name',
       component: EmailAndNameFormView
     },
     {
-      path: '/updatePassword',
+      path: '/update-password',
       name: 'update-password',
       component: UpdatePassword
     },
     {
-      path: '/createAccount',
+      path: '/create-account',
       name: 'create-account',
       component: CreateAccountView
     },
