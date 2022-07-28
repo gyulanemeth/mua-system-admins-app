@@ -15,6 +15,12 @@ describe('test admin connectors', () => {
       delete this.data[key]
     }
   }
+  global.window = {
+    config: {
+      adminApiBaseUrl: 'http://admins-api.emailfox.link',
+      accountsApiBaseUrl: 'http://accounts-api.emailfox.link'
+    }
+  }
 
   const apiUrl = 'https:/mua/admin'
   beforeEach(async () => {
@@ -318,22 +324,22 @@ describe('test admin connectors', () => {
     fetch.mockResolvedValue({
       ok: true,
       headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { loginToken: 'Token' } })
+      json: () => Promise.resolve({ result: { loginToken: 'token' } })
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await admin(fetch, apiUrl).invitation.accept({ token: 'token', newPassword: 'newPassword', newPasswordAgain: 'newPassword' })
+    const res = await admin(fetch, apiUrl).invitation.accept({ token: 'token', newPassword: 'newPassword', newPasswordAgain: 'newPassword', name: 'newName' })
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/invitation/accept',
       {
         method: 'POST',
-        body: JSON.stringify({ newPassword: 'newPassword', newPasswordAgain: 'newPassword' }),
+        body: JSON.stringify({ newPassword: 'newPassword', newPasswordAgain: 'newPassword', name: 'newName' }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
         }
       })
-    expect(res).toEqual({ loginToken: 'Token' })
+    expect(res).toEqual('token')
   })
 
   test('test accept invitation without password admin', async () => {
@@ -383,7 +389,7 @@ describe('test admin connectors', () => {
     fetch.mockResolvedValue({
       ok: true,
       headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: { loginToken: 'Token' } })
+      json: () => Promise.resolve({ result: { loginToken: 'token' } })
     })
 
     const spy = vi.spyOn(fetch, 'impl')
@@ -398,7 +404,7 @@ describe('test admin connectors', () => {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
         }
       })
-    expect(res).toEqual({ loginToken: 'Token' })
+    expect(res).toEqual('token')
   })
 
   test('test forgotPassword reset with undefined input admin', async () => {

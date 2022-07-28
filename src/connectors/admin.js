@@ -28,15 +28,15 @@ export default function (fetch, apiUrl) {
 
   const getAdmin = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
   const del = createDeleteConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
-  const getToken = createGetConnector(fetch, apiUrl, generateTokenRoute, generateAdditionalHeaders)
+  const getToken = createGetConnector(fetch, apiUrl, generateTokenRoute,  () => ({ Authorization: `Bearer ${localStorage.getItem('loginToken')}`}))
   const getAdminConfig = createGetConnector(fetch, apiUrl, generateConfigRoute)
   const updateName = createPatchConnector(fetch, apiUrl, generatePatchNameRoute, generateAdditionalHeaders)
   const updatePassword = createPatchConnector(fetch, apiUrl, generatePatchPasswordRoute, generateAdditionalHeaders)
   const postLogin = createPostConnector(fetch, apiUrl, generateLoginRoute)
   const postSendInvitation = createPostConnector(fetch, apiUrl, generateSendInvitationRoute, generateAdditionalHeaders)
-  const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, generateAdditionalHeaders)
+  const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('invitationToken')}`}))
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
-  const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, generateAdditionalHeaders)
+  const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('resetPasswordToken')}`}))
 
   const list = async function (param, query) {
     const res = await getAdmin({}, query)
@@ -91,7 +91,7 @@ export default function (fetch, apiUrl) {
     }
     const res = await postLogin({}, { email: formData.email, password: formData.password })
     if (res.loginToken) {
-      localStorage.setItem('accessToken', res.loginToken)
+      localStorage.setItem('loginToken', res.loginToken)
     }
     return res.loginToken
   }
@@ -105,12 +105,16 @@ export default function (fetch, apiUrl) {
   }
 
   const accept = async function (formData) {
-    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
+    if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain || !formData.name) {
       throw new RouteError('Admin Password Is Required')
     }
-    localStorage.setItem('accessToken', formData.token)
-    const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
-    return res
+    localStorage.setItem('invitationToken', formData.token)
+    const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain, name: formData.name })
+    if (res.loginToken) {
+      localStorage.setItem('loginToken', res.loginToken)
+        localStorage.removeItem('invitationToken');
+    }
+    return res.loginToken
   }
 
   const sendForgotPassword = async function (data) {
@@ -125,9 +129,13 @@ export default function (fetch, apiUrl) {
     if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
       throw new RouteError('Admin Password Is Required')
     }
-    localStorage.setItem('accessToken', formData.token)
+    localStorage.setItem('resetPasswordToken', formData.token)
     const res = await postResetForgotPassword({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
-    return res
+    if (res.loginToken) {
+      localStorage.setItem('loginToken', res.loginToken)
+      localStorage.removeItem('resetPasswordToken');
+    }
+    return res.loginToken
   }
 
   const getConfig = async function () {

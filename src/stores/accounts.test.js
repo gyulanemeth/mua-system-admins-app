@@ -2,9 +2,18 @@ import { createApp } from 'vue'
 import { setActivePinia, createPinia } from 'pinia'
 import { test, beforeEach, expect, describe } from 'vitest'
 
+import RouteError from '../errors/RouteError.js'
+
 import useAccountsStore from './accounts.js'
 
 describe('accounts Store', () => {
+  global.window = {
+    config: {
+      adminApiBaseUrl: 'http://admins-api.emailfox.link',
+      accountsApiBaseUrl: 'http://accounts-api.emailfox.link'
+    }
+  }
+
   const app = createApp({})
 
   const mokeConnector = () => {
@@ -19,9 +28,15 @@ describe('accounts Store', () => {
         count: 3
       }
     }
+    const mockCreateOne = async function (formData) {
+      if (!formData || !formData.name || !formData.urlFriendlyName) {
+        throw new RouteError('FormData Name And UrlFriendlyName Is Required')
+      }
+      return { success: true }
+    }
 
     return {
-      account: { list: mockList }
+      account: { list: mockList, createOne: mockCreateOne }
     }
   }
 
@@ -36,5 +51,19 @@ describe('accounts Store', () => {
     const store = accountStore()
     await store.load()
     expect(store.count).toEqual(3)
+  })
+
+  test('test success createOne', async () => {
+    const accountStore = useAccountsStore(mokeConnector())
+    const store = accountStore()
+    const res = await store.createOne({ name: 'testName', urlFriendlyName: 'testurlFriendlyName' })
+    expect(res).toEqual('success')
+  })
+
+  test('test createOne', async () => {
+    const accountStore = useAccountsStore(mokeConnector())
+    const store = accountStore()
+    const res = await store.createOne()
+    expect(res.message).toEqual('FormData Name And UrlFriendlyName Is Required')
   })
 })

@@ -5,8 +5,9 @@ import stores from '../stores/index.js'
 const store = stores().currentUserStore()
 
 const menuItems = [
-  { title: 'Update Password', path: '/updatePassword' },
-  { title: 'Update Name', path: '/UpdateName' }
+  { title: 'Update Password', path: '/update-password' },
+  { title: 'Update Name', path: '/Update-name' },
+  { title: 'Create Account', path: '/create-account' }
 ]
 
 </script>

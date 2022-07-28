@@ -1,13 +1,14 @@
 <script setup>
 import { watchEffect, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import EmailAndNameForm from '../components/EmailAndNameForm.vue'
 import stores from '../stores/index.js'
+import alerts from '../alerts/alert.js'
 
 const route = useRoute()
-const router = useRouter()
 const store = stores().currentUserStore()
+const alert = alerts()
 
 const formData = ref()
 
@@ -16,7 +17,7 @@ async function loadData () {
     formData.value = { inputType: 'Email', inputText: 'Email', text: 'Invite' }
   } else if (route.name === 'forgot-password') {
     formData.value = { inputType: 'Email', inputText: 'Email', text: 'Reset Password' }
-  } else if (route.name === 'updateName') {
+  } else if (route.name === 'update-name') {
     formData.value = { inputType: 'text', inputText: 'New Name', text: 'Update Name' }
   }
 }
@@ -25,13 +26,16 @@ async function eventHandler (data) {
   let res
   if (formData.value.text === 'Invite') {
     res = await store.sendInvitation(data)
+    if (res.success) {
+      await alert.message('Message sent to Admin email')
+    }
   } else if (formData.value.text === 'Reset Password') {
     res = await store.sendForgotPassword(data)
+    if (res.success) {
+      await alert.message('Message sent to your email')
+    }
   } else if (formData.value.text === 'Update Name') {
-    res = await store.patchName(data)
-  }
-  if (res === 'success') {
-    router.push('/')
+    await store.patchName(data)
   }
 }
 

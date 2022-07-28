@@ -7,7 +7,7 @@
         permanent
       >
         <v-list >
-          <v-list-item prepend-icon="mdi-account-group" title="Admins List" to="/" ></v-list-item>
+          <v-list-item prepend-icon="mdi-account-group" title="Admins List" to="/admins" ></v-list-item>
           <v-list-item prepend-icon="mdi-file-document" title="Accounts List" to="/accounts"></v-list-item>
         </v-list>
       </v-navigation-drawer>

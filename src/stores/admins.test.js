@@ -6,6 +6,13 @@ import useAdminsStore from './admins.js'
 import RouteError from '../errors/RouteError.js'
 
 describe('admins Store', () => {
+  global.window = {
+    config: {
+      adminApiBaseUrl: 'http://admins-api.emailfox.link',
+      accountsApiBaseUrl: 'http://accounts-api.emailfox.link'
+    }
+  }
+
   const app = createApp({})
 
   const mokeConnector = () => {

@@ -5,12 +5,13 @@ import EmailAndNameFormView from '../views/EmailAndNameFormView.vue'
 import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
 import UpdatePassword from '../components/UpdatePassword.vue'
 import AdminLogin from '../components/AdminLogin.vue'
+import CreateAccountView from '../views/CreateAccountView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/admins',
       name: 'admins',
       component: HomeView
     },
@@ -20,23 +21,27 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/updateName',
-      name: 'updateName',
+      path: '/update-name',
+      name: 'update-name',
       component: EmailAndNameFormView
     },
     {
-      path: '/updatePassword',
-      name: 'updatePassword',
+      path: '/update-password',
+      name: 'update-password',
       component: UpdatePassword
     },
-
+    {
+      path: '/create-account',
+      name: 'create-account',
+      component: CreateAccountView
+    },
     {
       path: '/me',
       name: 'me',
       component: HomeView
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: AdminLogin
     },
@@ -64,14 +69,6 @@ const router = createRouter({
       path: '/admins/:id',
       name: 'admin',
       component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
     }
   ]
 })
