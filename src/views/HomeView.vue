@@ -30,7 +30,8 @@ async function loadData () {
 
 async function eventHandler (id) {
   if (btn.value.text === 'Details') { // to accounts app
-    console.log(id)
+    const getToken = localStorage.getItem('accessToken')
+    window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${id}`
   }
   if (btn.value.text === 'Delete') {
     const confirm = await alert.confirmAlert('do you want to Delete the record?')

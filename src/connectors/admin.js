@@ -28,15 +28,15 @@ export default function (fetch, apiUrl) {
 
   const getAdmin = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
   const del = createDeleteConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
-  const getToken = createGetConnector(fetch, apiUrl, generateTokenRoute,  () => ({ Authorization: `Bearer ${localStorage.getItem('loginToken')}`}))
+  const getToken = createGetConnector(fetch, apiUrl, generateTokenRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('loginToken')}` }))
   const getAdminConfig = createGetConnector(fetch, apiUrl, generateConfigRoute)
   const updateName = createPatchConnector(fetch, apiUrl, generatePatchNameRoute, generateAdditionalHeaders)
   const updatePassword = createPatchConnector(fetch, apiUrl, generatePatchPasswordRoute, generateAdditionalHeaders)
   const postLogin = createPostConnector(fetch, apiUrl, generateLoginRoute)
   const postSendInvitation = createPostConnector(fetch, apiUrl, generateSendInvitationRoute, generateAdditionalHeaders)
-  const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('invitationToken')}`}))
+  const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('invitationToken')}` }))
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
-  const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('resetPasswordToken')}`}))
+  const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('resetPasswordToken')}` }))
 
   const list = async function (param, query) {
     const res = await getAdmin({}, query)
@@ -112,7 +112,7 @@ export default function (fetch, apiUrl) {
     const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain, name: formData.name })
     if (res.loginToken) {
       localStorage.setItem('loginToken', res.loginToken)
-        localStorage.removeItem('invitationToken');
+      localStorage.removeItem('invitationToken')
     }
     return res.loginToken
   }
@@ -133,7 +133,7 @@ export default function (fetch, apiUrl) {
     const res = await postResetForgotPassword({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     if (res.loginToken) {
       localStorage.setItem('loginToken', res.loginToken)
-      localStorage.removeItem('resetPasswordToken');
+      localStorage.removeItem('resetPasswordToken')
     }
     return res.loginToken
   }

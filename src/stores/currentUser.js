@@ -139,7 +139,20 @@ export default (connectors) => {
           useSystemMessagesStore().addError(e)
           return e
         }
+      },
+      async readOne () {
+        try {
+          if (!this.user || !this.user._id) {
+            throw new RouteError('Admin ID Is Required')
+          }
+          this.user = await connectors.admins.readOne({ id: this.user._id })
+          return this.user
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
       }
+
     }
   })
 
