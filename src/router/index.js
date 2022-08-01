@@ -6,6 +6,7 @@ import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
 import UpdatePassword from '../components/UpdatePassword.vue'
 import AdminLogin from '../components/AdminLogin.vue'
 import CreateAccountView from '../views/CreateAccountView.vue'
+import MeView from '../views/MeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       component: EmailAndNameFormView
     },
     {
+      path: '/me',
+      name: 'me',
+      component: MeView
+    },
+    {
       path: '/update-password',
       name: 'update-password',
       component: UpdatePassword
@@ -34,11 +40,6 @@ const router = createRouter({
       path: '/create-account',
       name: 'create-account',
       component: CreateAccountView
-    },
-    {
-      path: '/me',
-      name: 'me',
-      component: HomeView
     },
     {
       path: '/',
