@@ -19,6 +19,8 @@ export default function (fetch, apiUrl) {
 
   const generatePatchNameRoute = (params) => `/v1/admins/${params.id}/name`
   const generatePatchPasswordRoute = (params) => `/v1/admins/${params.id}/password`
+  const generatePatchEmailRoute = (params) => `/v1/admins/${params.id}/email`
+  const generatePatchConfirmEmailRoute = (params) => `/v1/admins/${params.id}/email-confirm`
 
   const generateLoginRoute = () => '/v1/login'
   const generateSendInvitationRoute = () => '/v1/invitation/send'
@@ -37,6 +39,8 @@ export default function (fetch, apiUrl) {
   const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('invitationToken')}` }))
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('resetPasswordToken')}` }))
+  const updateEmail = createPatchConnector(fetch, apiUrl, generatePatchEmailRoute, generateAdditionalHeaders)
+  const confirmEmailUpdate = createPatchConnector(fetch, apiUrl, generatePatchConfirmEmailRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('verifyEmailToken')}` }))
 
   const list = async function (param, query) {
     const res = await getAdmin({}, query)
@@ -143,8 +147,26 @@ export default function (fetch, apiUrl) {
     return res
   }
 
+  const patchEmail = async function (formData) {
+    if (!formData || !formData.id || !formData.newEmail) {
+      throw new RouteError('Admin ID And New Email Is Required')
+    }
+    const res = await updateEmail({ id: formData.id }, { newEmail: formData.newEmail })
+    return res
+  }
+
+  const patchEmailConfirm = async function (formData) {
+    if (!formData || !formData.id || !formData.token) {
+      throw new RouteError('Admin ID and token Is Required')
+    }
+    localStorage.setItem('verifyEmailToken', formData.token)
+    const res = await confirmEmailUpdate({ id: formData.id })
+    localStorage.removeItem('verifyEmailToken')
+    return res
+  }
+
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login },
+    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login, patchEmail, patchEmailConfirm },
     invitation: { send: sendInvitation, accept },
     forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }

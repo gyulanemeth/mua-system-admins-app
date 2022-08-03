@@ -121,6 +121,8 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { accessToken: 'Token' } })
     })
 
+    localStorage.setItem('loginToken', 'Token')
+
     const spy = vi.spyOn(fetch, 'impl')
     const res = await admin(fetch, apiUrl).admins.getAccessToken({ id: '123' })
 
@@ -336,7 +338,7 @@ describe('test admin connectors', () => {
         body: JSON.stringify({ newPassword: 'newPassword', newPasswordAgain: 'newPassword', name: 'newName' }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+          Authorization: 'Bearer ' + localStorage.getItem('loginToken')
         }
       })
     expect(res).toEqual('token')
@@ -401,7 +403,7 @@ describe('test admin connectors', () => {
         body: JSON.stringify({ newPassword: 'newPassword', newPasswordAgain: 'newPassword' }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+          Authorization: 'Bearer ' + localStorage.getItem('loginToken')
         }
       })
     expect(res).toEqual('token')
@@ -435,5 +437,74 @@ describe('test admin connectors', () => {
         headers: { 'Content-Type': 'application/json' }
       })
     expect(res).toEqual({ accountsApiUrl: 'accountsApiUrl', accountsAppUrl: 'accountsAppUrl', appUrl: 'appUrl' })
+  })
+
+  test('test success patchEmail ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.patchEmail({ id: '123', newEmail: 'newEmail@gmail.com' })
+
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/123/email',
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ newEmail: 'newEmail@gmail.com' }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
+  test('test patchEmail with undefined input admin', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    await expect(admin(fetch, apiUrl).admins.patchEmail({})).rejects.toThrowError('Admin ID And New Email Is Required')
+  })
+
+  test('test success patchEmailConfirm ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.patchEmailConfirm({ id: '123', token: 'token' })
+
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/123/email-confirm',
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + 'token'
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
+  test('test patchEmailConfirm with undefined input admin', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    await expect(admin(fetch, apiUrl).admins.patchEmailConfirm({})).rejects.toThrowError('Admin ID and token Is Required')
   })
 })
