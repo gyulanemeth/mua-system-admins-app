@@ -27,6 +27,16 @@ const router = createRouter({
       component: EmailAndNameFormView
     },
     {
+      path: '/update-email',
+      name: 'update-email',
+      component: EmailAndNameFormView
+    },
+    {
+      path: '/verify-email',
+      name: 'verify-email',
+      component: MeView
+    },
+    {
       path: '/me',
       name: 'me',
       component: MeView

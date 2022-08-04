@@ -12,7 +12,7 @@ export default (connectors) => {
 
   const storedAccessToken = localStorage.getItem('accessToken')
   if (!storedAccessToken || Date.now() >= jwtDecode(storedAccessToken).exp * 1000) {
-    if (window.location.pathname !== '/forgot-password/reset' && window.location.pathname !== '/invitation/accept' && window.location.pathname !== '/forgot-password' && window.location.pathname !== '/') {
+    if (window.location.pathname !== '/forgot-password/reset' && window.location.pathname !== '/invitation/accept' && window.location.pathname !== '/forgot-password' && window.location.pathname !== '/' && window.location.pathname !== '/verify-email') {
       router.push('/')
     }
   } else {
@@ -135,6 +135,33 @@ export default (connectors) => {
           }
           await connectors.admins.patchPassword({ id: this.user._id, oldPassword, newPassword, newPasswordAgain })
           router.push('/admins')
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
+      },
+      async patchEmail (newEmail) {
+        try {
+          if (!this.user || !this.user._id) {
+            throw new RouteError('Admin ID Is Required')
+          }
+          const res = await connectors.admins.patchEmail({ id: this.user._id, newEmail })
+          router.push('/admins')
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
+      },
+      async patchEmailConfirm (token) {
+        try {
+          const tokenData = jwtDecode(token)
+          if (!tokenData || !tokenData.user || !tokenData.user._id) {
+            throw new RouteError('Valid Token Is Required')
+          }
+          const res = await connectors.admins.patchEmailConfirm({ id: tokenData.user._id, token })
+          router.push('/')
+          return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e

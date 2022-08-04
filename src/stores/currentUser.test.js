@@ -25,7 +25,7 @@ describe('Current User Store', () => {
       accountsApiBaseUrl: 'http://accounts-api.emailfox.link'
     },
     location: {
-      patchName: ''
+      pathname: '/'
     }
   }
 
@@ -95,9 +95,21 @@ describe('Current User Store', () => {
       }
       return 'success'
     }
+    const mockPatchEmail = async function (formData) {
+      if (!formData || !formData.id || !formData.newEmail) {
+        throw new RouteError('Admin ID And New Email Is Required')
+      }
+      return 'success'
+    }
+    const mockPatchEmailConfirm = async function (formData) {
+      if (!formData || !formData.id || !formData.token) {
+        throw new RouteError('Admin ID and token Is Required')
+      }
+      return 'success'
+    }
 
     return {
-      admins: { login: mockLogin, getAccessToken: mockgetAccessToken, readOne: mockgetReadOne, patchName: mockPatchName, patchPassword: mockPatchPassword },
+      admins: { login: mockLogin, getAccessToken: mockgetAccessToken, readOne: mockgetReadOne, patchName: mockPatchName, patchPassword: mockPatchPassword, patchEmail: mockPatchEmail, patchEmailConfirm: mockPatchEmailConfirm },
       forgotPassword: { send: mockSendForgetPasssword, reset: mockReset },
       invitation: { send: mockSendInvitation, accept: mockAccept }
     }
@@ -267,5 +279,50 @@ describe('Current User Store', () => {
     userStore.user = { _id: '12test12' }
     const res = await userStore.patchPassword('oldPassword', 'newPassword')
     expect(res.message).toEqual('Admin ID And New Password Is Required')
+  })
+
+  test('test success patchEmail', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    userStore.user = { _id: '12test12' }
+    const res = await userStore.patchEmail('testEmail@gmail.com')
+    expect(res).toEqual('success')
+  })
+
+  test('test patchEmail fail admin id required ', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    const res = await userStore.patchEmail('testEmail@gmail.com')
+    expect(res.message).toEqual('Admin ID Is Required')
+  })
+
+  test('test success patchEmailConfirm', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    const res = await userStore.patchEmailConfirm('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlciI6eyJfaWQiOiIxMnRlc3QxMiJ9LCJpYXQiOjE1MTYyMzkwMjJ9.IPlAzWLDie169M7SOxZIasOYlTvoZhjf0t5Agr_F5bU')
+    expect(res).toEqual('success')
+  })
+
+  test('test patchEmailConfirm fail admin id required ', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    const res = await userStore.patchEmailConfirm('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.L8i6g3PfcHlioHCCPURC9pmXT7gdJpx3kOoyAfNUwCc')
+    expect(res.message).toEqual('Valid Token Is Required')
+  })
+
+  test('test success readOne', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    userStore.user = { _id: '12test12' }
+    const res = await userStore.readOne()
+
+    expect(res).toEqual({ name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
+  })
+
+  test('test readOne fail admin id required ', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    const res = await userStore.readOne()
+    expect(res.message).toEqual('Admin ID Is Required')
   })
 })

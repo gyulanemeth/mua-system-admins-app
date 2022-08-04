@@ -25,6 +25,8 @@ const props = defineProps({
                 <v-card-actions>
                     <v-btn color="primary" to="/update-name">Update Name</v-btn>
                     <v-btn color="primary" to="/update-password">Update Password</v-btn>
+                    <v-btn color="primary" to="/update-email">Update Email</v-btn>
+
                 </v-card-actions>
             </v-card>
         </v-col>
