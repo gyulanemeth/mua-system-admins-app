@@ -204,6 +204,7 @@ describe('Current User Store', () => {
   })
 
   test('test success accept invitation', async () => {
+    window.location.pathname = '/admins'
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     await userStore.acceptInvitation('acceptInvitationToken', 'newPassword', 'newPassword')
