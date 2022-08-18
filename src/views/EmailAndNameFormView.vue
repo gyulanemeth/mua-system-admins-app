@@ -13,36 +13,18 @@ const alert = alerts()
 const formData = ref()
 
 async function loadData () {
-  if (route.name === 'invite') {
-    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Invite' }
-  } else if (route.name === 'forgot-password') {
-    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Reset Password' }
-  } else if (route.name === 'update-name') {
-    formData.value = { inputType: 'text', inputText: 'New Name', text: 'Update Name' }
-  } else if (route.name === 'update-email') {
-    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Update Email' }
+  if (route.name === 'forgot-password') {
+    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Password recovery' }
   }
 }
 
 async function eventHandler (data) {
   let res
-  if (formData.value.text === 'Invite') {
-    res = await store.sendInvitation(data)
-    if (res.success) {
-      await alert.message('Message sent to Admin email')
-    }
-  } else if (formData.value.text === 'Reset Password') {
+  if (formData.value.text === 'Password recovery') {
     res = await store.sendForgotPassword(data)
     if (res.success) {
       await alert.message('Message sent to your email')
     }
-  } else if (formData.value.text === 'Update Email') {
-    res = await store.patchEmail(data)
-    if (res.success) {
-      await alert.message('Message sent to your email')
-    }
-  } else if (formData.value.text === 'Update Name') {
-    await store.patchName(data)
   }
 }
 

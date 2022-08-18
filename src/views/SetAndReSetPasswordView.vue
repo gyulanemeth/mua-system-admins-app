@@ -11,17 +11,13 @@ const route = useRoute()
 const formData = ref()
 
 async function loadData () {
-  if (route.name === 'forgot-password-reset') {
-    formData.value = { text: 'Reset Password' }
-  } else if (route.name === 'accept-invitation') {
+  if (route.name === 'accept-invitation') {
     formData.value = { text: 'Set Password' }
   }
 }
 
 async function eventHandler (data) {
-  if (formData.value.text === 'Reset Password') {
-    await store.resetForgotPassword(data.token, data.newPassword, data.newPasswordAgain)
-  } else if (formData.value.text === 'Set Password') {
+  if (formData.value.text === 'Set Password') {
     await store.acceptInvitation(data.token, data.newPassword, data.newPasswordAgain, data.name)
   }
 }

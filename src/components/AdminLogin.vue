@@ -15,38 +15,60 @@ async function submit () {
 </script>
 
 <template>
-  <v-container>
-    <v-row class="text-center" justify="center">
-        <v-col cols="6">
-        <form>
-          <v-col>
-            <h1>Sign In</h1>
-          </v-col>
-            <v-col>
-              <v-text-field
+  <v-form class="d-flex flex-column justify-center align-center h-screen">
+    <v-card elevation="0" class="w-25">
+      <v-card-text align="center" >
+          <v-icon size="77" color="info" icon="mdi-weather-hurricane" />
+      </v-card-text>
+      <v-card-title class="justify-center py-0">
+        <h3>  Administration Panel </h3>
+      </v-card-title>
+    </v-card>
+  <v-card class="ma-2 pa-2  rounded-xl cardShadow">
+    <v-card-text align="center">
+      <h4 class="m-4 " >Sign in to your account</h4>
+              <v-text-field  hide-details
+                density="compact"
+              class="inputShadow my-5 pt-2 pl-3 rounded"
+                color="info"
+                variant="plain"
+                placeholder="your@email.com"
                 name="email"
                 label="Email"
+                v-model="email"
                 id="email"
                 type="email"
-                v-model="email"
-                required></v-text-field>
-              <v-text-field
+                required />
+              <v-text-field  hide-details
+                density="compact"
+                class="inputShadow my-5 pt-2 pl-3 rounded"
+                color="info"
+                placeholder="********"
+                variant="plain"
                 name="password"
                 label="Password"
                 id="password"
                 type="password"
                 v-model="password"
-                required></v-text-field>
-            </v-col>
-            <v-row>
-            <v-col>
-                <v-list-item class="d-flex flex-row mb-1 ml-4" title=" Forget password? Reset Password" to="/forgot-password"></v-list-item>
-              <v-btn color="primary" @click="submit" >Sign In</v-btn>
+                active
+                required />
+                <v-btn color="info" @click="submit" >Sign In</v-btn>
+                <p class="mt-4 pa-4">Forget your password? <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/forgot-password">Reset it here.</router-link></p>
               <button hidden @click.enter.prevent="submit" />
-            </v-col>
-          </v-row>
-        </form>
-      </v-col>
-    </v-row >
-  </v-container>
+            </v-card-text>
+
+            </v-card>
+        </v-form>
 </template>
+
+<style scoped>
+
+.cardShadow {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.25);
+  width: 30%;
+}
+.inputShadow {
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
+}
+
+</style>

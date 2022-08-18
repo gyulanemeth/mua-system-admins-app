@@ -3,9 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import EmailAndNameFormView from '../views/EmailAndNameFormView.vue'
 import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
-import UpdatePassword from '../components/UpdatePassword.vue'
 import AdminLogin from '../components/AdminLogin.vue'
-import CreateAccountView from '../views/CreateAccountView.vue'
 import MeView from '../views/MeView.vue'
 
 const router = createRouter({
@@ -22,16 +20,6 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/update-name',
-      name: 'update-name',
-      component: EmailAndNameFormView
-    },
-    {
-      path: '/update-email',
-      name: 'update-email',
-      component: EmailAndNameFormView
-    },
-    {
       path: '/verify-email',
       name: 'verify-email',
       component: MeView
@@ -40,16 +28,6 @@ const router = createRouter({
       path: '/me',
       name: 'me',
       component: MeView
-    },
-    {
-      path: '/update-password',
-      name: 'update-password',
-      component: UpdatePassword
-    },
-    {
-      path: '/create-account',
-      name: 'create-account',
-      component: CreateAccountView
     },
     {
       path: '/',
@@ -66,11 +44,7 @@ const router = createRouter({
       name: 'forgot-password-reset',
       component: SetAndReSetPasswordView
     },
-    {
-      path: '/invitation',
-      name: 'invite',
-      component: EmailAndNameFormView
-    },
+
     {
       path: '/invitation/accept',
       name: 'accept-invitation',

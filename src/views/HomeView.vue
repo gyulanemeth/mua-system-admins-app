@@ -19,25 +19,49 @@ async function loadData () {
     store = stores().adminsStore()
     await store.load()
     data.value = store.items
-    btn.value = { text: 'Delete', color: 'red-lighten-2' }
+    btn.value = {
+      text: 'Delete',
+      color: 'red-lighten-2',
+      header: 'Invite Administrators',
+      input: [
+        { label: 'Email address', name: 'email', placeholder: 'your@email.com', type: 'email' },
+        { label: 'Confirm e-mail address', name: 'confirmEmail', placeholder: 'your@email.com', type: 'email' }
+      ]
+    }
   } else if (route.name === 'accounts') {
     store = stores().accountStore()
     await store.load()
     data.value = store.items
-    btn.value = { text: 'Details', color: 'primary' }
+    btn.value = {
+      text: 'Details',
+      color: 'primary',
+      header: 'Create a new account!',
+      input: [
+        { label: 'Account Name', name: 'name', placeholder: 'Your Account’s Name', type: 'text' },
+        { label: 'URL Friendly Name', name: 'urlFriendlyName', placeholder: '/youraccountname', type: 'text' },
+        { label: 'Logo', name: 'pic', placeholder: 'Upload', type: 'file' }
+      ]
+    }
   }
 }
 
-async function eventHandler (id) {
-  if (btn.value.text === 'Details') { // to accounts app
+async function eventHandler (data) {
+  if (data.operation === 'Details') { // to accounts app
     const getToken = localStorage.getItem('accessToken')
-    window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${id}`
+    window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${data.id}`
   }
-  if (btn.value.text === 'Delete') {
+  if (data.operation === 'Delete') {
     const confirm = await alert.confirmAlert('do you want to Delete the record?')
     if (confirm.isConfirmed) {
-      store.deleteOne(id)
+      store.deleteOne(data.id)
     }
+  }
+  if (data.operation === 'Invite') {
+    store = stores().currentUserStore()
+    await store.sendInvitation(data.data.email)
+  }
+  if (data.operation === 'Create') {
+    await store.createOne(data.data)
   }
 }
 
@@ -57,5 +81,5 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <CardList :items="data" :btn="btn" @buttonEvent="eventHandler" @searchEvent="searchBarHandler" />
+  <CardList v-if="data" :items="data" :btn="btn" @buttonEvent="eventHandler" @searchEvent="searchBarHandler" />
 </template>
