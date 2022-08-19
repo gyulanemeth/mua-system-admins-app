@@ -35,10 +35,10 @@ function submitForm (data) {
       <v-tabs
      v-model="tab"
    >
-     <v-tab value="one" prepend-icon="mdi-account" >MY details</v-tab>
-     <v-tab value="two" prepend-icon="mdi-lock">Change password</v-tab>
-     <v-tab value="three" prepend-icon="mdi-at">Change e-mail</v-tab>
-     <v-tab value="four" prepend-icon="mdi-cog">Settings</v-tab>
+     <v-tab value="one" color="info" prepend-icon="mdi-account" >MY details</v-tab>
+     <v-tab value="two" color="info" prepend-icon="mdi-lock">Change password</v-tab>
+     <v-tab value="three" color="info" prepend-icon="mdi-at">Change e-mail</v-tab>
+     <v-tab value="four" color="info" prepend-icon="mdi-cog">Settings</v-tab>
 
    </v-tabs>
 
