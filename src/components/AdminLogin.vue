@@ -24,12 +24,12 @@ async function submit () {
         <h3>  Administration Panel </h3>
       </v-card-title>
     </v-card>
-  <v-card class="ma-2 pa-2  rounded-xl cardShadow">
+  <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
     <v-card-text align="center">
       <h4 class="m-4 " >Sign in to your account</h4>
               <v-text-field  hide-details
                 density="compact"
-              class="inputShadow my-5 pt-2 pl-3 rounded"
+              class=" elevation-2 my-5 pt-2 pl-3 rounded"
                 color="info"
                 variant="plain"
                 placeholder="your@email.com"
@@ -41,7 +41,7 @@ async function submit () {
                 required />
               <v-text-field  hide-details
                 density="compact"
-                class="inputShadow my-5 pt-2 pl-3 rounded"
+                class="elevation-2 my-5 pt-2 pl-3 rounded"
                 color="info"
                 placeholder="********"
                 variant="plain"
@@ -60,15 +60,3 @@ async function submit () {
             </v-card>
         </v-form>
 </template>
-
-<style scoped>
-
-.cardShadow {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.25);
-  width: 30%;
-}
-.inputShadow {
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
-}
-
-</style>

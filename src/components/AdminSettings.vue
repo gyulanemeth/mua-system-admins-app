@@ -50,7 +50,7 @@ function submitForm (data) {
           <v-text-field
           hide-details
           density="compact"
-          class="inputShadow my-5 pt-2 pl-3 rounded"
+          class=" elevation-2 my-5 pt-2 pl-3 rounded"
           color="info"
           variant="plain"
          name="example"
@@ -63,7 +63,7 @@ function submitForm (data) {
 
       <v-col class="pt-15">
       <h3 class="font-weight-bold text-red-accent-4" >Delete Account</h3>
-      <v-divider class="redColor" />
+      <v-divider color="red-accent-4"  />
 
         <DeleteMyAccount @submit="submitForm" :data="props.data" />
       </v-col >
@@ -71,15 +71,3 @@ function submitForm (data) {
 
 </v-layout>
 </template>
-
-<style scoped>
-
-.inputShadow {
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
-}
-
-.redColor{
-  background-color:#D50000;
-}
-
-</style>

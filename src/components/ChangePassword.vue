@@ -18,7 +18,7 @@ const data = ref({})
         <v-text-field
         hide-details
         density="compact"
-        class="inputShadow my-5 pt-2 pl-3 rounded"
+        class=" elevation-2 my-5 pt-2 pl-3 rounded"
         color="info"
         variant="plain"
         v-model="data['oldPassword']"
@@ -38,7 +38,7 @@ const data = ref({})
           hide-details
           density="compact"
           v-model="data['newPassword']"
-          class="inputShadow my-5 pt-2 pl-3 rounded"
+          class=" elevation-2 my-5 pt-2 pl-3 rounded"
           color="info"
           variant="plain"
          :type="show[1] ? 'text' : 'password'"
@@ -56,7 +56,7 @@ const data = ref({})
           hide-details
           v-model="data['confirmNewPassword']"
           density="compact"
-          class="inputShadow my-5 pt-2 pl-3 rounded"
+          class=" elevation-2 my-5 pt-2 pl-3 rounded"
           color="info"
           variant="plain"
          :type="show[2] ? 'text' : 'password'"
@@ -72,11 +72,3 @@ const data = ref({})
   </v-layout>
 
 </template>
-
-<style scoped>
-
-.inputShadow {
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
-}
-
-</style>

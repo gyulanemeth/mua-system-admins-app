@@ -33,21 +33,21 @@ const dialog = ref()
             <v-col>
                 <p class="font-weight-bold">Name</p>
             </v-col>
-              <v-text-field  hide-details density="compact" color="info" disabled class="inputShadow my-5 pt-2 pl-3 rounded" variant="plain" :placeholder="props.data.name" name="name" :value="props.data.name" type="text" required />
+              <v-text-field  hide-details density="compact" color="info" disabled class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" :placeholder="props.data.name" name="name" :value="props.data.name" type="text" required />
           </v-row>
 
           <v-row align="center" >
               <v-col>
                   <p class="font-weight-bold">E-mail</p>
               </v-col>
-                <v-text-field  hide-details density="compact" color="info" disabled class="inputShadow my-5 pt-2 pl-3 rounded" variant="plain" :placeholder="props.data.email" name="email" :value="props.data.email" type="text" required />
+                <v-text-field  hide-details density="compact" color="info" disabled class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" :placeholder="props.data.email" name="email" :value="props.data.email" type="text" required />
             </v-row>
           <v-row align="center">
             <v-col  >
             <p class="font-weight-bold">Profile picture</p>
           </v-col >
             <v-col align="center" >
-            <v-avatar class="shadow " size="180" >
+            <v-avatar class="elevation-3 " size="180" >
               <v-img
               src="https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg"
                class="align-self-stretch"
@@ -65,7 +65,7 @@ const dialog = ref()
               <v-col>
                   <p class="font-weight-bold">Password</p>
               </v-col>
-                <v-text-field  hide-details density="compact" color="info" class="inputShadow my-5 pt-2 pl-3 rounded" variant="plain" placeholder="********" name="password" v-model="password" type="text" required />
+                <v-text-field  hide-details density="compact" color="info" class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" placeholder="********" name="password" v-model="password" type="text" required />
             </v-row>
 
         </v-card-text>
@@ -78,15 +78,3 @@ const dialog = ref()
 </v-dialog>
 
 </template>
-
-<style scoped>
-
-  .shadow{
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  .inputShadow {
-      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
-  }
-
-</style>

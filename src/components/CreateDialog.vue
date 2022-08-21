@@ -51,7 +51,7 @@ const operation = computed(() => route.name === 'admins' ? 'Invite' : 'Create')
                       </v-card-title>
                       <p>{{input.placeholder}}</p>
                   </v-card>
-                <v-text-field v-else hide-details density="compact" class="inputShadow my-5 pl-3 rounded" color="info" variant="plain" :placeholder="input.placeholder" :name="input.name" v-model="data[input.name]" :type="input.type" required />
+                <v-text-field v-else hide-details density="compact" class=" elevation-2 my-5 pl-3 rounded" color="info" variant="plain" :placeholder="input.placeholder" :name="input.name" v-model="data[input.name]" :type="input.type" required />
               </v-col>
           </v-row>
         </v-card-text>
@@ -63,11 +63,3 @@ const operation = computed(() => route.name === 'admins' ? 'Invite' : 'Create')
 </v-dialog>
 
 </template>
-
-<style scoped>
-
-  .inputShadow {
-      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
-  }
-
-</style>

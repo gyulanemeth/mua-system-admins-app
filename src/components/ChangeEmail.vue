@@ -40,7 +40,7 @@ const data = ref({ email: props.email })
           hide-details
           density="compact"
           v-model="data['newEmail']"
-          class="inputShadow my-5 pt-2 pl-3 rounded"
+          class=" elevation-2 my-5 pt-2 pl-3 rounded"
           color="info"
           variant="plain"
          name="newEmail"
@@ -56,7 +56,7 @@ const data = ref({ email: props.email })
           hide-details
           v-model="data['confirmNewEmail']"
           density="compact"
-          class="inputShadow my-5 pt-2 pl-3 rounded"
+          class=" elevation-2 my-5 pt-2 pl-3 rounded"
           color="info"
           variant="plain"
          name="confirmNewEmail"
@@ -69,11 +69,3 @@ const data = ref({ email: props.email })
     </v-col >
 </v-layout>
 </template>
-
-<style scoped>
-
-.inputShadow {
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
-}
-
-</style>
