@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  name: String
+  name: String,
+  email: String
 })
 
 const name = ref(props.name)
@@ -31,6 +32,15 @@ const editemood = ref()
                   </template>
 
              </v-row>
+             <v-row align="center" class="mt-3">
+                 <v-col>
+                     <p class="font-weight-bold">E-mail</p>
+                 </v-col>
+                   <v-text-field  hide-details density="compact" disabled  color="info" variant="underlined" placeholder="E-mail" name="E-mail" v-model="email" type="text" required />
+                   <v-btn color="info" variant="text" icon="mdi-arrow-right" class="ma-2" size="small" @click.stop="$emit('changeTab', 'three')" />
+
+               </v-row>
+
 
              </v-col >
 

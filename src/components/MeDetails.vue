@@ -11,6 +11,10 @@ const props = defineProps({
 
 const tab = ref()
 
+const changeTab = (tabId) => {
+  tab.value = tabId
+}
+
 const emit = defineEmits(['buttonEvent'])
 
 function submitForm (data) {
@@ -46,7 +50,7 @@ function submitForm (data) {
      <v-window v-model="tab">
        <v-window-item value="one">
 
-         <MyDetails @submit="submitForm" :name="props.data.name" />
+         <MyDetails @submit="submitForm" @changeTab="changeTab" :email="props.data.email" :name="props.data.name" />
        </v-window-item>
 
               <v-window-item value="two">
