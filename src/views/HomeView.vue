@@ -3,8 +3,8 @@ import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CardList from '../components/CardsList.vue'
-import stores from '../stores/index.js'
 import alerts from '../alerts/alert.js'
+import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/index.js'
 
 const route = useRoute()
 const alert = alerts()
@@ -16,7 +16,7 @@ let store
 
 async function loadData () {
   if (route.name === 'admins') {
-    store = stores().adminsStore()
+    store = useAdminsStore()
     await store.load()
     data.value = store.items
     btn.value = {
@@ -29,7 +29,7 @@ async function loadData () {
       ]
     }
   } else if (route.name === 'accounts') {
-    store = stores().accountStore()
+    store = useAccountStore()
     await store.load()
     data.value = store.items
     btn.value = {
@@ -59,7 +59,7 @@ async function handleDeleteEvent (params) {
 }
 
 async function handleInviteEvent (params, statusCallBack) {
-  store = stores().currentUserStore()
+  store = useCurrentUserStore()
   const res = await store.sendInvitation(params.email)
   if (!res.message) {
     statusCallBack('success')

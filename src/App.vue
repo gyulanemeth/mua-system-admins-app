@@ -3,9 +3,9 @@
 import NavBar from './components/NavBar.vue'
 import SideBar from './components/SideBar.vue'
 import ErrorMessage from './components/ErrorMessage.vue'
-import stores from './stores/index.js'
+import { useCurrentUserStore } from './stores/index.js'
 
-const store = stores().currentUserStore()
+const store = useCurrentUserStore()
 
 </script>
 <template>

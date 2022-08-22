@@ -3,10 +3,10 @@ import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import SetAndReSetPassword from '../components/SetAndReSetPassword.vue'
-import stores from '../stores/index.js'
 import alerts from '../alerts/alert.js'
+import { useCurrentUserStore } from '../stores/index.js'
 
-const store = stores().currentUserStore()
+const store = useCurrentUserStore()
 const route = useRoute()
 const alert = alerts()
 

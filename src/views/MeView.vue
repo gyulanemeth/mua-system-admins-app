@@ -4,10 +4,10 @@ import { useRoute } from 'vue-router'
 
 import MeDetails from '../components/MeDetails.vue'
 
-import stores from '../stores/index.js'
 import alerts from '../alerts/alert.js'
+import { useCurrentUserStore, useAdminsStore } from '../stores/index.js'
 
-let store = stores().currentUserStore()
+let store = useCurrentUserStore()
 const route = useRoute()
 const alert = alerts()
 
@@ -43,11 +43,11 @@ async function handleUpdateEmailHandler (params, statusCallBack) {
   statusCallBack(!res.message)
 }
 async function handleDeleteMyAccountHandler (params) {
-  store = stores().adminsStore()
+  store = useAdminsStore()
   const res = await store.deleteOne(params.id)
   if (!res.message) {
     alert.message('Account Deleted successfully')
-    store = stores().currentUserStore()
+    store = useCurrentUserStore()
     await store.logout()
   }
 }

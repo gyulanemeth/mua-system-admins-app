@@ -1,9 +1,9 @@
 <script setup >
 import { ref } from 'vue'
 
-import stores from '../stores/index.js'
+import { useCurrentUserStore } from '../stores/index.js'
 
-const userStore = stores().currentUserStore()
+const userStore = useCurrentUserStore()
 
 const email = ref('')
 const password = ref('')

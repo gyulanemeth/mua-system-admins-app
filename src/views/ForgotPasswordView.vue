@@ -2,11 +2,11 @@
 import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { useCurrentUserStore } from '../stores/index.js'
 import ForgotPasswordForm from '../components/ForgotPasswordForm.vue'
-import stores from '../stores/index.js'
 
 const route = useRoute()
-const store = stores().currentUserStore()
+const store = useCurrentUserStore()
 
 const formData = ref()
 

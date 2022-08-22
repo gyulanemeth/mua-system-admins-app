@@ -1,6 +1,6 @@
 <script setup>
-import stores from '../stores/index.js'
-const store = stores().currentUserStore()
+import { useCurrentUserStore } from '../stores/index.js'
+const store = useCurrentUserStore()
 </script>
 
 <template>
