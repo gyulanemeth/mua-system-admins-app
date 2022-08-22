@@ -1,30 +1,31 @@
 <script setup >
 import { ref } from 'vue'
+
 import Settings from './AdminSettings.vue'
 import ChangeEmail from './ChangeEmail.vue'
 import ChangePassword from './ChangePassword.vue'
 import MyDetails from './MyDetails.vue'
 
+const emit = defineEmits(['buttonEvent'])
 const props = defineProps({
   data: Object
 })
-
-const tab = ref()
 
 const changeTab = (tabId) => {
   tab.value = tabId
 }
 
-const emit = defineEmits(['buttonEvent'])
-
-function submitForm (data) {
-  emit('buttonEvent', data)
+function submitForm (data, cb) {
+  emit('buttonEvent', data, cb)
 }
+
+const tab = ref()
+
 </script>
 
 <template>
 
-<v-container class="elevation-4 rounded">
+<v-container class="elevation-0 mx-6 pt-0  rounded">
   <v-layout class="d-flex flex-wrap align-end justify-end">
 
   <p class="text-h4 pa-2">{{props.data.name}}</p>

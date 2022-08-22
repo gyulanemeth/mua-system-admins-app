@@ -1,32 +1,31 @@
 <script setup>
-
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import Dialog from '../components/CreateDialog.vue'
 
+import Dialog from '../components/CreateDialog.vue'
+import DeleteMyAccount from './DeleteMyAccount.vue'
+
+const emit = defineEmits(['buttonEvent'])
 const props = defineProps({
   items: Array,
   btn: Object
 })
-const emit = defineEmits(['buttonEvent'])
 
 const route = useRoute()
+const numOfPages = computed(() => Math.ceil(props.items.length / rows.value))
 
 const filter = ref('')
 const rows = ref(5)
-
 const page = ref(1)
 
-const numOfPages = computed(() => Math.ceil(props.items.length / rows.value))
-
-function submitForm (data) {
-  emit('buttonEvent', data)
+function submitForm (data, cb) {
+  emit('buttonEvent', data, cb)
 }
 
 </script>
 <template>
 
-<v-container class="elevation-4 rounded">
+<v-container class="elevation-2 mx-6 pt-0 rounded">
     <v-layout class="d-flex flex-wrap">
         <v-col cols="2" class="pt-3">
             <p class="text-h6">{{route.name === 'admins'? 'Administrators' : 'Accounts'}} </p>
@@ -73,7 +72,7 @@ function submitForm (data) {
                     <td>{{ new Date(item.data.createdAt).toLocaleDateString() }}</td>
                     <td>{{ new Date(item.data.updatedAt).toLocaleDateString() }}</td>
                     <td v-if="route.name === 'admins'" class="text-right">
-                        <v-btn color="grey" variant="text" class="ma-2" icon="mdi-delete" size="small" @click="$emit('buttonEvent',{id: item._id, operation:'Delete'})" />
+                        <DeleteMyAccount @submit="submitForm" :data="item.data" />
                     </td>
                     <td v-else class="text-right">
                         <v-btn color="grey" variant="text" class="ma-2" icon="mdi-arrow-right" size="small" @click="$emit('buttonEvent',{id: item._id, operation: 'Details'})" />

@@ -5,7 +5,9 @@ const props = defineProps({
   formData: Object
 })
 
+const cb = ref()
 const data = ref('')
+
 </script>
 
 <template>
@@ -39,13 +41,14 @@ const data = ref('')
              value="I am human"
              hide-details
            ></v-checkbox>
-                <v-btn color="info" @click="$emit('buttonEvent',data)">{{props.formData.text}}</v-btn>
-              <button hidden @click.enter.prevent="$emit('buttonEvent',data)" />
-              <v-div>
+                <v-btn color="info" @click="$emit('buttonEvent',data, (res)=>{cb=res})">{{props.formData.text}}</v-btn>
+              <button hidden @click.enter.prevent="$emit('buttonEvent',data, (res)=>{cb=res})" />
+              <div v-if="cb">
+
 <p class="mt-4">We have sent you an e-mail with instructions on how to reset
 your password. Please check your inbox.</p>
-<v-btn color="white" class="mt-4" @click="$emit('buttonEvent',data)">continue</v-btn>
-</v-div>
+<v-btn color="white" class="mt-4" to="/">continue</v-btn>
+</div>
             </v-card-text>
 
             </v-card>

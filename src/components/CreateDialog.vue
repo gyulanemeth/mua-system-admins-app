@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -11,10 +10,11 @@ const props = defineProps({
 })
 
 const route = useRoute()
+const operation = computed(() => route.name === 'admins' ? 'Invite' : 'Create')
+
 const dialog = ref(false)
 const data = ref({})
-
-const operation = computed(() => route.name === 'admins' ? 'Invite' : 'Create')
+const cb = ref()
 
 </script>
 
@@ -54,9 +54,14 @@ const operation = computed(() => route.name === 'admins' ? 'Invite' : 'Create')
                 <v-text-field v-else hide-details density="compact" class=" elevation-2 my-5 pl-3 rounded" color="info" variant="plain" :placeholder="input.placeholder" :name="input.name" v-model="data[input.name]" :type="input.type" required />
               </v-col>
           </v-row>
+          <v-row v-if="cb" class="justify-center">
+          <p class="font-weight-bold">Invitation sent.</p>
+        </v-row>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="info" @click="$emit('submit',{data, operation})">{{operation}}</v-btn>
+          <v-btn color="info" v-if="cb" @click="cb=null">Invite ANOTHER</v-btn>
+          <v-btn color="info" v-else @click="$emit('submit',{data, operation}, (res)=>{cb = res})">{{operation}}</v-btn>
+
             <v-btn color="info" @click="dialog=false">close</v-btn>
         </v-card-actions>
     </v-card>

@@ -1,18 +1,20 @@
 <script setup >
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import jwtDecode from 'jwt-decode'
 
-const route = useRoute()
 const props = defineProps({
   formData: Object
 })
 
+const route = useRoute()
+const operation = computed(() => route.name === 'accept-invitation' ? 'setPassword' : 'resetPassword')
+
 const email = ref()
-email.value = jwtDecode(route.query.token).user.email
-
 const data = ref({})
+const cb = ref()
 
+email.value = jwtDecode(route.query.token).user.email
 </script>
 
 <template>
@@ -29,7 +31,7 @@ const data = ref({})
     <v-card-text align="center">
       <h4 class="m-4 " >{{props.formData.text}}</h4>
 
-      <v-text-field v-if="props.formData.text === 'Set Password' "
+      <v-text-field v-if="operation === 'setPassword' "
        hide-details
       density="compact"
       class=" elevation-2 my-5 pt-2 pl-3 rounded"
@@ -42,7 +44,7 @@ const data = ref({})
       disabled
       required />
 
-      <v-text-field v-if="props.formData.text === 'Set Password' "
+      <v-text-field v-if="operation === 'setPassword' "
        hide-details
       density="compact"
       class=" elevation-2 my-5 pt-2 pl-3 rounded"
@@ -86,12 +88,12 @@ const data = ref({})
                hide-details
              ></v-checkbox>
 
-              <v-btn color="info" @click="$emit('buttonEvent',{token:route.query.token,...data})">{{props.formData.text}}</v-btn>
-              <button hidden @click.enter.prevent="$emit('buttonEvent',{token:route.query.token,...data})" />
-              <div>
-<p class="mt-4">We have sent you an e-mail with instructions on how to reset
-your password. Please check your inbox.</p>
-<v-btn color="white" class="mt-4" >continue</v-btn>
+              <v-btn color="info" @click="$emit('buttonEvent',{token:route.query.token,...data, operation},(res)=>{cb = res})">{{props.formData.text}}</v-btn>
+              <button hidden @click.enter.prevent="$emit('buttonEvent',{token:route.query.token,...data, operation},(res)=>{cb = res})" />
+              <div v-if="cb">
+                <h2 class="mt-4">Password changed</h2>
+<p class="mt-4">Your password has been changed. You will be automatically logged in. Please click here if you are not redirected..</p>
+<v-btn color="white" class="mt-4" to="/admins" >continue</v-btn>
 </div>
             </v-card-text>
 

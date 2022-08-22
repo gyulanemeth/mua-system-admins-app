@@ -45,23 +45,28 @@ async function loadData () {
   }
 }
 
-async function eventHandler (data) {
-  if (data.operation === 'Details') { // to accounts app
+async function eventHandler (params, statusCallBack) {
+  let res
+  if (params.operation === 'Details') {
     const getToken = localStorage.getItem('accessToken')
-    window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${data.id}`
+    window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${params.id}`
   }
-  if (data.operation === 'Delete') {
-    const confirm = await alert.confirmAlert('do you want to Delete the record?')
-    if (confirm.isConfirmed) {
-      store.deleteOne(data.id)
+  if (params.operation === 'Delete') {
+    res = await store.deleteOne(params.data.id)
+    if (!res.message) {
+      await alert.message('Deleted successfully')
     }
   }
-  if (data.operation === 'Invite') {
+  if (params.operation === 'Invite') {
     store = stores().currentUserStore()
-    await store.sendInvitation(data.data.email)
+    res = await store.sendInvitation(params.data.email)
+    statusCallBack(!res.message)
   }
-  if (data.operation === 'Create') {
-    await store.createOne(data.data)
+  if (params.operation === 'Create') {
+    res = await store.createOne(params.data)
+    if (!res.message) {
+      alert.message('Account Created successfully')
+    }
   }
 }
 

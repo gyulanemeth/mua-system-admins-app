@@ -1,10 +1,13 @@
 <script setup>
-
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 const props = defineProps({
   data: Object
 })
+
+const route = useRoute()
+const confirmPassword = computed(() => route.name === 'me')
 
 const password = ref()
 const dialog = ref()
@@ -14,7 +17,9 @@ const dialog = ref()
 <template>
 <v-dialog v-model="dialog" persistent>
     <template v-slot:activator="{ props }">
-          <v-btn color="red-accent-4" class="mt-10 text-white"  v-bind="props" >Delete</v-btn>
+          <v-btn v-if="confirmPassword" color="red-accent-4" class="mt-10 text-white"  v-bind="props" >Delete</v-btn>
+          <v-btn v-else color="grey" variant="text" class="ma-2" icon="mdi-delete" size="small" v-bind="props" />
+
     </template>
     <v-card min-width="800" class="d-flex flex-column justify-center">
 
@@ -55,7 +60,7 @@ const dialog = ref()
             </v-avatar>
           </v-col>
           </v-row>
-
+          <v-col v-if="confirmPassword">
           <v-row align="center" class="py-10">
           <h3 class="font-weight-bold">Please type your password to proceed with deleting your account:</h3>
           <v-divider />
@@ -67,10 +72,12 @@ const dialog = ref()
               </v-col>
                 <v-text-field  hide-details density="compact" color="info" class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" placeholder="********" name="password" v-model="password" type="text" required />
             </v-row>
+          </v-col>
 
         </v-card-text>
         <v-card-actions>
-          <v-btn color="red-accent-4" @click="$emit('submit',{data:{id:props.data._id, password}, operation:'DeleteMyAccount'});dialog=false">Delete</v-btn>
+          <v-btn v-if="confirmPassword" color="red-accent-4" @click="$emit('submit',{data:{id:props.data._id, password}, operation:'DeleteMyAccount'});dialog=false">Delete</v-btn>
+          <v-btn v-else color="red-accent-4" @click="$emit('submit',{data:{id:props.data._id}, operation:'Delete'});dialog=false">Delete</v-btn>
           <v-spacer />
             <v-btn color="info" @click="dialog=false">close</v-btn>
         </v-card-actions>

@@ -10,12 +10,13 @@ import alerts from '../alerts/alert.js'
 let store = stores().currentUserStore()
 const route = useRoute()
 const alert = alerts()
+
 const data = ref()
 
 async function loadData () {
   if (route.name === 'verify-email') {
     const res = await store.patchEmailConfirm(route.query.token)
-    if (res.success) {
+    if (res) {
       await alert.message('Email changed successfully')
     }
   } else if (!store.user.name) {
@@ -24,27 +25,32 @@ async function loadData () {
   data.value = store.user
 }
 
-async function eventHandler (params) {
+async function eventHandler (params, statusCallBack) {
+  let res
   if (params.operation === 'updateName') {
-    await store.patchName(params.data)
-  }
-  if (params.operation === 'Delete') {
-    const confirm = await alert.confirmAlert('do you want to Delete the record?')
-    if (confirm.isConfirmed) {
-      store.deleteOne(params.id)
+    res = await store.patchName(params.data)
+    if (res) {
+      await alert.message('Name updated successfully')
     }
   }
   if (params.operation === 'UpdatePassword') {
-    await store.patchPassword(params.data.oldPassword, params.data.newPassword, params.data.confirmNewPassword)
+    res = await store.patchPassword(params.data.oldPassword, params.data.newPassword, params.data.confirmNewPassword)
+    if (!res.message) {
+      await alert.message('Password updated successfully')
+    }
   }
   if (params.operation === 'UpdateEmail') {
-    await store.patchEmail(params.data.newEmail)
+    res = await store.patchEmail(params.data.newEmail)
+    statusCallBack(!res.message)
   }
   if (params.operation === 'DeleteMyAccount') {
     store = stores().adminsStore()
-    await store.deleteOne(params.data.id)
-    store = stores().currentUserStore()
-    await store.logout()
+    res = await store.deleteOne(params.data.id)
+    if (!res.message) {
+      alert.message('Account Deleted successfully')
+      store = stores().currentUserStore()
+      await store.logout()
+    }
   }
 }
 

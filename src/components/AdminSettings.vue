@@ -1,11 +1,10 @@
 <script setup >
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
+const emit = defineEmits(['buttonEvent'])
 const props = defineProps({
   data: Object
 })
-
-const emit = defineEmits(['buttonEvent'])
 
 function submitForm (data) {
   emit('submit', data)

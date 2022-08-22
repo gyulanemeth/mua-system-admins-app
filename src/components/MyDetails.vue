@@ -7,6 +7,8 @@ const props = defineProps({
 })
 
 const name = ref(props.name)
+const email = ref(props.email)
+
 const editemood = ref()
 
 </script>
@@ -40,7 +42,6 @@ const editemood = ref()
                    <v-btn color="info" variant="text" icon="mdi-arrow-right" class="ma-2" size="small" @click.stop="$emit('changeTab', 'three')" />
 
                </v-row>
-
 
              </v-col >
 

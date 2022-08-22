@@ -6,6 +6,8 @@ const props = defineProps({
 })
 
 const data = ref({ email: props.email })
+const cb = ref()
+
 </script>
 
 <template>
@@ -65,7 +67,11 @@ const data = ref({ email: props.email })
          </v-text-field>
 
       </v-row>
-      <v-btn color="info mt-3" @click="$emit('submit',{data, operation: 'UpdateEmail'})"> Change my E-mail</v-btn>
+      <v-btn color="info mt-3" @click="$emit('submit',{data, operation: 'UpdateEmail'}, (res) => {cb = res})"> Change my E-mail</v-btn>
+      <div v-if="cb">
+        <h2 class="mt-4">Request sent.</h2>
+        <p class="mt-4">Please check your inbox and click the link we sent you to verify your e-mail address.</p>
+    </div>
     </v-col >
 </v-layout>
 </template>

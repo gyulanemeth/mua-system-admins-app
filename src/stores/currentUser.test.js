@@ -264,7 +264,7 @@ describe('Current User Store', () => {
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
     const res = await userStore.patchPassword('oldPassword', 'newPassword', 'newPassword')
-    expect(res).toEqual(undefined)
+    expect(res).toEqual('success')
   })
 
   test('test patchPassword fail admin id required ', async () => {
