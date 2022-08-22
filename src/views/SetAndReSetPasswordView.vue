@@ -21,18 +21,16 @@ async function loadData () {
   }
 }
 
-async function eventHandler (params, statusCallBack) {
-  let res
-  if (params.operation === 'setPassword') {
-    res = await store.acceptInvitation(params.token, params.newPassword, params.newPasswordAgain, params.name)
-    if (!res.message) {
-      await alert.message('Admin registered successfully')
-    }
+async function handleSetPasswordEvent (params) {
+  const res = await store.acceptInvitation(params.token, params.newPassword, params.newPasswordAgain, params.name)
+  if (!res.message) {
+    await alert.message('Admin registered successfully')
   }
-  if (params.operation === 'resetPassword') {
-    res = await store.resetForgotPassword(params.token, params.newPassword, params.newPasswordAgain)
-    statusCallBack(!res.message)
-  }
+}
+
+async function handleResetPassword (params, statusCallBack) {
+  const res = await store.resetForgotPassword(params.token, params.newPassword, params.newPasswordAgain)
+  statusCallBack(!res.message)
 }
 
 watchEffect(async () => {
@@ -41,5 +39,5 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <SetAndReSetPassword :formData="formData" @buttonEvent="eventHandler" />
+  <SetAndReSetPassword :formData="formData" @setPasswordEventHandler="handleSetPasswordEvent" @resetPasswordEventHandler="handleResetPassword" />
 </template>

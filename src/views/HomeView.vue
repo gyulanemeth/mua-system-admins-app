@@ -21,7 +21,7 @@ async function loadData () {
     data.value = store.items
     btn.value = {
       text: 'Delete',
-      color: 'red-lighten-2',
+      color: 'error',
       header: 'Invite Administrators',
       input: [
         { label: 'Email address', name: 'email', placeholder: 'your@email.com', type: 'email' },
@@ -45,28 +45,33 @@ async function loadData () {
   }
 }
 
-async function eventHandler (params, statusCallBack) {
-  let res
-  if (params.operation === 'Details') {
-    const getToken = localStorage.getItem('accessToken')
-    window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${params.id}`
+async function handleDetailsEvent (params) {
+  const getToken = localStorage.getItem('accessToken')
+  window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${params.id}`
+}
+
+async function handleDeleteEvent (params) {
+  const res = await store.deleteOne(params.id)
+  if (!res.message) {
+    await alert.message('Deleted successfully')
+    loadData()
   }
-  if (params.operation === 'Delete') {
-    res = await store.deleteOne(params.data.id)
-    if (!res.message) {
-      await alert.message('Deleted successfully')
-    }
+}
+
+async function handleInviteEvent (params, statusCallBack) {
+  store = stores().currentUserStore()
+  const res = await store.sendInvitation(params.email)
+  if (!res.message) {
+    statusCallBack('success')
+    loadData()
   }
-  if (params.operation === 'Invite') {
-    store = stores().currentUserStore()
-    res = await store.sendInvitation(params.data.email)
-    statusCallBack(!res.message)
-  }
-  if (params.operation === 'Create') {
-    res = await store.createOne(params.data)
-    if (!res.message) {
-      alert.message('Account Created successfully')
-    }
+}
+
+async function handleCreateEvent (params) {
+  const res = await store.createOne(params)
+  if (!res.message) {
+    await alert.message('Account Created successfully')
+    loadData()
   }
 }
 
@@ -86,5 +91,5 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <CardList v-if="data" :items="data" :btn="btn" @buttonEvent="eventHandler" @searchEvent="searchBarHandler" />
+  <CardList v-if="data" :items="data" :btn="btn" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 </template>

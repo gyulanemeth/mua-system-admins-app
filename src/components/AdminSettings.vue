@@ -1,13 +1,13 @@
 <script setup >
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['buttonEvent'])
+const emit = defineEmits(['deleteEventHandler'])
 const props = defineProps({
   data: Object
 })
 
-function submitForm (data) {
-  emit('submit', data)
+function redirectDeleteHandler (data) {
+  emit('deleteEventHandler', data)
 }
 
 </script>
@@ -61,10 +61,10 @@ function submitForm (data) {
       <v-btn color="info mt-3">Update Settings</v-btn>
 
       <v-col class="pt-15">
-      <h3 class="font-weight-bold text-red-accent-4" >Delete Account</h3>
-      <v-divider color="red-accent-4"  />
+      <h3 class="font-weight-bold text-error" >Delete Account</h3>
+      <v-divider color="error"  />
 
-        <DeleteMyAccount @submit="submitForm" :data="props.data" />
+        <DeleteMyAccount @deleteEventHandler="redirectDeleteHandler" :data="props.data" />
       </v-col >
     </v-col >
 

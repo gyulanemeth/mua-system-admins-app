@@ -17,7 +17,7 @@ const dialog = ref()
 <template>
 <v-dialog v-model="dialog" persistent>
     <template v-slot:activator="{ props }">
-          <v-btn v-if="confirmPassword" color="red-accent-4" class="mt-10 text-white"  v-bind="props" >Delete</v-btn>
+          <v-btn v-if="confirmPassword" color="error" class="mt-10 text-white"  v-bind="props" >Delete</v-btn>
           <v-btn v-else color="grey" variant="text" class="ma-2" icon="mdi-delete" size="small" v-bind="props" />
 
     </template>
@@ -25,8 +25,8 @@ const dialog = ref()
 
         <v-card-text align="start">
           <v-col align="center" class="pb-10">
-            <v-toolbar-title class="font-weight-bold text-red-accent-4">Are you sure you want to delete “Peter Griffin”?</v-toolbar-title>
-            <v-toolbar-title class="text-red-accent-4">Doing so will fully delete this record forever, which cannot be reversed.</v-toolbar-title>
+            <v-toolbar-title class="font-weight-bold text-error">Are you sure you want to delete “Peter Griffin”?</v-toolbar-title>
+            <v-toolbar-title class="text-error">Doing so will fully delete this record forever, which cannot be reversed.</v-toolbar-title>
           </v-col>
 
           <v-row align="center" class="pb-10"  >
@@ -76,8 +76,8 @@ const dialog = ref()
 
         </v-card-text>
         <v-card-actions>
-          <v-btn v-if="confirmPassword" color="red-accent-4" @click="$emit('submit',{data:{id:props.data._id, password}, operation:'DeleteMyAccount'});dialog=false">Delete</v-btn>
-          <v-btn v-else color="red-accent-4" @click="$emit('submit',{data:{id:props.data._id}, operation:'Delete'});dialog=false">Delete</v-btn>
+          <v-btn v-if="confirmPassword" color="error" @click="$emit('deleteEventHandler',{id:props.data._id, password});dialog=false">Delete</v-btn>
+          <v-btn v-else color="error" @click="$emit('deleteEventHandler',{id:props.data._id});dialog=false">Delete</v-btn>
           <v-spacer />
             <v-btn color="info" @click="dialog=false">close</v-btn>
         </v-card-actions>

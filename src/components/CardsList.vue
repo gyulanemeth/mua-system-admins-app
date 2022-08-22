@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['buttonEvent'])
+const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler'])
 const props = defineProps({
   items: Array,
   btn: Object
@@ -18,8 +18,14 @@ const filter = ref('')
 const rows = ref(5)
 const page = ref(1)
 
-function submitForm (data, cb) {
-  emit('buttonEvent', data, cb)
+function redirectDeleteEventHandler (data) {
+  emit('deleteEventHandler', data)
+}
+function redirectInviteEventHandler (data, cb) {
+  emit('inviteEventHandler', data, cb)
+}
+function redirectCreateEventHandler (data) {
+  emit('createEventHandler', data)
 }
 
 </script>
@@ -36,7 +42,7 @@ function submitForm (data, cb) {
         </v-col>
 
         <v-col cols="2" class="pt-3">
-            <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'" @submit="submitForm" :inputs="props.btn.input" />
+            <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'"  @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler'  :inputs="props.btn.input" />
         </v-col>
     </v-layout>
 
@@ -72,10 +78,10 @@ function submitForm (data, cb) {
                     <td>{{ new Date(item.data.createdAt).toLocaleDateString() }}</td>
                     <td>{{ new Date(item.data.updatedAt).toLocaleDateString() }}</td>
                     <td v-if="route.name === 'admins'" class="text-right">
-                        <DeleteMyAccount @submit="submitForm" :data="item.data" />
+                        <DeleteMyAccount @deleteEventHandler='redirectDeleteEventHandler' :data="item.data" />
                     </td>
                     <td v-else class="text-right">
-                        <v-btn color="grey" variant="text" class="ma-2" icon="mdi-arrow-right" size="small" @click="$emit('buttonEvent',{id: item._id, operation: 'Details'})" />
+                        <v-btn color="grey" variant="text" class="ma-2" icon="mdi-arrow-right" size="small" @click="$emit('detailsEventHandler',{id: item._id})" />
                     </td>
                 </tr>
             </tbody>

@@ -67,7 +67,7 @@ const cb = ref()
          </v-text-field>
 
       </v-row>
-      <v-btn color="info mt-3" @click="$emit('submit',{data, operation: 'UpdateEmail'}, (res) => {cb = res})"> Change my E-mail</v-btn>
+      <v-btn color="info mt-3" @click="$emit('updateEmailHandler',data, (res) => {cb = res})"> Change my E-mail</v-btn>
       <div v-if="cb">
         <h2 class="mt-4">Request sent.</h2>
         <p class="mt-4">Please check your inbox and click the link we sent you to verify your e-mail address.</p>

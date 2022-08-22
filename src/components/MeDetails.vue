@@ -6,7 +6,7 @@ import ChangeEmail from './ChangeEmail.vue'
 import ChangePassword from './ChangePassword.vue'
 import MyDetails from './MyDetails.vue'
 
-const emit = defineEmits(['buttonEvent'])
+const emit = defineEmits(['updateNameHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteMyAccountHandler'])
 const props = defineProps({
   data: Object
 })
@@ -15,8 +15,17 @@ const changeTab = (tabId) => {
   tab.value = tabId
 }
 
-function submitForm (data, cb) {
-  emit('buttonEvent', data, cb)
+async function redirectUpdateNameHandler (data) {
+  emit('updateNameHandler', data)
+}
+async function redirectUpdateEmailHandler (data, cb) {
+  emit('updateEmailHandler', data, cb)
+}
+async function redirectUpdatePasswordHandler (data) {
+  emit('updatePasswordHandler', data)
+}
+async function redirectDeleteHandler (data) {
+  emit('deleteMyAccountHandler', data)
 }
 
 const tab = ref()
@@ -42,28 +51,28 @@ const tab = ref()
    >
      <v-tab value="one" color="info" prepend-icon="mdi-account" >MY details</v-tab>
      <v-tab value="two" color="info" prepend-icon="mdi-lock">Change password</v-tab>
-     <v-tab value="three" color="info" prepend-icon="mdi-at">Change e-mail</v-tab>
+     <v-tab value="changeEmail" color="info" prepend-icon="mdi-at">Change e-mail</v-tab>
      <v-tab value="four" color="info" prepend-icon="mdi-cog">Settings</v-tab>
 
    </v-tabs>
 
    <v-card-text>
      <v-window v-model="tab">
-       <v-window-item value="one">
 
-         <MyDetails @submit="submitForm" @changeTab="changeTab" :email="props.data.email" :name="props.data.name" />
+       <v-window-item value="one">
+         <MyDetails @updateNameHandler="redirectUpdateNameHandler" @changeTab="changeTab" :email="props.data.email" :name="props.data.name" />
        </v-window-item>
 
-              <v-window-item value="two">
-                <ChangePassword @submit="submitForm" />
-              </v-window-item>
+      <v-window-item value="two">
+        <ChangePassword @updatePasswordHandler="redirectUpdatePasswordHandler"  />
+      </v-window-item>
 
-       <v-window-item value="three">
-                <ChangeEmail @submit="submitForm" :email="props.data.email" />
+       <v-window-item value="changeEmail">
+        <ChangeEmail @updateEmailHandler="redirectUpdateEmailHandler" :email="props.data.email" />
        </v-window-item>
 
        <v-window-item value="four">
-         <Settings @submit="submitForm" :data="props.data" />
+         <Settings @deleteEventHandler="redirectDeleteHandler" :data="props.data" />
        </v-window-item>
      </v-window>
    </v-card-text>

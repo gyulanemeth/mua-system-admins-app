@@ -67,7 +67,7 @@ const data = ref({})
          <v-btn  color="info" variant="text" :icon="show[2] ? 'mdi-eye' : 'mdi-eye-off'"  @click="show[2] = !show[2]"/>
 
       </v-row>
-      <v-btn color="info mt-3"  @click="$emit('submit',{data, operation: 'UpdatePassword'})"> Change my Password</v-btn>
+      <v-btn color="info mt-3"  @click="$emit('updatePasswordHandler',data)"> Change my Password</v-btn>
     </v-col >
   </v-layout>
 

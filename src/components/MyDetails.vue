@@ -26,8 +26,8 @@ const editemood = ref()
                </v-col>
                  <v-text-field  hide-details density="compact" :disabled='!editemood'  color="info" variant="underlined" placeholder="User Name" name="name" v-model="name" type="text" required />
                  <template v-if='editemood'>
-                          <v-btn color="info" variant="text" icon="mdi-check" size="small" @click.stop="$emit('submit', {data:name,operation:'updateName'});editemood = false" />
-                          <v-btn class="ml-2" color="red" variant="text" icon="mdi-window-close" size="small"  @click='editemood = false' />
+                          <v-btn color="info" variant="text" icon="mdi-check" size="small" @click.stop="$emit('updateNameHandler', name);editemood = false" />
+                          <v-btn class="ml-2" color="error" variant="text" icon="mdi-window-close" size="small"  @click='editemood = false' />
                   </template>
                   <template v-else>
                     <v-btn color="info" variant="text" class="ma-2"  icon="mdi-pencil-outline" size="small" @click='editemood = true'  />
@@ -39,7 +39,7 @@ const editemood = ref()
                      <p class="font-weight-bold">E-mail</p>
                  </v-col>
                    <v-text-field  hide-details density="compact" disabled  color="info" variant="underlined" placeholder="E-mail" name="E-mail" v-model="email" type="text" required />
-                   <v-btn color="info" variant="text" icon="mdi-arrow-right" class="ma-2" size="small" @click.stop="$emit('changeTab', 'three')" />
+                   <v-btn color="info" variant="text" icon="mdi-arrow-right" class="ma-2" size="small" @click.stop="$emit('changeTab', 'changeEmail')" />
 
                </v-row>
 

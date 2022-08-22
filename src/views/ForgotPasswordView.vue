@@ -2,7 +2,7 @@
 import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import EmailAndNameForm from '../components/EmailAndNameForm.vue'
+import ForgotPasswordForm from '../components/ForgotPasswordForm.vue'
 import stores from '../stores/index.js'
 
 const route = useRoute()
@@ -16,11 +16,9 @@ async function loadData () {
   }
 }
 
-async function eventHandler (data, statusCallBack) {
-  if (formData.value.text === 'Password recovery') {
-    const res = await store.sendForgotPassword(data)
-    statusCallBack(!res.message)
-  }
+async function handlePasswordRecoveryEvent (data, statusCallBack) {
+  const res = await store.sendForgotPassword(data)
+  statusCallBack(!res.message)
 }
 
 watchEffect(async () => {
@@ -29,5 +27,5 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <EmailAndNameForm :formData="formData" @buttonEvent="eventHandler" />
+  <ForgotPasswordForm :formData="formData" @passwordRecoveryEventHandler="handlePasswordRecoveryEvent" />
 </template>

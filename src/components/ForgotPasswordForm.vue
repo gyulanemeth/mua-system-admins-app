@@ -41,8 +41,8 @@ const data = ref('')
              value="I am human"
              hide-details
            ></v-checkbox>
-                <v-btn color="info" @click="$emit('buttonEvent',data, (res)=>{cb=res})">{{props.formData.text}}</v-btn>
-              <button hidden @click.enter.prevent="$emit('buttonEvent',data, (res)=>{cb=res})" />
+                <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{props.formData.text}}</v-btn>
+              <button hidden @click.enter.prevent="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})" />
               <div v-if="cb">
 
 <p class="mt-4">We have sent you an e-mail with instructions on how to reset

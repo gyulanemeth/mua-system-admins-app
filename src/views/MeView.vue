@@ -25,32 +25,30 @@ async function loadData () {
   data.value = store.user
 }
 
-async function eventHandler (params, statusCallBack) {
-  let res
-  if (params.operation === 'updateName') {
-    res = await store.patchName(params.data)
-    if (res) {
-      await alert.message('Name updated successfully')
-    }
+async function handleUpdateNameHandler (params) {
+  const res = await store.patchName(params)
+  if (res) {
+    await alert.message('Name updated successfully')
   }
-  if (params.operation === 'UpdatePassword') {
-    res = await store.patchPassword(params.data.oldPassword, params.data.newPassword, params.data.confirmNewPassword)
-    if (!res.message) {
-      await alert.message('Password updated successfully')
-    }
+}
+
+async function handleUpdatePasswordHandler (params) {
+  const res = await store.patchPassword(params.oldPassword, params.newPassword, params.confirmNewPassword)
+  if (!res.message) {
+    await alert.message('Password updated successfully')
   }
-  if (params.operation === 'UpdateEmail') {
-    res = await store.patchEmail(params.data.newEmail)
-    statusCallBack(!res.message)
-  }
-  if (params.operation === 'DeleteMyAccount') {
-    store = stores().adminsStore()
-    res = await store.deleteOne(params.data.id)
-    if (!res.message) {
-      alert.message('Account Deleted successfully')
-      store = stores().currentUserStore()
-      await store.logout()
-    }
+}
+async function handleUpdateEmailHandler (params, statusCallBack) {
+  const res = await store.patchEmail(params.newEmail)
+  statusCallBack(!res.message)
+}
+async function handleDeleteMyAccountHandler (params) {
+  store = stores().adminsStore()
+  const res = await store.deleteOne(params.id)
+  if (!res.message) {
+    alert.message('Account Deleted successfully')
+    store = stores().currentUserStore()
+    await store.logout()
   }
 }
 
@@ -60,5 +58,5 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <MeDetails v-if='data' :data="data" @buttonEvent="eventHandler" />
+  <MeDetails v-if='data' :data="data" @updateNameHandler='handleUpdateNameHandler' @updatePasswordHandler='handleUpdatePasswordHandler' @updateEmailHandler='handleUpdateEmailHandler' @deleteMyAccountHandler='handleDeleteMyAccountHandler' />
 </template>

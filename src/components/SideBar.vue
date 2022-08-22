@@ -1,9 +1,9 @@
 <template>
   <v-card class="elevation-4">
 
-      <v-navigation-drawer color="#EFEFEF" rail permanent >
+      <v-navigation-drawer color="grey-lighten-2" rail permanent >
 
-        <v-list bg-color="#EFEFEF"  density="compact" nav>
+        <v-list bg-color="grey-lighten-2"  density="compact" nav>
           <v-list-item active-class="text-white" prepend-icon="mdi-shield-account-variant-outline" value="dashboard2" />
 
           <v-list-item  active-class="text-white" prepend-icon="mdi-account-group-outline" value="dashboard" />

@@ -88,8 +88,14 @@ email.value = jwtDecode(route.query.token).user.email
                hide-details
              ></v-checkbox>
 
-              <v-btn color="info" @click="$emit('buttonEvent',{token:route.query.token,...data, operation},(res)=>{cb = res})">{{props.formData.text}}</v-btn>
-              <button hidden @click.enter.prevent="$emit('buttonEvent',{token:route.query.token,...data, operation},(res)=>{cb = res})" />
+              <v-col v-if="operation === 'resetPassword'">
+                <v-btn color="info" @click="$emit('resetPasswordEventHandler',{token:route.query.token,...data},(res)=>{cb = res})">{{props.formData.text}}</v-btn>
+                <button hidden @click.enter.prevent="$emit('resetPasswordEventHandler',{token:route.query.token,...data},(res)=>{cb = res})" />
+              </v-col>
+                <v-col v-if="operation === 'setPassword'">
+                  <v-btn color="info" @click="$emit('setPasswordEventHandler',{token:route.query.token,...data})">{{props.formData.text}}</v-btn>
+                  <button hidden @click.enter.prevent="$emit('setPasswordEventHandler',{token:route.query.token,...data})" />
+                </v-col>
               <div v-if="cb">
                 <h2 class="mt-4">Password changed</h2>
 <p class="mt-4">Your password has been changed. You will be automatically logged in. Please click here if you are not redirected..</p>

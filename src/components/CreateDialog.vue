@@ -58,11 +58,11 @@ const cb = ref()
           <p class="font-weight-bold">Invitation sent.</p>
         </v-row>
         </v-card-text>
-        <v-card-actions>
-          <v-btn color="info" v-if="cb" @click="cb=null">Invite ANOTHER</v-btn>
-          <v-btn color="info" v-else @click="$emit('submit',{data, operation}, (res)=>{cb = res})">{{operation}}</v-btn>
-
-            <v-btn color="info" @click="dialog=false">close</v-btn>
+        <v-card-actions >
+          <v-btn color="info" v-if="operation === 'Create'" @click="$emit('createEventHandler',data)">{{operation}}</v-btn>
+          <v-btn color="info" v-else-if="cb" @click="cb=null">Invite ANOTHER</v-btn>
+          <v-btn color="info" v-else @click="$emit('inviteEventHandler',data, (res)=>{cb = res})">{{operation}}</v-btn>
+          <v-btn color="info" @click="dialog=false">close</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>
