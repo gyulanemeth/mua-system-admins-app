@@ -1,5 +1,6 @@
 <script setup >
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import Settings from './AdminSettings.vue'
 import ChangeEmail from './ChangeEmail.vue'
@@ -28,7 +29,8 @@ async function redirectDeleteHandler (data) {
   emit('deleteMyAccountHandler', data)
 }
 
-const tab = ref()
+const route = useRoute()
+const tab = ref(route.query.tab)
 
 </script>
 
@@ -49,21 +51,21 @@ const tab = ref()
       <v-tabs
      v-model="tab"
    >
-     <v-tab value="one" color="info" prepend-icon="mdi-account" >MY details</v-tab>
-     <v-tab value="two" color="info" prepend-icon="mdi-lock">Change password</v-tab>
+     <v-tab value="me" color="info" prepend-icon="mdi-account" >MY details</v-tab>
+     <v-tab value="changePassword" color="info" prepend-icon="mdi-lock">Change password</v-tab>
      <v-tab value="changeEmail" color="info" prepend-icon="mdi-at">Change e-mail</v-tab>
-     <v-tab value="four" color="info" prepend-icon="mdi-cog">Settings</v-tab>
+     <v-tab value="settings" color="info" prepend-icon="mdi-cog">Settings</v-tab>
 
    </v-tabs>
 
    <v-card-text>
      <v-window v-model="tab">
 
-       <v-window-item value="one">
+       <v-window-item value="me">
          <MyDetails @updateNameHandler="redirectUpdateNameHandler" @changeTab="changeTab" :email="props.data.email" :name="props.data.name" />
        </v-window-item>
 
-      <v-window-item value="two">
+      <v-window-item value="changePassword">
         <ChangePassword @updatePasswordHandler="redirectUpdatePasswordHandler"  />
       </v-window-item>
 
@@ -71,7 +73,7 @@ const tab = ref()
         <ChangeEmail @updateEmailHandler="redirectUpdateEmailHandler" :email="props.data.email" />
        </v-window-item>
 
-       <v-window-item value="four">
+       <v-window-item value="settings">
          <Settings @deleteEventHandler="redirectDeleteHandler" :data="props.data" />
        </v-window-item>
      </v-window>

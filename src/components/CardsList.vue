@@ -24,8 +24,8 @@ function redirectDeleteEventHandler (data) {
 function redirectInviteEventHandler (data, cb) {
   emit('inviteEventHandler', data, cb)
 }
-function redirectCreateEventHandler (data) {
-  emit('createEventHandler', data)
+function redirectCreateEventHandler (data, cb) {
+  emit('createEventHandler', data, cb)
 }
 
 </script>

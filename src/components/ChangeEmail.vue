@@ -1,9 +1,12 @@
 <script setup >
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 const props = defineProps({
   email: String
 })
+
+const route = useRoute()
 
 const data = ref({ email: props.email })
 const cb = ref()
@@ -72,6 +75,9 @@ const cb = ref()
         <h2 class="mt-4">Request sent.</h2>
         <p class="mt-4">Please check your inbox and click the link we sent you to verify your e-mail address.</p>
     </div>
+    <div v-else-if="route.query.tab === 'changeEmail'">
+      <p class="mt-4">You have successfully verified your new e-mail address.</p>
+  </div>
     </v-col >
 </v-layout>
 </template>

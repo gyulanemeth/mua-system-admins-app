@@ -1,6 +1,6 @@
 <script setup>
 import { watchEffect, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import SetAndReSetPassword from '../components/SetAndReSetPassword.vue'
 import alerts from '../alerts/alert.js'
@@ -8,6 +8,8 @@ import { useCurrentUserStore } from '../stores/index.js'
 
 const store = useCurrentUserStore()
 const route = useRoute()
+const router = useRouter()
+
 const alert = alerts()
 
 const formData = ref()
@@ -30,7 +32,11 @@ async function handleSetPasswordEvent (params) {
 
 async function handleResetPassword (params, statusCallBack) {
   const res = await store.resetForgotPassword(params.token, params.newPassword, params.newPasswordAgain)
-  statusCallBack(!res.message)
+  if (!res.message) {
+    statusCallBack(res)
+    await new Promise(resolve => setTimeout(resolve, 5000))
+    router.push('/me')
+  }
 }
 
 watchEffect(async () => {

@@ -1,6 +1,6 @@
 <script setup>
 import { watchEffect, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import MeDetails from '../components/MeDetails.vue'
 
@@ -9,6 +9,8 @@ import { useCurrentUserStore, useAdminsStore } from '../stores/index.js'
 
 let store = useCurrentUserStore()
 const route = useRoute()
+const router = useRouter()
+
 const alert = alerts()
 
 const data = ref()
@@ -16,8 +18,10 @@ const data = ref()
 async function loadData () {
   if (route.name === 'verify-email') {
     const res = await store.patchEmailConfirm(route.query.token)
-    if (res) {
-      await alert.message('Email changed successfully')
+    if (!res.message) {
+      router.push({ path: '/me', query: { tab: 'changeEmail' } })
+      await new Promise(resolve => setTimeout(resolve, 5000))
+      router.push({ path: '/me', query: {}, replace: true })
     }
   } else if (!store.user.name) {
     await store.readOne()

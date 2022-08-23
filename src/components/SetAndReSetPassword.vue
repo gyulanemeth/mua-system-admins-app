@@ -98,8 +98,7 @@ email.value = jwtDecode(route.query.token).user.email
                 </v-col>
               <div v-if="cb">
                 <h2 class="mt-4">Password changed</h2>
-<p class="mt-4">Your password has been changed. You will be automatically logged in. Please click here if you are not redirected..</p>
-<v-btn color="white" class="mt-4" to="/admins" >continue</v-btn>
+<p class="mt-4">Your password has been changed. You will be automatically logged in in 5 seconds. Please <router-link tag="span"  style="text-decoration: none; color: inherit;" to="/me" class="font-weight-bold">click here</router-link> if you are not redirected.</p>
 </div>
             </v-card-text>
 
