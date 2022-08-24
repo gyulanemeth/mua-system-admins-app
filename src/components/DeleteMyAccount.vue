@@ -79,7 +79,7 @@ const dialog = ref()
           <v-btn v-if="confirmPassword" color="error" @click="$emit('deleteEventHandler',{id:props.data._id, password});dialog=false">Delete</v-btn>
           <v-btn v-else color="error" @click="$emit('deleteEventHandler',{id:props.data._id});dialog=false">Delete</v-btn>
           <v-spacer />
-            <v-btn color="info" @click="dialog=false">close</v-btn>
+            <v-btn color="info" @click="dialog=false; password=null">close</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>

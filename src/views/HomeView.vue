@@ -61,10 +61,8 @@ async function handleDeleteEvent (params) {
 async function handleInviteEvent (params, statusCallBack) {
   store = useCurrentUserStore()
   const res = await store.sendInvitation(params.email)
-  if (!res.message) {
-    statusCallBack('success')
-    loadData()
-  }
+  statusCallBack(!res.message)
+  loadData()
 }
 
 async function handleCreateEvent (params, statusCallBack) {

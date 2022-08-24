@@ -2,13 +2,12 @@
   <v-card class="elevation-4">
 
       <v-navigation-drawer color="grey-lighten-2" rail permanent >
+        <v-list bg-color="grey-lighten-2" density="compact" nav>
+          <v-list-item active-class="text-white" active prepend-icon="mdi-shield-account-variant-outline" value="dashboard2" />
 
-        <v-list bg-color="grey-lighten-2"  density="compact" nav>
-          <v-list-item active-class="text-white" prepend-icon="mdi-shield-account-variant-outline" value="dashboard2" />
+          <v-list-item  active-class="text-white" prepend-icon="mdi-account-group-outline" />
 
-          <v-list-item  active-class="text-white" prepend-icon="mdi-account-group-outline" value="dashboard" />
-
-          <v-list-item  active-class="text-white" prepend-icon="mdi-forum" value="messages" />
+          <v-list-item  active-class="text-white" prepend-icon="mdi-apps"  />
         </v-list>
 
       </v-navigation-drawer>

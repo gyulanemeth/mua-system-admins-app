@@ -16,6 +16,12 @@ const dialog = ref(false)
 const data = ref({})
 const cb = ref()
 
+const resetForm = () => {
+  Object.keys(data.value).forEach(key => {
+    data.value[key] = null
+  })
+}
+
 </script>
 
 <template>
@@ -59,10 +65,10 @@ const cb = ref()
         </v-row>
         </v-card-text>
         <v-card-actions >
-          <v-btn color="info" v-if="operation === 'Create'" @click="$emit('createEventHandler',data, ()=>{dialog=false}); ">{{operation}}</v-btn>
+          <v-btn color="info" v-if="operation === 'Create'" @click="$emit('createEventHandler',data, ()=>{dialog=false}); resetForm() ">{{operation}}</v-btn>
           <v-btn color="info" v-else-if="cb" @click="cb=null">Invite ANOTHER</v-btn>
-          <v-btn color="info" v-else @click="$emit('inviteEventHandler',data, (res)=>{cb = res})">{{operation}}</v-btn>
-          <v-btn color="info" @click="dialog=false">close</v-btn>
+          <v-btn color="info" v-else @click="$emit('inviteEventHandler',data, (res)=>{cb = res; resetForm()})">{{operation}}</v-btn>
+          <v-btn color="info" @click="dialog=false; resetForm()">close</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>
