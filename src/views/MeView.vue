@@ -43,7 +43,7 @@ async function handleUpdatePasswordHandler (params) {
   }
 }
 async function handleUpdateEmailHandler (params, statusCallBack) {
-  const res = await store.patchEmail(params.newEmail)
+  const res = await store.patchEmail(params.newEmail, params.confirmNewEmail)
   statusCallBack(!res.message)
 }
 async function handleDeleteMyAccountHandler (params) {

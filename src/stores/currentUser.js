@@ -138,12 +138,12 @@ export default (connectors) => {
           return e
         }
       },
-      async patchEmail (newEmail) {
+      async patchEmail (newEmail, newEmailAgain) {
         try {
           if (!this.user || !this.user._id) {
             throw new RouteError('Admin ID Is Required')
           }
-          const res = await connectors.admins.patchEmail({ id: this.user._id, newEmail })
+          const res = await connectors.admins.patchEmail({ id: this.user._id, newEmail, newEmailAgain })
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)

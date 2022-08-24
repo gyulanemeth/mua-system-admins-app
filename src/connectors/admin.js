@@ -148,10 +148,10 @@ export default function (fetch, apiUrl) {
   }
 
   const patchEmail = async function (formData) {
-    if (!formData || !formData.id || !formData.newEmail) {
-      throw new RouteError('Admin ID And New Email Required')
+    if (!formData || !formData.id || !formData.newEmail || !formData.newEmailAgain) {
+      throw new RouteError('Admin ID, New Email and confirm Email Required')
     }
-    const res = await updateEmail({ id: formData.id }, { newEmail: formData.newEmail })
+    const res = await updateEmail({ id: formData.id }, { newEmail: formData.newEmail, newEmailAgain: formData.newEmailAgain })
     return res
   }
 
