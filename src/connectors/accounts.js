@@ -19,7 +19,7 @@ export default function (fetch, apiUrl) {
 
   const createOne = async function (formData) {
     if (!formData || !formData.name || !formData.urlFriendlyName) {
-      throw new RouteError('FormData Name And UrlFriendlyName Is Required')
+      throw new RouteError('Name And UrlFriendlyName Is Required')
     }
     const res = await createAccount({}, { name: formData.name, urlFriendlyName: formData.urlFriendlyName })
     return res

@@ -76,14 +76,14 @@ export default function (fetch, apiUrl) {
 
   const patchName = async function (formData) {
     if (!formData || !formData.id || !formData.name) {
-      throw new RouteError('Admin ID And New Name Is Required')
+      throw new RouteError('Admin ID And New Name Required')
     }
     const res = await updateName({ id: formData.id }, { name: formData.name })
     return res
   }
   const patchPassword = async function (formData) {
     if (!formData || !formData.id || !formData.oldPassword || !formData.newPassword || !formData.newPasswordAgain) {
-      throw new RouteError('Admin ID And New Password Is Required')
+      throw new RouteError('Admin ID, New Password, Old Password and confirm Password Required')
     }
     const res = await updatePassword({ id: formData.id }, { oldPassword: formData.oldPassword, newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
     return res
@@ -91,7 +91,7 @@ export default function (fetch, apiUrl) {
 
   const login = async function (formData) {
     if (!formData || !formData.email || !formData.password) {
-      throw new RouteError('Admin Email And Password Is Required')
+      throw new RouteError('Admin Email And Password Required')
     }
     const res = await postLogin({}, { email: formData.email, password: formData.password })
     if (res.loginToken) {
@@ -102,7 +102,7 @@ export default function (fetch, apiUrl) {
 
   const sendInvitation = async function (data) {
     if (!data || !data.email) {
-      throw new RouteError('Email Is Required')
+      throw new RouteError('Email and confirm Email Required')
     }
     const res = await postSendInvitation({}, { email: data.email })
     return res
@@ -110,7 +110,7 @@ export default function (fetch, apiUrl) {
 
   const accept = async function (formData) {
     if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain || !formData.name) {
-      throw new RouteError('Admin Password Is Required')
+      throw new RouteError('New Password, confirm Password, name and token Required')
     }
     localStorage.setItem('invitationToken', formData.token)
     const res = await postAcceptedInvitaion({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain, name: formData.name })
@@ -131,7 +131,7 @@ export default function (fetch, apiUrl) {
 
   const reset = async function (formData) {
     if (!formData || !formData.token || !formData.newPassword || !formData.newPasswordAgain) {
-      throw new RouteError('Admin Password Is Required')
+      throw new RouteError('Admin Password and confirmPassword Required')
     }
     localStorage.setItem('resetPasswordToken', formData.token)
     const res = await postResetForgotPassword({}, { newPassword: formData.newPassword, newPasswordAgain: formData.newPasswordAgain })
@@ -149,7 +149,7 @@ export default function (fetch, apiUrl) {
 
   const patchEmail = async function (formData) {
     if (!formData || !formData.id || !formData.newEmail) {
-      throw new RouteError('Admin ID And New Email Is Required')
+      throw new RouteError('Admin ID And New Email Required')
     }
     const res = await updateEmail({ id: formData.id }, { newEmail: formData.newEmail })
     return res
@@ -157,7 +157,7 @@ export default function (fetch, apiUrl) {
 
   const patchEmailConfirm = async function (formData) {
     if (!formData || !formData.id || !formData.token) {
-      throw new RouteError('Admin ID and token Is Required')
+      throw new RouteError('Admin ID and token Required')
     }
     localStorage.setItem('verifyEmailToken', formData.token)
     const res = await confirmEmailUpdate({ id: formData.id })

@@ -80,6 +80,6 @@ describe('test admin connectors', () => {
       headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { success: true } })
     })
-    await expect(accounts(fetch, apiUrl).account.createOne()).rejects.toThrowError('FormData Name And UrlFriendlyName Is Required')
+    await expect(accounts(fetch, apiUrl).account.createOne()).rejects.toThrowError('Name And UrlFriendlyName Is Required')
   })
 })
