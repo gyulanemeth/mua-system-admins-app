@@ -12,7 +12,7 @@ const formData = ref()
 
 async function loadData () {
   if (route.name === 'forgot-password') {
-    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Password recovery' }
+    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Password recovery', btnText: 'Reset password' }
   }
 }
 

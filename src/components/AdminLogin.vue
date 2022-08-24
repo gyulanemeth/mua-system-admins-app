@@ -21,12 +21,12 @@ async function submit () {
           <v-icon size="77" color="info" icon="mdi-weather-hurricane" />
       </v-card-text>
       <v-card-title class="justify-center py-0">
-        <h3>  Administration Panel </h3>
+        <h1>  Administration Panel </h1>
       </v-card-title>
     </v-card>
   <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
     <v-card-text align="center">
-      <h4 class="m-4 " >Sign in to your account</h4>
+      <h3 class="m-4 " >Sign in to your account</h3>
               <v-text-field  hide-details
                 density="compact"
               class=" elevation-2 my-5 pt-2 pl-3 rounded"

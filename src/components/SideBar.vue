@@ -7,16 +7,16 @@
 
           <v-list-item  active-class="text-white" prepend-icon="mdi-account-group-outline" />
 
-          <v-list-item  active-class="text-white" prepend-icon="mdi-apps"  />
+          <v-list-item  active-class="text-white" prepend-icon="mdi-email-variant"  />
         </v-list>
 
       </v-navigation-drawer>
 
       <v-navigation-drawer class="elevation-2" permanent>
         <v-list>
-          <v-list-item title="Me" to="/me" />
-          <v-list-item title="Admins List" to="/admins" />
-          <v-list-item title="Accounts List" to="/accounts" />
+          <v-list-item title="My Profile" to="/me" />
+          <v-list-item title="Manage Admins" to="/admins" />
+          <v-list-item title="Manage Accounts" to="/accounts" />
         </v-list>
       </v-navigation-drawer>
 

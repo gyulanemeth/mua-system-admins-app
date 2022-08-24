@@ -17,12 +17,12 @@ const data = ref('')
           <v-icon size="77" color="info" icon="mdi-weather-hurricane" />
       </v-card-text>
       <v-card-title class="justify-center py-0">
-        <h3>  Administration Panel </h3>
+        <h1>  Administration Panel </h1>
       </v-card-title>
     </v-card>
   <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
     <v-card-text align="center">
-      <h4 class="m-4 " >{{props.formData.text}}</h4>
+      <h3 class="m-4 " >{{props.formData.text}}</h3>
 
               <v-text-field  hide-details
                 density="compact"
@@ -33,16 +33,19 @@ const data = ref('')
                 :name="props.formData.inputText"
                 :label="props.formData.inputText"
                 :type="props.formData.inputType"
+                :disabled="cb"
                 v-model="data"
                 required />
-                <v-checkbox v-if="props.formData.text === 'Password recovery'"
-             label="info"
+                <v-checkbox v-if="props.formData.text === 'Password recovery' && !cb"
+             label="I am human."
              color="info"
              value="I am human"
              hide-details
            ></v-checkbox>
-                <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{props.formData.text}}</v-btn>
+           <div v-if="!cb">
+                <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{props.formData.btnText}}</v-btn>
               <button hidden @click.enter.prevent="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})" />
+              </div>
               <div v-if="cb">
 
 <p class="mt-4">We have sent you an e-mail with instructions on how to reset
