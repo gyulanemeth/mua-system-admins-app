@@ -21,11 +21,11 @@ const dialog = ref()
           <v-btn v-else color="grey" variant="text" class="ma-2" icon="mdi-delete" size="small" v-bind="props" />
 
     </template>
-    <v-card min-width="800" class="d-flex flex-column justify-center">
+    <v-card class="d-flex flex-column justify-center">
 
         <v-card-text align="start">
           <v-col align="center" class="pb-10">
-            <v-toolbar-title class="font-weight-bold text-error">Are you sure you want to delete “Peter Griffin”?</v-toolbar-title>
+            <v-toolbar-title class="font-weight-bold text-error">Are you sure you want to delete “{{props.data.name}}”?</v-toolbar-title>
             <v-toolbar-title class="text-error">Doing so will fully delete this record forever, which cannot be reversed.</v-toolbar-title>
           </v-col>
 
