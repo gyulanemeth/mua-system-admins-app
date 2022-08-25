@@ -41,7 +41,6 @@ const tab = ref(route.query.tab)
 
   <p class="text-h4 pa-2">{{props.data.name}}</p>
   <p class="text-h7 font-weight-bold pa-2 ">Administrator</p>
-  <p class="text-h7 pa-2">{{props.data.email}}</p>
 
 <v-spacer />
 </v-layout>
