@@ -10,22 +10,30 @@ const store = useCurrentUserStore()
 
 const formData = ref()
 
-async function loadData () {
-  if (route.name === 'forgot-password') {
-    formData.value = { inputType: 'Email', inputText: 'Email', text: 'Password recovery', btnText: 'Reset password' }
-  }
+async function loadData() {
+    if (route.name === 'forgot-password') {
+        formData.value = {
+            inputType: 'Email',
+            inputText: 'Email',
+            text: 'Password recovery',
+            btnText: 'Reset password'
+        }
+    }
 }
 
-async function handlePasswordRecoveryEvent (data, statusCallBack) {
-  const res = await store.sendForgotPassword(data)
-  statusCallBack(!res.message)
+async function handlePasswordRecoveryEvent(data, statusCallBack) {
+    const res = await store.sendForgotPassword(data)
+    statusCallBack(!res.message)
 }
 
-watchEffect(async () => {
-  loadData()
+watchEffect(async() => {
+    loadData()
 })
+
 </script>
 
 <template>
+
   <ForgotPasswordForm :formData="formData" @passwordRecoveryEventHandler="handlePasswordRecoveryEvent" />
+
 </template>

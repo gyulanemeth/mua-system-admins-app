@@ -18,17 +18,21 @@ const filter = ref('')
 const rows = ref(5)
 const page = ref(1)
 
-function redirectDeleteEventHandler (data) {
+function redirectDeleteEventHandler(data) {
   emit('deleteEventHandler', data)
 }
-function redirectInviteEventHandler (data, cb) {
+
+function redirectInviteEventHandler(data, cb) {
   emit('inviteEventHandler', data, cb)
 }
-function redirectCreateEventHandler (data, cb) {
+
+function redirectCreateEventHandler(data, cb) {
   emit('createEventHandler', data, cb)
 }
 
 </script>
+
+
 <template>
 
 <v-container class="elevation-2 mx-6 pt-0 rounded">
@@ -42,7 +46,7 @@ function redirectCreateEventHandler (data, cb) {
         </v-col>
 
         <v-col cols="2" class="pt-3">
-            <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'"  @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler'  :inputs="props.btn.input" />
+            <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
         </v-col>
     </v-layout>
 
@@ -91,13 +95,15 @@ function redirectCreateEventHandler (data, cb) {
     <v-layout class="d-flex flex-wrap justify-center align-center">
         <v-spacer />
         <p class="ma-2">Rows per page</p>
-        <p class="ma-2"><v-select hide-details density="compact" variant="underlined"  v-model="rows" :items="[5,10,15]" /></p>
+        <p class="ma-2">
+            <v-select hide-details density="compact" variant="underlined" v-model="rows" :items="[5,10,15]" />
+        </p>
         <p class="ma-2">{{page}} of {{numOfPages}} </p>
         <v-col cols="3">
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-left" :disabled="page === 1 "  size="small" @click="page = page - 1"  />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-right" :disabled="page  === numOfPages " size="small"  @click="page = page + 1" />
-            <v-btn color="grey" variant="text"  class="ma-2" icon="mdi-page-first" size="small" @click="page =  1" />
-            <v-btn color="grey" variant="text"  class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages"/>
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-left" :disabled="page === 1 " size="small" @click="page = page - 1" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-right" :disabled="page  === numOfPages " size="small" @click="page = page + 1" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-first" size="small" @click="page =  1" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages" />
         </v-col>
     </v-layout>
 </v-container>
