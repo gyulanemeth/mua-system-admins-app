@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 import NavBar from './components/NavBar.vue'
@@ -8,6 +9,11 @@ import { useCurrentUserStore } from './stores/index.js'
 
 const store = useCurrentUserStore()
 const route = useRoute()
+
+
+onMounted(() => {
+  document.title = window.config.appTitle
+})
 
 </script>
 <template>
