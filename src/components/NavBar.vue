@@ -10,11 +10,11 @@ const appIcon = window.config.appIcon
 
 <template>
 
-<v-app-bar class="elevation-0">
+<v-app-bar class="elevation-0 pl-0 ml-0">
     <v-app-bar-nav-icon size="60" color="info" :icon="appIcon" />
     <v-app-bar-title class=" text-h4">{{appName}}</v-app-bar-title>
     <v-spacer></v-spacer>
-  
+
     <v-menu location="bottom " origin="end top">
         <template v-slot:activator="{ props }">
             <v-avatar size="large" color="grey-darken-3">
