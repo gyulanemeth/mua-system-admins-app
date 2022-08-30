@@ -14,6 +14,10 @@ const email = ref()
 const data = ref({})
 const cb = ref()
 
+const title = window.config.title
+const appIcon = window.config.appIcon
+
+
 email.value = jwtDecode(route.query.token).user.email
 </script>
 
@@ -21,15 +25,15 @@ email.value = jwtDecode(route.query.token).user.email
   <v-form class="d-flex flex-column justify-center align-center h-screen">
     <v-card elevation="0" class="w-25">
       <v-card-text align="center" >
-          <v-icon size="77" color="info" icon="mdi-weather-hurricane" />
+          <v-icon size="77" color="info" :icon="appIcon" />
       </v-card-text>
       <v-card-title class="justify-center py-0">
-        <h1>  Administration Panel </h1>
+        <h4 class="text-h4"> {{title}} </h4>
       </v-card-title>
     </v-card>
   <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
     <v-card-text align="center" v-if="!cb">
-      <h3 class="m-4 " >{{props.formData.text}}</h3>
+      <h6 class="text-h6">{{props.formData.text}}</h6>
 
       <v-text-field v-if="operation === 'setPassword' "
        hide-details
