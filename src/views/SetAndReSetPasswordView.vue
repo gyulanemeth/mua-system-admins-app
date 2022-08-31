@@ -15,41 +15,40 @@ const alert = alerts()
 
 const formData = ref()
 
-async function loadData() {
-    if (route.name === 'accept-invitation') {
-        formData.value = {
-            text: 'Set up your account'
-        }
+async function loadData () {
+  if (route.name === 'accept-invitation') {
+    formData.value = {
+      text: 'Set up your account'
     }
-    if (route.name === 'forgot-password-reset') {
-        formData.value = {
-            text: 'Reset your password'
-        }
+  }
+  if (route.name === 'forgot-password-reset') {
+    formData.value = {
+      text: 'Reset your password'
     }
+  }
 }
 
-async function handleSetPasswordEvent(params) {
-    const res = await store.acceptInvitation(params.token, params.newPassword, params.newPasswordAgain, params.name)
-    if (!res.message) {
-        await alert.message('Admin registered successfully')
-    }
+async function handleSetPasswordEvent (params) {
+  const res = await store.acceptInvitation(params.token, params.newPassword, params.newPasswordAgain, params.name)
+  if (!res.message) {
+    await alert.message('Admin registered successfully')
+  }
 }
 
-async function handleResetPassword(params, statusCallBack) {
-    const res = await store.resetForgotPassword(params.token, params.newPassword, params.newPasswordAgain)
-    if (!res.message) {
-        statusCallBack(res)
-        await new Promise(resolve => setTimeout(resolve, 5000))
-        router.push('/me')
-    }
+async function handleResetPassword (params, statusCallBack) {
+  const res = await store.resetForgotPassword(params.token, params.newPassword, params.newPasswordAgain)
+  if (!res.message) {
+    statusCallBack(res)
+    await new Promise(resolve => setTimeout(resolve, 5000))
+    router.push('/me')
+  }
 }
 
-watchEffect(async() => {
-    loadData()
+watchEffect(async () => {
+  loadData()
 })
 
 </script>
-
 
 <template>
 

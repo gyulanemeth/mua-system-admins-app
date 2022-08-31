@@ -17,11 +17,9 @@ const cb = ref()
 const title = window.config.title
 const appIcon = window.config.appIcon
 
-
 email.value = jwtDecode(route.query.token).user.email
 
 </script>
-
 
 <template>
 

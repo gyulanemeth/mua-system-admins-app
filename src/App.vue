@@ -10,7 +10,6 @@ import { useCurrentUserStore } from './stores/index.js'
 const store = useCurrentUserStore()
 const route = useRoute()
 
-
 onMounted(() => {
   document.title = window.config.appTitle
 })

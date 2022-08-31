@@ -9,24 +9,24 @@ import MyDetails from './MyDetails.vue'
 
 const emit = defineEmits(['updateNameHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteMyAccountHandler'])
 const props = defineProps({
-    data: Object
+  data: Object
 })
 
 const changeTab = (tabId) => {
-    tab.value = tabId
+  tab.value = tabId
 }
 
-async function redirectUpdateNameHandler(data) {
-    emit('updateNameHandler', data)
+async function redirectUpdateNameHandler (data) {
+  emit('updateNameHandler', data)
 }
-async function redirectUpdateEmailHandler(data, cb) {
-    emit('updateEmailHandler', data, cb)
+async function redirectUpdateEmailHandler (data, cb) {
+  emit('updateEmailHandler', data, cb)
 }
-async function redirectUpdatePasswordHandler(data) {
-    emit('updatePasswordHandler', data)
+async function redirectUpdatePasswordHandler (data) {
+  emit('updatePasswordHandler', data)
 }
-async function redirectDeleteHandler(data) {
-    emit('deleteMyAccountHandler', data)
+async function redirectDeleteHandler (data) {
+  emit('deleteMyAccountHandler', data)
 }
 
 const route = useRoute()

@@ -17,7 +17,6 @@
                 </v-list-item-icon>
             </v-list-item>
 
-
             <v-list-item class="justify-center align-center" active-class=" elevation-4 text-white bg-white">
                 <v-list-item-icon class="text-black">
                     mdi-email-variant

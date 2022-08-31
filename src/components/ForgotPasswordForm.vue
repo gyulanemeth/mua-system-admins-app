@@ -12,7 +12,6 @@ const appIcon = window.config.appIcon
 
 </script>
 
-
 <template>
 
 <v-form class="d-flex flex-column justify-center align-center h-screen">

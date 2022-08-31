@@ -18,20 +18,19 @@ const filter = ref('')
 const rows = ref(5)
 const page = ref(1)
 
-function redirectDeleteEventHandler(data) {
+function redirectDeleteEventHandler (data) {
   emit('deleteEventHandler', data)
 }
 
-function redirectInviteEventHandler(data, cb) {
+function redirectInviteEventHandler (data, cb) {
   emit('inviteEventHandler', data, cb)
 }
 
-function redirectCreateEventHandler(data, cb) {
+function redirectCreateEventHandler (data, cb) {
   emit('createEventHandler', data, cb)
 }
 
 </script>
-
 
 <template>
 

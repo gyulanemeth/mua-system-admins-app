@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const props = defineProps({
-    data: Object
+  data: Object
 })
 
 const route = useRoute()

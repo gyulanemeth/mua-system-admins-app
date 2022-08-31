@@ -5,5 +5,5 @@ window.config = {
   appName: 'MUA admin\'s UI',
   appTitle: 'MUA admin\'s UI',
   appIcon: 'mdi-weather-hurricane',
-  title: 'Administration Panel',
+  title: 'Administration Panel'
 }

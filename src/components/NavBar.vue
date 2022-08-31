@@ -7,7 +7,6 @@ const appIcon = window.config.appIcon
 
 </script>
 
-
 <template>
 
 <v-app-bar class="elevation-0 pl-0 ml-0">
@@ -32,9 +31,6 @@ const appIcon = window.config.appIcon
             </v-list-item>
         </v-list>
     </v-menu>
-
-
-
 
 </v-app-bar>
 

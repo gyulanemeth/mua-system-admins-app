@@ -11,12 +11,11 @@ const password = ref('')
 const title = window.config.title
 const appIcon = window.config.appIcon
 
-async function submit() {
+async function submit () {
   await userStore.login(email.value, password.value)
 }
 
 </script>
-
 
 <template>
 <v-form class="d-flex flex-column justify-center align-center h-screen">
