@@ -1,56 +1,37 @@
 <script setup>
+import { useCurrentUserStore } from '../stores/index.js'
 
-import stores from '../stores/index.js'
-
-const store = stores().currentUserStore()
-
-const menuItems = [
-  { title: 'Update Password', path: '/update-password' },
-  { title: 'Update Name', path: '/Update-name' },
-  { title: 'Create Account', path: '/create-account' }
-]
+const store = useCurrentUserStore()
+const appName = window.config.appName
+const appIcon = window.config.appIcon
 
 </script>
 
 <template>
-  <v-app-bar  v-if="store.loggedIn">
-    <v-app-bar-title >MUA admin's UI</v-app-bar-title>
-    <v-avatar color="secondary">
-     Pic
-   </v-avatar>
-      <v-menu
 
-       location="bottom " origin="end top" >
-            <template v-slot:activator="{ props }">
-              <v-btn
-                icon="mdi-dots-vertical"
-                v-bind="props"
-              />
-            </template>
-            <v-list>
-              <v-list-item
-              v-for="item in menuItems"
-              :key="item.title"
-              :to="item.path"
-              :value="item.title"
-              >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="store.logout()">
+<v-app-bar class="elevation-0 pl-0 ml-0">
+    <v-app-bar-nav-icon size="60" color="info" :icon="appIcon" />
+    <v-app-bar-title class=" text-h4">{{appName}}</v-app-bar-title>
+    <v-spacer></v-spacer>
+
+    <v-menu location="bottom " origin="end top">
+        <template v-slot:activator="{ props }">
+            <v-avatar size="large" color="grey-darken-3">
+                <v-btn v-bind="props">
+                    Pic
+                </v-btn>
+            </v-avatar>
+        </template>
+        <v-list>
+            <v-list-item @click="store.logout()">
+                <v-list-item-icon>
+                    mdi-logout
+                </v-list-item-icon>
                 <v-list-item-title> Logout </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-  </v-app-bar>
+            </v-list-item>
+        </v-list>
+    </v-menu>
 
-  <v-app-bar v-else >
-      <v-app-bar-title >MUA admin's UI</v-app-bar-title>
-    <v-btn
+</v-app-bar>
 
-      variant="text"
-      to="/login"
-    >
-      Login
-    </v-btn>
-  </v-app-bar>
 </template>

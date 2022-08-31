@@ -58,7 +58,6 @@ export default (connectors) => {
       async  sendForgotPassword (email) {
         try {
           const res = await connectors.forgotPassword.send({ email })
-          router.push('/')
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -72,7 +71,7 @@ export default (connectors) => {
           const resetPasswordTokenData = jwtDecode(resetPasswordToken)
           this.accessToken = await connectors.admins.getAccessToken({ id: resetPasswordTokenData.user._id })
           this.user = await connectors.admins.readOne({ id: resetPasswordTokenData.user._id })
-          router.push('/admins')
+          return 'success'
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -82,7 +81,6 @@ export default (connectors) => {
       async sendInvitation (email) {
         try {
           const res = await connectors.invitation.send({ email })
-          router.push('/admins')
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -121,7 +119,7 @@ export default (connectors) => {
           }
           await connectors.admins.patchName({ id: this.user._id, name })
           this.user.name = name
-          router.push('/admins')
+          return name
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
@@ -134,19 +132,18 @@ export default (connectors) => {
             throw new RouteError('Admin ID Is Required')
           }
           await connectors.admins.patchPassword({ id: this.user._id, oldPassword, newPassword, newPasswordAgain })
-          router.push('/admins')
+          return 'success'
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
         }
       },
-      async patchEmail (newEmail) {
+      async patchEmail (newEmail, newEmailAgain) {
         try {
           if (!this.user || !this.user._id) {
             throw new RouteError('Admin ID Is Required')
           }
-          const res = await connectors.admins.patchEmail({ id: this.user._id, newEmail })
-          router.push('/admins')
+          const res = await connectors.admins.patchEmail({ id: this.user._id, newEmail, newEmailAgain })
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)

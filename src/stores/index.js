@@ -1,12 +1,21 @@
-import useCurrentUserStore from './currentUser.js'
-import useAdminsStore from './admins.js'
-import useAccountsStore from './accounts.js'
+import createCurrentUserStore from './currentUser.js'
+import createAdminsStore from './admins.js'
+import createAccountsStore from './accounts.js'
 import connectors from '../connectors/index.js'
 
-export default function () {
-  const currentUserStore = useCurrentUserStore(connectors().adminConnectors)
-  const adminsStore = useAdminsStore(connectors().adminConnectors)
-  const accountStore = useAccountsStore(connectors().accountsConnectors)
-
-  return { currentUserStore, adminsStore, accountStore }
+const useCurrentUserStore = () => {
+  const store = createCurrentUserStore(connectors().adminConnectors)
+  return store()
 }
+
+const useAdminsStore = () => {
+  const store = createAdminsStore(connectors().adminConnectors)
+  return store()
+}
+
+const useAccountStore = () => {
+  const store = createAccountsStore(connectors().accountsConnectors)
+  return store()
+}
+
+export { useCurrentUserStore, useAdminsStore, useAccountStore }

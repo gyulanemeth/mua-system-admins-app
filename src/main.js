@@ -16,8 +16,10 @@ async () => {
 }
 */
 
-createApp(App)
+const app = createApp(App)
   .use(pinia)
   .use(router)
   .use(vuetify)
   .mount('#app')
+
+app.config.devtools = true

@@ -218,7 +218,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
-    await expect(admin(fetch, apiUrl).admins.patchName({ id: '123' })).rejects.toThrowError('Admin ID And New Name Is Required')
+    await expect(admin(fetch, apiUrl).admins.patchName({ id: '123' })).rejects.toThrowError('Admin ID And New Name Required')
   })
 
   test('test patchPassword admin', async () => {
@@ -253,7 +253,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
-    await expect(admin(fetch, apiUrl).admins.patchPassword({ id: '123', newPasswordAgain: 'newPassword' })).rejects.toThrowError('Admin ID And New Password Is Required')
+    await expect(admin(fetch, apiUrl).admins.patchPassword({ id: '123', newPasswordAgain: 'newPassword' })).rejects.toThrowError('Admin ID, New Password, Old Password and confirm Password Required')
   })
 
   test('test login admin', async () => {
@@ -284,7 +284,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { loginToken: 'Token' } })
     })
 
-    await expect(admin(fetch, apiUrl).admins.login()).rejects.toThrowError('Admin Email And Password Is Required')
+    await expect(admin(fetch, apiUrl).admins.login()).rejects.toThrowError('Admin Email And Password Required')
   })
 
   test('test sendInvitation admin', async () => {
@@ -318,7 +318,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
-    await expect(admin(fetch, apiUrl).invitation.send()).rejects.toThrowError('Email Is Required')
+    await expect(admin(fetch, apiUrl).invitation.send()).rejects.toThrowError('Email and confirm Email Required')
   })
 
   test('test accept invitation admin', async () => {
@@ -352,7 +352,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { loginToken: 'Token' } })
     })
 
-    await expect(admin(fetch, apiUrl).invitation.accept()).rejects.toThrowError('Admin Password Is Required')
+    await expect(admin(fetch, apiUrl).invitation.accept()).rejects.toThrowError('New Password, confirm Password, name and token Required')
   })
 
   test('test forgotPassword send admin', async () => {
@@ -417,7 +417,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { loginToken: 'Token' } })
     })
 
-    await expect(admin(fetch, apiUrl).forgotPassword.reset()).rejects.toThrowError('Admin Password Is Required')
+    await expect(admin(fetch, apiUrl).forgotPassword.reset()).rejects.toThrowError('Admin Password and confirmPassword Required')
   })
 
   test('test getConfig admin', async () => {
@@ -448,13 +448,13 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await admin(fetch, apiUrl).admins.patchEmail({ id: '123', newEmail: 'newEmail@gmail.com' })
+    const res = await admin(fetch, apiUrl).admins.patchEmail({ id: '123', newEmail: 'newEmail@gmail.com', newEmailAgain: 'newEmail@gmail.com' })
 
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/admins/123/email',
       {
         method: 'PATCH',
-        body: JSON.stringify({ newEmail: 'newEmail@gmail.com' }),
+        body: JSON.stringify({ newEmail: 'newEmail@gmail.com', newEmailAgain: 'newEmail@gmail.com' }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
@@ -471,7 +471,7 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
-    await expect(admin(fetch, apiUrl).admins.patchEmail({})).rejects.toThrowError('Admin ID And New Email Is Required')
+    await expect(admin(fetch, apiUrl).admins.patchEmail({})).rejects.toThrowError('Admin ID, New Email and confirm Email Required')
   })
 
   test('test success patchEmailConfirm ', async () => {
@@ -505,6 +505,6 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
-    await expect(admin(fetch, apiUrl).admins.patchEmailConfirm({})).rejects.toThrowError('Admin ID and token Is Required')
+    await expect(admin(fetch, apiUrl).admins.patchEmailConfirm({})).rejects.toThrowError('Admin ID and token Required')
   })
 })

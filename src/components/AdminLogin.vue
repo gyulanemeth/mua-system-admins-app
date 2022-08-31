@@ -1,12 +1,15 @@
 <script setup >
 import { ref } from 'vue'
 
-import stores from '../stores/index.js'
+import { useCurrentUserStore } from '../stores/index.js'
 
-const userStore = stores().currentUserStore()
+const userStore = useCurrentUserStore()
 
 const email = ref('')
 const password = ref('')
+
+const title = window.config.title
+const appIcon = window.config.appIcon
 
 async function submit () {
   await userStore.login(email.value, password.value)
@@ -15,38 +18,26 @@ async function submit () {
 </script>
 
 <template>
-  <v-container>
-    <v-row class="text-center" justify="center">
-        <v-col cols="6">
-        <form>
-          <v-col>
-            <h1>Sign In</h1>
-          </v-col>
-            <v-col>
-              <v-text-field
-                name="email"
-                label="Email"
-                id="email"
-                type="email"
-                v-model="email"
-                required></v-text-field>
-              <v-text-field
-                name="password"
-                label="Password"
-                id="password"
-                type="password"
-                v-model="password"
-                required></v-text-field>
-            </v-col>
-            <v-row>
-            <v-col>
-                <v-list-item class="d-flex flex-row mb-1 ml-4" title=" Forget password? Reset Password" to="/forgot-password"></v-list-item>
-              <v-btn color="primary" @click="submit" >Sign In</v-btn>
-              <button hidden @click.enter.prevent="submit" />
-            </v-col>
-          </v-row>
-        </form>
-      </v-col>
-    </v-row >
-  </v-container>
+<v-form class="d-flex flex-column justify-center align-center h-screen">
+    <v-card elevation="0" class="w-25">
+        <v-card-text align="center">
+            <v-icon size="77" color="info" :icon="appIcon" />
+        </v-card-text>
+        <v-card-title class="justify-center py-0">
+            <h4 class="text-h4">  {{title}} </h4>
+        </v-card-title>
+    </v-card>
+    <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
+        <v-card-text align="center">
+            <h6 class="text-h6">Sign in to your account</h6>
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" placeholder="your@email.com" name="email" label="Email" v-model="email" id="email" type="email" required />
+            <v-text-field hide-details density="compact" class="elevation-2 my-5 pt-2 pl-3 rounded" color="info" placeholder="********" variant="plain" name="password" label="Password" id="password" type="password" v-model="password" active required />
+            <v-btn color="info" @click="submit">Sign In</v-btn>
+            <p class="mt-4 pa-4">Forget your password?
+                <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/forgot-password">Reset it here.</router-link>
+            </p>
+            <button hidden @click.enter.prevent="submit" />
+        </v-card-text>
+    </v-card>
+</v-form>
 </template>
