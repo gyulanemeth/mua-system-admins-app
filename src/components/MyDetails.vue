@@ -9,7 +9,7 @@ const props = defineProps({
 const name = ref(props.name)
 const email = ref(props.email)
 
-const editemood = ref()
+const editMood = ref()
 
 </script>
 
@@ -25,13 +25,13 @@ const editemood = ref()
             <v-col>
                 <p class="font-weight-bold">Name</p>
             </v-col>
-            <v-text-field hide-details density="compact" :disabled='!editemood' color="info" variant="underlined" placeholder="User Name" name="name" v-model="name" type="text" required />
-            <template v-if='editemood'>
-                <v-btn color="info" variant="text" icon="mdi-check" size="small" @click.stop="$emit('updateNameHandler', name);editemood = false" />
-                <v-btn class="ml-2" color="error" variant="text" icon="mdi-window-close" size="small" @click='editemood = false' />
+            <v-text-field hide-details density="compact" :disabled='!editMood' color="info" variant="underlined" placeholder="User Name" name="name" v-model="name" type="text" required />
+            <template v-if='editMood'>
+                <v-btn color="info" variant="text" icon="mdi-check" size="small" @click.stop="$emit('updateNameHandler', name);editMood = false" />
+                <v-btn class="ml-2" color="error" variant="text" icon="mdi-window-close" size="small" @click='editMood = false' />
             </template>
             <template v-else>
-                <v-btn color="info" variant="text" class="ma-2" icon="mdi-pencil-outline" size="small" @click='editemood = true' />
+                <v-btn color="info" variant="text" class="ma-2" icon="mdi-pencil-outline" size="small" @click='editMood = true' />
             </template>
 
         </v-row>
