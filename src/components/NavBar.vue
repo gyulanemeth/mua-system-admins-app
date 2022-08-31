@@ -1,17 +1,25 @@
 <script setup>
+import { useRoute } from 'vue-router'
+
 import { useCurrentUserStore } from '../stores/index.js'
 
+const route = useRoute()
 const store = useCurrentUserStore()
 const appName = window.config.appName
 const appIcon = window.config.appIcon
-
 </script>
 
 <template>
 
-<v-app-bar class="elevation-0 pl-0 ml-0">
+<v-app-bar height="100" class="elevation-0 pl-0 ml-0">
     <v-app-bar-nav-icon size="60" color="info" :icon="appIcon" />
-    <v-app-bar-title class=" text-h4">{{appName}}</v-app-bar-title>
+    <v-app-bar-title > <h4 class=" text-h4">
+    <span class="mx-1 pt-0 "> {{appName}} </span>
+    <span class="mx-7 pt-0 "> {{ route.name === "me"? "My Profile": route.name === "admins"? "Manage Admins": route.name === "accounts" ? "Manage Accounts" : null }}
+    </span>
+    </h4>
+    </v-app-bar-title>
+
     <v-spacer></v-spacer>
 
     <v-menu location="bottom " origin="end top">

@@ -36,11 +36,12 @@ const tab = ref(route.query.tab)
 
 <template>
 
-<v-container class="elevation-0 mx-6 pt-0  rounded">
+<v-container class="elevation-0 mx-6 pa-0  rounded">
     <v-layout class="d-flex flex-wrap align-end justify-end">
 
-        <p class="text-h4 pa-2">{{props.data.name}}</p>
-        <p class="text-h7 font-weight-bold pa-2 ">Administrator</p>
+        <p class="text-h4 ">{{props.data.name}}
+          <span class="text-subtitle-1 font-weight-bold ">Administrator</span>
+        </p>
 
         <v-spacer />
     </v-layout>
