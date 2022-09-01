@@ -12,7 +12,9 @@ const appIcon = window.config.appIcon
 <template>
 
 <v-app-bar height="100" class="elevation-0 pl-0 ml-0">
-    <v-app-bar-nav-icon size="60" color="info" :icon="appIcon" />
+    <v-avatar size="80" >
+      <v-img :src="appIcon" cover></v-img>
+    </v-avatar>
     <v-app-bar-title > <h4 class=" text-h4">
     <span class="mx-1 pt-0 "> {{appName}} </span>
     <span class="mx-7 pt-0 "> {{ route.name === "me"? "My Profile": route.name === "admins"? "Manage Admins": route.name === "accounts" ? "Manage Accounts" : null }}

@@ -26,7 +26,9 @@ email.value = jwtDecode(route.query.token).user.email
 <v-form class="d-flex flex-column justify-center align-center h-screen">
     <v-card elevation="0" class="w-25">
         <v-card-text align="center">
-            <v-icon size="77" color="info" :icon="appIcon" />
+          <v-avatar size="80" >
+            <v-img :src="appIcon" cover></v-img>
+          </v-avatar>
         </v-card-text>
         <v-card-title class="justify-center py-0">
             <h4 class="text-h4"> {{title}} </h4>
