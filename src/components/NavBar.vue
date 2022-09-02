@@ -16,7 +16,6 @@ const appIcon = window.config.appIcon
       <v-img :src="appIcon" cover></v-img>
     </v-avatar>
 
-
    <v-col cols="2">
     <span class="text-h4 mx-1 pt-0 "> {{appName}} </span>
   </v-col>
