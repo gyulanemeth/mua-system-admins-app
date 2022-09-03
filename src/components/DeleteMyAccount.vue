@@ -17,7 +17,6 @@ const resetForm = () => {
   dialog.value = false
 }
 
-
 </script>
 
 <template>

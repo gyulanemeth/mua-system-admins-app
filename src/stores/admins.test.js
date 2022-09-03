@@ -35,8 +35,14 @@ describe('admins Store', () => {
       return { name: 'user1', email: 'user1@gmail.com', _id: '12test12' }
     }
 
+    const mockDeleteMyAccount = ({id, password}) => {
+      if (!id || !password) {
+        throw new RouteError('Password and Admin\'s Id Is Required')
+      }
+      return { name: 'user1', email: 'user1@gmail.com', _id: '12test12' }
+    }
     return {
-      admins: { list: mockList, deleteOne: mockDeleteOne }
+      admins: { list: mockList, deleteOne: mockDeleteOne, deleteMyAccount: mockDeleteMyAccount }
     }
   }
 
@@ -60,5 +66,21 @@ describe('admins Store', () => {
     await store.deleteOne(store.items[0]._id)
     expect(store.items.length).toEqual(3)
     expect(store.items[0].data.name).toEqual('user2')
+  })
+
+  test('test success delete My Account', async () => {
+    const adminStore = useAdminsStore(mokeConnector())
+    const store = adminStore()
+    await store.load()
+    const res = await store.deleteMyAccount({id:123456, password: 123123})
+    expect(res).toEqual({name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
+  })
+
+  test('test error delete My Account', async () => {
+    const adminStore = useAdminsStore(mokeConnector())
+    const store = adminStore()
+    await store.load()
+    const res = await store.deleteMyAccount({})
+    expect(res.message).toEqual('Password and Admin\'s Id Is Required')
   })
 })

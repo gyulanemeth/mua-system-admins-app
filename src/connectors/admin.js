@@ -49,7 +49,6 @@ export default function (fetch, apiUrl) {
   const confirmEmailUpdate = createPatchConnector(fetch, apiUrl, generatePatchConfirmEmailRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('verifyEmailToken')}` }))
   const delMyAccount = createPostConnector(fetch, apiUrl, generateDeleteMyAccountRoute, generateAdditionalHeaders)
 
-
   const list = async function (param, query) {
     const res = await getAdmin({}, query)
     return res
@@ -82,16 +81,14 @@ export default function (fetch, apiUrl) {
     return res
   }
 
-  const deleteMyAccount = async function ({id, password}) {
+  const deleteMyAccount = async function ({ id, password }) {
     if (!id || !password) {
       throw new RouteError('Password and Admin\'s Id Is Required')
     }
-    let res = await delMyAccount({},{password})
-    if(res.permissionToken){
+    let res = await delMyAccount({}, { password })
       localStorage.setItem('permission', res.permissionToken)
-      res = await deleteOne({id})
+      res = await deleteOne({ id })
       localStorage.removeItem('permission')
-    }
     return res
   }
 
