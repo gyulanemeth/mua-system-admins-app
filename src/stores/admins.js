@@ -10,7 +10,16 @@ export default (connectors) => {
     state: infiniteListState,
     actions: {
       load: load(connectors.admins.list, useSystemMessagesStore().addError, { metaFirst: false }),
-      deleteOne: deleteOne(connectors.admins.deleteOne, useSystemMessagesStore().addError, { optimistic: false })
+      deleteOne: deleteOne(connectors.admins.deleteOne, useSystemMessagesStore().addError, { optimistic: false }),
+      async deleteMyAccount ({id, password}) {
+        try {
+          const res = await connectors.admins.deleteMyAccount({ id, password })
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
+      },
     }
   })
 

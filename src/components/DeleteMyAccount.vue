@@ -12,6 +12,12 @@ const confirmPassword = computed(() => route.name === 'me')
 const password = ref()
 const dialog = ref()
 
+const resetForm = () => {
+  password.value = null
+  dialog.value = false
+}
+
+
 </script>
 
 <template>
@@ -68,16 +74,16 @@ const dialog = ref()
                     <v-col>
                         <p class="font-weight-bold">Password</p>
                     </v-col>
-                    <v-text-field hide-details density="compact" color="info" class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" placeholder="********" name="password" v-model="password" type="text" required />
+                    <v-text-field hide-details density="compact" color="info" class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" placeholder="********" name="password" v-model="password" type="password" required />
                 </v-row>
             </v-col>
 
         </v-card-text>
         <v-card-actions>
-            <v-btn v-if="confirmPassword" color="error" @click="$emit('deleteEventHandler',{id:props.data._id, password});dialog=false">Delete</v-btn>
-            <v-btn v-else color="error" @click="$emit('deleteEventHandler',{id:props.data._id});dialog=false">Delete</v-btn>
+            <v-btn v-if="confirmPassword" color="error" @click="$emit('deleteEventHandler',{id:props.data._id, password});resetForm">Delete</v-btn>
+            <v-btn v-else color="error" @click="$emit('deleteEventHandler',{id:props.data._id});resetForm">Delete</v-btn>
             <v-spacer />
-            <v-btn color="info" @click="dialog=false; password=null">close</v-btn>
+            <v-btn color="info" @click="resetForm">close</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>

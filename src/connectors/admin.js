@@ -12,6 +12,10 @@ export default function (fetch, apiUrl) {
     return { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
   }
 
+  const generateDeleteHeaders = () => {
+    return { Authorization: `Bearer ${localStorage.getItem('permission') || localStorage.getItem('accessToken')}` }
+  }
+
   const generateAdminRoute = (params) => `/v1/admins${params.id ? '/' + params.id : ''}`
   const generateTokenRoute = (params) => `/v1/admins/${params.id}/access-token`
 
@@ -28,8 +32,10 @@ export default function (fetch, apiUrl) {
   const generateSendForgotPasswordRoute = () => '/v1/forgot-password/send'
   const generateResetForgotPasswordRoute = () => '/v1/forgot-password/reset'
 
+  const generateDeleteMyAccountRoute = () => '/v1/admins/permission/delete'
+
   const getAdmin = createGetConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
-  const del = createDeleteConnector(fetch, apiUrl, generateAdminRoute, generateAdditionalHeaders)
+  const del = createDeleteConnector(fetch, apiUrl, generateAdminRoute, generateDeleteHeaders)
   const getToken = createGetConnector(fetch, apiUrl, generateTokenRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('loginToken')}` }))
   const getAdminConfig = createGetConnector(fetch, apiUrl, generateConfigRoute)
   const updateName = createPatchConnector(fetch, apiUrl, generatePatchNameRoute, generateAdditionalHeaders)
@@ -41,6 +47,8 @@ export default function (fetch, apiUrl) {
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('resetPasswordToken')}` }))
   const updateEmail = createPatchConnector(fetch, apiUrl, generatePatchEmailRoute, generateAdditionalHeaders)
   const confirmEmailUpdate = createPatchConnector(fetch, apiUrl, generatePatchConfirmEmailRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('verifyEmailToken')}` }))
+  const delMyAccount = createPostConnector(fetch, apiUrl, generateDeleteMyAccountRoute, generateAdditionalHeaders)
+
 
   const list = async function (param, query) {
     const res = await getAdmin({}, query)
@@ -71,6 +79,19 @@ export default function (fetch, apiUrl) {
       throw new RouteError('Admin ID Is Required')
     }
     const res = await del(id)
+    return res
+  }
+
+  const deleteMyAccount = async function ({id, password}) {
+    if (!id || !password) {
+      throw new RouteError('Password and Admin\'s Id Is Required')
+    }
+    let res = await delMyAccount({},{password})
+    if(res.permissionToken){
+      localStorage.setItem('permission', res.permissionToken)
+      res = await deleteOne({id})
+      localStorage.removeItem('permission')
+    }
     return res
   }
 
@@ -166,7 +187,7 @@ export default function (fetch, apiUrl) {
   }
 
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login, patchEmail, patchEmailConfirm },
+    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login, patchEmail, patchEmailConfirm, deleteMyAccount },
     invitation: { send: sendInvitation, accept },
     forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }
