@@ -7,7 +7,7 @@ import ChangeEmail from './ChangeEmail.vue'
 import ChangePassword from './ChangePassword.vue'
 import MyDetails from './MyDetails.vue'
 
-const emit = defineEmits(['updateNameHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteMyAccountHandler'])
+const emit = defineEmits(['updateNameHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteEventHandler'])
 const props = defineProps({
   data: Object
 })
@@ -26,7 +26,7 @@ async function redirectUpdatePasswordHandler (data) {
   emit('updatePasswordHandler', data)
 }
 async function redirectDeleteHandler (data) {
-  emit('deleteMyAccountHandler', data)
+  emit('deleteEventHandler', data)
 }
 
 const route = useRoute()

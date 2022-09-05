@@ -35,14 +35,14 @@ describe('admins Store', () => {
       return { name: 'user1', email: 'user1@gmail.com', _id: '12test12' }
     }
 
-    const mockDeleteMyAccount = ({ id, password }) => {
-      if (!id || !password) {
-        throw new RouteError('Password and Admin\'s Id Is Required')
+    const mockDeletePermission = (password) => {
+      if (!password) {
+        throw new RouteError('Password Is Required')
       }
       return { name: 'user1', email: 'user1@gmail.com', _id: '12test12' }
     }
     return {
-      admins: { list: mockList, deleteOne: mockDeleteOne, deleteMyAccount: mockDeleteMyAccount }
+      admins: { list: mockList, deleteOne: mockDeleteOne, deletePermission: mockDeletePermission }
     }
   }
 
@@ -59,28 +59,28 @@ describe('admins Store', () => {
     expect(store.count).toEqual(4)
   })
 
-  test('test success DeleteOne', async () => {
+  test('test success deleteOne', async () => {
     const adminStore = useAdminsStore(mokeConnector())
     const store = adminStore()
     await store.load()
-    await store.deleteOne(store.items[0]._id)
+    await store.delete(store.items[0]._id)
     expect(store.items.length).toEqual(3)
     expect(store.items[0].data.name).toEqual('user2')
   })
 
-  test('test success delete My Account', async () => {
+  test('test success delete ', async () => {
     const adminStore = useAdminsStore(mokeConnector())
     const store = adminStore()
     await store.load()
-    const res = await store.deleteMyAccount({ id: 123456, password: 123123 })
+    const res = await store.deleteOne({ id: store.items[0]._id, password: 123123 })
     expect(res).toEqual({ name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
   })
 
-  test('test error delete My Account', async () => {
+  test('test error delete ', async () => {
     const adminStore = useAdminsStore(mokeConnector())
     const store = adminStore()
     await store.load()
-    const res = await store.deleteMyAccount({})
-    expect(res.message).toEqual('Password and Admin\'s Id Is Required')
+    const res = await store.deleteOne({})
+    expect(res.message).toEqual('Password Is Required')
   })
 })

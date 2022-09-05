@@ -69,10 +69,9 @@ async function handleDetailsEvent (params) {
 }
 
 async function handleDeleteEvent (params) {
-  const res = await store.deleteOne(params.id)
+  const res = await store.deleteOne(params)
   if (!res.message) {
-    await alert.message('Deleted successfully')
-    loadData()
+    alert.message('Deleted successfully')
   }
 }
 

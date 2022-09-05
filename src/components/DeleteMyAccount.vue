@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const props = defineProps({
@@ -7,7 +7,6 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const confirmPassword = computed(() => route.name === 'me')
 
 const password = ref()
 const dialog = ref()
@@ -23,7 +22,7 @@ const resetForm = () => {
 
 <v-dialog v-model="dialog" persistent>
     <template v-slot:activator="{ props }">
-        <v-btn v-if="confirmPassword" color="error" class="mt-10 text-white" v-bind="props">Delete</v-btn>
+        <v-btn v-if="route.name === 'me'" color="error" class="mt-10 text-white" v-bind="props">Delete</v-btn>
         <v-btn v-else color="grey" variant="text" class="ma-2" icon="mdi-delete" size="small" v-bind="props" />
 
     </template>
@@ -63,9 +62,9 @@ const resetForm = () => {
                     </v-avatar>
                 </v-col>
             </v-row>
-            <v-col v-if="confirmPassword">
+            <v-col>
                 <v-row align="center" class="py-10">
-                    <h3 class="font-weight-bold">Please type your password to proceed with deleting your account:</h3>
+                    <h3 class="font-weight-bold">Please type your password to proceed with deleting the account:</h3>
                     <v-divider />
                 </v-row>
 
@@ -84,8 +83,7 @@ const resetForm = () => {
 
         </v-card-text>
         <v-card-actions>
-            <v-btn v-if="confirmPassword" color="error" @click="$emit('deleteEventHandler',{id:props.data._id, password});resetForm">Delete</v-btn>
-            <v-btn v-else color="error" @click="$emit('deleteEventHandler',{id:props.data._id});resetForm">Delete</v-btn>
+            <v-btn color="error" @click="$emit('deleteEventHandler',{id:props.data._id, password});resetForm">Delete</v-btn>
             <v-spacer />
             <v-btn color="info" @click="resetForm">close</v-btn>
         </v-card-actions>
