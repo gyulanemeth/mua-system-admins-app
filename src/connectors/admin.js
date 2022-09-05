@@ -86,9 +86,9 @@ export default function (fetch, apiUrl) {
       throw new RouteError('Password and Admin\'s Id Is Required')
     }
     let res = await delMyAccount({}, { password })
-      localStorage.setItem('permission', res.permissionToken)
-      res = await deleteOne({ id })
-      localStorage.removeItem('permission')
+    localStorage.setItem('permission', res.permissionToken)
+    res = await deleteOne({ id })
+    localStorage.removeItem('permission')
     return res
   }
 

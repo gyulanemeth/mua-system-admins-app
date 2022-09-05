@@ -43,14 +43,22 @@ const resetForm = () => {
             <v-col>
                 <p class="font-weight-bold">New E-mail Address</p>
             </v-col>
-            <v-text-field hide-details density="compact" v-model="data.newEmail" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="newEmail" placeholder="email@email.com">
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="newEmail"
+            :placeholder="data.newEmail ||'your@email.com'"
+            :value="data.newEmail"
+            @update:modelValue="res => data.newEmail = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+            >
             </v-text-field>
         </v-row>
         <v-row align="center" class="mt-3">
             <v-col>
                 <p class="font-weight-bold">Confirm New E-mail Address</p>
             </v-col>
-            <v-text-field hide-details v-model="data.confirmNewEmail" density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="confirmNewEmail" placeholder="email@email.com">
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="confirmNewEmail"
+            :placeholder="data.confirmNewEmail ||'your@email.com'"
+            :value="data.confirmNewEmail"
+            @update:modelValue="res => data.confirmNewEmail = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+            >
             </v-text-field>
 
         </v-row>

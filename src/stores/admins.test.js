@@ -35,7 +35,7 @@ describe('admins Store', () => {
       return { name: 'user1', email: 'user1@gmail.com', _id: '12test12' }
     }
 
-    const mockDeleteMyAccount = ({id, password}) => {
+    const mockDeleteMyAccount = ({ id, password }) => {
       if (!id || !password) {
         throw new RouteError('Password and Admin\'s Id Is Required')
       }
@@ -72,8 +72,8 @@ describe('admins Store', () => {
     const adminStore = useAdminsStore(mokeConnector())
     const store = adminStore()
     await store.load()
-    const res = await store.deleteMyAccount({id:123456, password: 123123})
-    expect(res).toEqual({name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
+    const res = await store.deleteMyAccount({ id: 123456, password: 123123 })
+    expect(res).toEqual({ name: 'user1', email: 'user1@gmail.com', _id: '12test12' })
   })
 
   test('test error delete My Account', async () => {

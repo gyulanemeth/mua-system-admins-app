@@ -24,7 +24,13 @@ const editMode = ref()
             <v-col>
                 <p class="font-weight-bold">Name</p>
             </v-col>
-            <v-text-field hide-details density="compact" :disabled='!editMode' color="info" variant="underlined" placeholder="User Name" name="name" v-model="name" type="text" required />
+
+            <v-text-field
+            hide-details density="compact" :disabled='!editMode' color="info" variant="underlined" name="name"
+            :placeholder="name ||'User Name'"
+            :value="name"
+            @update:modelValue="res => name = res.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, '')"
+            type="text" required />
             <template v-if='editMode'>
                 <v-btn color="info" variant="text" icon="mdi-check" size="small" @click.stop="$emit('updateNameHandler', name);editMode = false" />
                 <v-btn class="ml-2" color="error" variant="text" icon="mdi-window-close" size="small" @click='editMode = false' />

@@ -29,8 +29,11 @@ const appIcon = window.config.appIcon
         <v-card-text align="center">
             <h6 class="text-h6">{{props.formData.text}}</h6>
 
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" placeholder="your@email.com" :name="props.formData.inputText" :label="props.formData.inputText" :type="props.formData.inputType" :disabled="cb"
-            v-model="data" required />
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" :name="props.formData.inputText" :label="props.formData.inputText" :type="props.formData.inputType" :disabled="cb"
+            :placeholder="data ||'your@email.com'"
+            :value="data"
+            @update:modelValue="res => data = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+             required />
             <v-checkbox v-if="props.formData.text === 'Password recovery' && !cb" label="I am human." color="info" value="I am human" hide-details></v-checkbox>
             <div v-if="!cb">
                 <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{props.formData.btnText}}</v-btn>

@@ -73,7 +73,12 @@ const resetForm = () => {
                     <v-col>
                         <p class="font-weight-bold">Password</p>
                     </v-col>
-                    <v-text-field hide-details density="compact" color="info" class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain" placeholder="********" name="password" v-model="password" type="password" required />
+                    <v-text-field hide-details density="compact" color="info" class=" elevation-2 my-5 pt-2 pl-3 rounded" variant="plain"
+                    name="password" type="password"
+                    :placeholder="password ||'********'"
+                    :value="password"
+                    @update:modelValue="res => password = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
+                    required />
                 </v-row>
             </v-col>
 

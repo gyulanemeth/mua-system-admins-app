@@ -508,13 +508,12 @@ describe('test admin connectors', () => {
     await expect(admin(fetch, apiUrl).admins.patchEmailConfirm({})).rejects.toThrowError('Admin ID and token Required')
   })
 
-
   test('test deleteMyAccount admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
       ok: true,
       headers: { get: () => 'application/json' },
-      json: () => Promise.resolve({ result: {permissionToken: 'permissionToken'} })
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
     })
 
     const spy = vi.spyOn(fetch, 'impl')
@@ -532,14 +531,13 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ permissionToken: 'permissionToken' })
   })
 
-
-    test('test deleteMyAccount admin error ', async () => {
-      const fetch = vi.fn()
-      fetch.mockResolvedValue({
-        ok: true,
-        headers: { get: () => 'application/json' },
-        json: () => Promise.resolve({ result: {permissionToken: 'permissionToken'} })
-      })
-      await expect(admin(fetch, apiUrl).admins.deleteMyAccount({})).rejects.toThrowError('Password and Admin\'s Id Is Required')
+  test('test deleteMyAccount admin error ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
     })
+    await expect(admin(fetch, apiUrl).admins.deleteMyAccount({})).rejects.toThrowError('Password and Admin\'s Id Is Required')
+  })
 })
