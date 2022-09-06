@@ -83,7 +83,7 @@ export default function (fetch, apiUrl) {
       throw new RouteError('Password Is Required')
     }
     const res = await delPermission({}, { password })
-    localStorage.setItem('permission', res.permissionToken)
+    localStorage.setItem('delete-permission-token', res.permissionToken)
   }
 
   const patchName = async function (formData) {
