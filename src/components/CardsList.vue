@@ -34,7 +34,7 @@ function redirectCreateEventHandler (data, cb) {
 
 <template>
 
-<v-container class="elevation-2 mx-6 pt-0 rounded">
+<v-container class="elevation-2 mx-10 pt-0 rounded">
     <v-layout class="d-flex flex-wrap">
         <v-col cols="2" class="pt-3">
             <p class="text-h6">{{route.name === 'admins'? 'Administrators' : 'Accounts'}} </p>

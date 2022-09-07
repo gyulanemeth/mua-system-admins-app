@@ -26,7 +26,9 @@ email.value = jwtDecode(route.query.token).user.email
 <v-form class="d-flex flex-column justify-center align-center h-screen">
     <v-card elevation="0" class="w-25">
         <v-card-text align="center">
-            <v-icon size="77" color="info" :icon="appIcon" />
+          <v-avatar size="80" >
+            <v-img :src="appIcon" cover></v-img>
+          </v-avatar>
         </v-card-text>
         <v-card-title class="justify-center py-0">
             <h4 class="text-h4"> {{title}} </h4>
@@ -38,12 +40,26 @@ email.value = jwtDecode(route.query.token).user.email
 
             <v-text-field v-if="operation === 'setPassword' " hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" type="text" :value="email" :placeholder="email" disabled required />
 
-            <v-text-field v-if="operation === 'setPassword' " hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" placeholder="Your Name" name="name" label="Name" type="text" v-model="data.name" required />
+            <v-text-field v-if="operation === 'setPassword' " hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
+            name="name" label="Name" type="text"
+            :placeholder="data.name ||'User Name'"
+            :value="data.name"
+            @update:modelValue="res => data.name = res.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, '')"
+            required />
 
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" placeholder="********" name="newPassword" label="New Password" type="password" v-model="data.newPassword" required />
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
+            name="newPassword" label="New Password" type="password"
+            :placeholder="data.newPassword ||'********'"
+            :value="data.newPassword"
+            @update:modelValue="res => data.newPassword = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
+            required />
 
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" placeholder="********" name="newPasswordAgain" label="Confirm New Password" type="password" v-model="data.newPasswordAgain" required
-            />
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
+            name="newPasswordAgain" label="Confirm New Password" type="password"
+            :placeholder="data.newPasswordAgain ||'********'"
+            :value="data.newPasswordAgain"
+            @update:modelValue="res => data.newPasswordAgain = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
+            required/>
 
             <v-checkbox label="I am human." color="info" value="I am human" hide-details></v-checkbox>
 

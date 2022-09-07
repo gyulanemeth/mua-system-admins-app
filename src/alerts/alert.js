@@ -13,11 +13,14 @@ export default function () {
   }
 
   async function message (msg) {
-    return Swal.fire(
-      msg,
-      '',
-      'success'
-    )
+    return Swal.fire({
+      title: msg,
+      showDenyButton: true,
+      icon: 'success',
+      showConfirmButton: false,
+      denyButtonColor: '#2196F3',
+      denyButtonText: 'Done'
+    })
   }
   return { confirmAlert, message }
 }

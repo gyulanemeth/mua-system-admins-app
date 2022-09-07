@@ -21,7 +21,9 @@ async function submit () {
 <v-form class="d-flex flex-column justify-center align-center h-screen">
     <v-card elevation="0" class="w-25">
         <v-card-text align="center">
-            <v-icon size="77" color="info" :icon="appIcon" />
+            <v-avatar size="80" >
+              <v-img :src="appIcon" cover></v-img>
+            </v-avatar>
         </v-card-text>
         <v-card-title class="justify-center py-0">
             <h4 class="text-h4">  {{title}} </h4>
@@ -30,8 +32,17 @@ async function submit () {
     <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
         <v-card-text align="center">
             <h6 class="text-h6">Sign in to your account</h6>
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" placeholder="your@email.com" name="email" label="Email" v-model="email" id="email" type="email" required />
-            <v-text-field hide-details density="compact" class="elevation-2 my-5 pt-2 pl-3 rounded" color="info" placeholder="********" variant="plain" name="password" label="Password" id="password" type="password" v-model="password" active required />
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" label="Email" id="email" type="email"
+             :placeholder="email ||'your@email.com'"
+             :value="email"
+             @update:modelValue="res => email = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+             required />
+            <v-text-field hide-details density="compact" class="elevation-2 my-5 pt-2 pl-3 rounded" color="info"
+            variant="plain" name="password" label="Password" id="password" type="password"
+            :placeholder="password ||'********'"
+            :value="password"
+            @update:modelValue="res => password = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
+            active required />
             <v-btn color="info" @click="submit">Sign In</v-btn>
             <p class="mt-4 pa-4">Forget your password?
                 <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/forgot-password">Reset it here.</router-link>

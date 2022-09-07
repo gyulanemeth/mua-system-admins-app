@@ -21,7 +21,9 @@ onMounted(() => {
     <SideBar v-if="store.loggedIn && route.name !== 'forgot-password-reset'"/>
     <v-main >
       <ErrorMessage/>
+      <Suspense>
       <router-view/>
+    </Suspense>
     </v-main>
   </v-app>
 </template>

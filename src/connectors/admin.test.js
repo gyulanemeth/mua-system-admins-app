@@ -151,6 +151,7 @@ describe('test admin connectors', () => {
 
   test('test delete admin', async () => {
     const fetch = vi.fn()
+    localStorage.setItem('delete-permission-token', 'token')
 
     fetch.mockResolvedValue({
       ok: true,
@@ -167,7 +168,7 @@ describe('test admin connectors', () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+          Authorization: 'Bearer token'
         }
       })
 
@@ -506,5 +507,38 @@ describe('test admin connectors', () => {
     })
 
     await expect(admin(fetch, apiUrl).admins.patchEmailConfirm({})).rejects.toThrowError('Admin ID and token Required')
+  })
+
+  test('test get delete permission admin', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.deletePermission(142536)
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/permission/delete',
+      {
+        method: 'POST',
+        body: JSON.stringify({ password: 142536 }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer Token'
+        }
+      })
+    expect(res).toEqual(undefined)
+  })
+
+  test('test deleteMyAccount admin error ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
+    })
+    await expect(admin(fetch, apiUrl).admins.deletePermission()).rejects.toThrowError('Password Is Required')
   })
 })
