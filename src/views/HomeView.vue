@@ -6,6 +6,9 @@ import CardList from '../components/CardsList.vue'
 import alerts from '../alerts/alert.js'
 import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/index.js'
 
+import { useI18n } from 'vue-i18n';
+const { tm } = useI18n();
+console.log(tm('createDialog'));
 const route = useRoute()
 const alert = alerts()
 
@@ -20,18 +23,16 @@ async function loadData () {
     await store.load()
     data.value = store.items
     btn.value = {
-      text: 'Delete',
-      color: 'error',
-      header: 'Invite Administrators',
+      header: tm('createDialog.inviteHeader'),
       input: [{
-        label: 'Email address',
+        label: tm('createDialog.emailLabel'),
         name: 'email',
-        placeholder: 'your@email.com',
+        placeholder: tm('createDialog.emailPlaceHolder'),
         type: 'email'
       }, {
-        label: 'Confirm e-mail address',
+        label: tm('createDialog.confirmEmailLabel'),
         name: 'confirmEmail',
-        placeholder: 'your@email.com',
+        placeholder: tm('createDialog.confirmEmailPlaceHolder'),
         type: 'email'
       }]
     }
@@ -40,23 +41,21 @@ async function loadData () {
     await store.load()
     data.value = store.items
     btn.value = {
-      text: 'Details',
-      color: 'primary',
-      header: 'Create a new account!',
+      header: tm('createDialog.detailsHeader'),
       input: [{
-        label: 'Account Name',
+        label: tm('createDialog.nameLabel'),
         name: 'name',
-        placeholder: 'Your Account’s Name',
+        placeholder: tm('createDialog.namePlaceHolder'),
         type: 'text'
       }, {
-        label: 'URL Friendly Name',
+        label: tm('createDialog.urlFriendlyNameLabel'),
         name: 'urlFriendlyName',
-        placeholder: '/youraccountname',
+        placeholder: tm('createDialog.urlFriendlyNamePlaceHolder'),
         type: 'text'
       }, {
-        label: 'Logo',
+        label: tm('createDialog.logoLabel'),
         name: 'pic',
-        placeholder: 'Upload',
+        placeholder: tm('createDialog.logoPlaceHolder'),
         type: 'file'
       }]
     }

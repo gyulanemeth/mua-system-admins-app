@@ -31,21 +31,21 @@ async function submit () {
     </v-card>
     <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
         <v-card-text align="center">
-            <h6 class="text-h6">Sign in to your account</h6>
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" label="Email" id="email" type="email"
+            <h6 class="text-h6">{{ $t('adminLogin.header') }}</h6>
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" :label="$t('adminLogin.emailLabel')" id="email" type="email"
              :placeholder="email ||'your@email.com'"
              :value="email"
              @update:modelValue="res => email = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
              required />
             <v-text-field hide-details density="compact" class="elevation-2 my-5 pt-2 pl-3 rounded" color="info"
-            variant="plain" name="password" label="Password" id="password" type="password"
+            variant="plain" name="password" :label="$t('adminLogin.passwordLabel')" id="password" type="password"
             :placeholder="password ||'********'"
             :value="password"
             @update:modelValue="res => password = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
             active required />
-            <v-btn color="info" @click="submit">Sign In</v-btn>
-            <p class="mt-4 pa-4">Forget your password?
-                <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/forgot-password">Reset it here.</router-link>
+            <v-btn color="info" @click="submit">{{ $t('adminLogin.submitBtn') }}</v-btn>
+            <p class="mt-4 pa-4">{{ $t('adminLogin.resetPasswordMsg') }}
+                <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/forgot-password">{{ $t('adminLogin.resetPasswordBtn') }}</router-link>
             </p>
             <button hidden @click.enter.prevent="submit" />
         </v-card-text>

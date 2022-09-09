@@ -37,7 +37,7 @@ function redirectCreateEventHandler (data, cb) {
 <v-container class="elevation-2 mx-10 pt-0 rounded">
     <v-layout class="d-flex flex-wrap">
         <v-col cols="2" class="pt-3">
-            <p class="text-h6">{{route.name === 'admins'? 'Administrators' : 'Accounts'}} </p>
+            <p class="text-h6">{{route.name === 'admins'?  $t('cardsList.header.admin') : $t('cardsList.header.account')}} </p>
         </v-col>
         <v-spacer />
         <v-col cols="5">
@@ -54,19 +54,19 @@ function redirectCreateEventHandler (data, cb) {
             <thead>
                 <tr>
                     <th class="text-left">
-                        Name
+                        {{$t('cardsList.tableHeader.nameLabel')}}
                     </th>
                     <th v-if="route.name === 'admins'" class="text-left">
-                        E-mail address
+                        {{$t('cardsList.tableHeader.emailLabel')}}
                     </th>
                     <th v-else class="text-left">
-                        URL Friendly name
+                        {{$t('cardsList.tableHeader.urlFriendlyName')}}
                     </th>
                     <th class="text-left">
-                        Last Edited
+                        {{$t('cardsList.tableHeader.lastEditedLabel')}}
                     </th>
                     <th class="text-left">
-                        Creation Date
+                        {{$t('cardsList.tableHeader.creationDateLabel')}}
                     </th>
                     <th>
                     </th>
@@ -93,7 +93,9 @@ function redirectCreateEventHandler (data, cb) {
     <v-divider />
     <v-layout class="d-flex flex-wrap justify-center align-center">
         <v-spacer />
-        <p class="ma-2">Rows per page</p>
+        <p class="ma-2">
+          {{$t('cardsList.tableFooter.label')}}
+        </p>
         <p class="ma-2">
             <v-select hide-details density="compact" variant="underlined" v-model="rows" :items="[5,10,15]" />
         </p>

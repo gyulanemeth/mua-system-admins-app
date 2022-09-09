@@ -17,17 +17,17 @@ const editMode = ref()
 
 <v-layout class="d-flex flex-wrap">
     <v-col cols="8" class="pt-3">
-        <h3 class="font-weight-bold">My Details</h3>
+        <h3 class="font-weight-bold">{{$t('myDetails.header')}}</h3>
         <v-divider />
 
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">Name</p>
+                <p class="font-weight-bold">{{$t('myDetails.nameLabel')}}</p>
             </v-col>
 
             <v-text-field
             hide-details density="compact" :disabled='!editMode' color="info" variant="underlined" name="name"
-            :placeholder="name ||'User Name'"
+            :placeholder="name || $t('myDetails.namePlaceHolder')"
             :value="name"
             @update:modelValue="res => name = res.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, '')"
             type="text" required />
@@ -42,9 +42,9 @@ const editMode = ref()
         </v-row>
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">E-mail</p>
+                <p class="font-weight-bold">{{$t('myDetails.emailLabel')}}</p>
             </v-col>
-            <v-text-field hide-details density="compact" disabled color="info" variant="underlined" placeholder="E-mail" name="E-mail" v-model="email" type="text" required />
+            <v-text-field hide-details density="compact" disabled color="info" variant="underlined" :placeholder="$t('myDetails.emailPlaceHolder')" name="E-mail" v-model="email" type="text" required />
             <v-btn color="info" variant="text" icon="mdi-arrow-right" class="ma-2" size="small" @click.stop="$emit('changeTab', 'changeEmail')" />
 
         </v-row>
@@ -52,7 +52,7 @@ const editMode = ref()
     </v-col>
 
     <v-col cols="4" class="pt-3">
-        <h3 class="font-weight-bold">Profile picture</h3>
+        <h3 class="font-weight-bold">{{$t('myDetails.picLabel')}}</h3>
         <v-divider/>
         <v-col align="center" class="mt-3">
             <v-hover v-slot="{ isHovering, props }">

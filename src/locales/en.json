@@ -1,0 +1,156 @@
+{
+  "adminLogin": {
+    "header": "Sign in to your account",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "resetPasswordMsg": "Forget your password?",
+    "resetPasswordBtn": "Reset it here.",
+    "submitBtn": "Sign In"
+  },
+  "adminSettings": {
+    "header" : "Account Settings",
+    "picLabel": "New Profile Picture",
+    "picBtn": "New Profile Picture",
+    "picSubmit": "Upload",
+    "inputLabel": "Real user settings will be here",
+    "inputPlaceholder": "Real user settings will be here",
+    "btnLabel": "Update Settings",
+    "deleteLabel": "Delete Account"
+  },
+  "cardsList": {
+    "header": {
+      "admin" : "Administrators",
+      "account": "Accounts"
+    },
+    "tableHeader": {
+      "nameLabel": "Name",
+      "emailLabel": "E-mail address",
+      "urlFriendlyName": "URL Friendly name",
+      "lastEditedLabel": "Last Edited",
+      "creationDateLabel": "Creation Date"
+    },
+    "tableFooter": {
+      "label" : "Rows per page"
+    }
+  },
+  "changeEmail" : {
+    "header": "Change E-mail Address",
+    "currentEmailLabel":"Current E-mail Address",
+    "newEmailLabel":"New E-mail Address",
+    "newEmailPlaceHolder":"your@email.com",
+    "confirmEmailLabel":"Confirm New E-mail Address",
+    "confirmEmailPlaceHolder":"your@email.com",
+    "submitBtn": "Change my E-mail",
+    "verifyMessage": "You have successfully verified your new e-mail address.",
+    "cb":{
+      "header": "Request sent.",
+      "message": "Please check your inbox and click the link we sent you to verify your e-mail address."
+    }
+  },
+  "changePassword" : {
+    "header" : "Change Password",
+    "oldPasswordLabel": "Old Password",
+    "oldPasswordPlaceholder": "********",
+    "newPasswordLabel": "New Password",
+    "newPasswordPlaceholder": "********",
+    "confirmNewPasswordLabel": "Confirm New Password",
+    "confirmNewPasswordPlaceholder": "********",
+    "submitBtn": "Change my Password"
+  },
+  "createDialog" : {
+    "operation":{
+        "admins": "Invite",
+        "accounts": "Create"
+    },
+    "cb":{
+      "message": "Invitation sent.",
+      "resetbtn": "Invite ANOTHER",
+      "closeBtn": "close"
+    },
+    "inviteHeader": "Invite Administrators",
+    "emailLabel": "E-mail Address",
+    "emailPlaceHolder": "your@email.com",
+    "confirmEmailLabel":  "Confirm New E-mail Address",
+    "confirmEmailPlaceHolder":  "your@email.com",
+    "detailsHeader": "Create a new account!",
+    "nameLabel":"Account Names",
+    "namePlaceHolder":"Your Account’s Name",
+    "urlFriendlyNameLabel":"URL Friendly Name",
+    "urlFriendlyNamePlaceHolder":"./youraccountname",
+    "logoLabel":"Logo",
+    "logoPlaceHolder":"Upload"
+  },
+  "deleteMyAccount": {
+    "openBtn": "Delete",
+    "header":"Are you sure you want to delete",
+    "subheader": "Doing so will fully delete this record forever, which cannot be reversed.",
+    "overviewTitle":"Account Overview",
+    "nameLabel":"Name",
+    "emailLabel":"E-mail",
+    "picLabel":"Profile picture",
+    "passwordConfirmationHeader":"Please type your password to proceed with deleting the account:",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "********",
+    "submitBtn": "Delete",
+    "closeBtn": "Close"
+  },
+  "forgotPasswordForm": {
+    "header": "Password recovery",
+    "emailLabel": "Email",
+    "emailPlaceHolder": "your@email.com",
+    "checkboxLabel": "I am human.",
+    "submitBtn": "Reset password",
+    "cb": {
+      "message" : "We have sent you an e-mail with instructions on how to reset your password. Please check your inbox.",
+      "cbBtn":"continue"
+    }
+  },
+  "meDetails": {
+    "header": "Administrator",
+    "tabs": {
+      "meLabel": "MY details",
+      "changePasswordLabel": "Change password",
+      "changeEmailLabel": "Change e-mail",
+      "settingsLabel":"Settings"
+    }
+  },
+  "myDetails": {
+    "header": "My Details",
+    "nameLabel": "Name",
+    "namePlaceHolder": "User Name",
+    "emailLabel": "E-mail",
+    "emailPlaceHolder": "E-mail",
+    "picLabel": "Profile picture"
+  },
+  "navBar": {
+    "title": {
+      "me":"My Profile",
+      "admins":"Manage Admins",
+      "accounts": "Manage Accounts"
+    },
+    "picLabel": "Pic",
+    "logoutBtn": "Logout"
+  },
+  "setAndReSetPassword": {
+    "acceptHeader": "Set up your account",
+    "forgotHeader": "Reset your password",
+    "nameLabel": "Name",
+    "namePlaceHolder": "User Name",
+    "newPasswordLabel": "New Password",
+    "newPasswordPlaceholder": "********",
+    "confirmNewPasswordLabel": "Confirm New Password",
+    "confirmNewPasswordPlaceholder": "********",
+    "checkboxLabel": "I am human.",
+    "cb": {
+      "header":"Password changed",
+      "message": "Your password has been changed. You will be automatically logged in in 5 seconds. Please",
+      "cbBtn":"click here",
+      "subMessage": "if you are not redirected."
+    }
+  },
+  "sideBar":{
+    "me":"My Profile",
+    "admins": "Manage Admins",
+    "accounts": "Manage Accounts"
+  }
+}

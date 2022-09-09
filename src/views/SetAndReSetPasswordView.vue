@@ -18,12 +18,12 @@ const formData = ref()
 async function loadData () {
   if (route.name === 'accept-invitation') {
     formData.value = {
-      text: 'Set up your account'
+      text: 'Set up your account' //$t('setAndReSetPassword.acceptHeader')
     }
   }
   if (route.name === 'forgot-password-reset') {
     formData.value = {
-      text: 'Reset your password'
+      text: 'Reset your password' //$t('setAndReSetPassword.forgotHeader')
     }
   }
 }

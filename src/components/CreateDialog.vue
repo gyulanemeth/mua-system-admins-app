@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n';
+const { tm } = useI18n();
 
 const props = defineProps({
   name: String,
@@ -10,7 +12,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const operation = computed(() => route.name === 'admins' ? 'Invite' : 'Create')
+const operation = computed(() => route.name === 'admins' ? tm('createDialog.operation.admins') : tm('createDialog.operation.accounts'))
 
 const dialog = ref(false)
 const data = ref({})
@@ -53,14 +55,14 @@ const resetForm = () => {
                 </v-col>
             </v-row>
             <v-row v-if="cb" class="justify-center">
-                <p class="font-weight-bold">Invitation sent.</p>
+                <p class="font-weight-bold">{{$t('createDialog.cb.message')}}</p>
             </v-row>
         </v-card-text>
         <v-card-actions>
-            <v-btn color="info" v-if="operation === 'Create'" @click="$emit('createEventHandler',data, ()=>{dialog=false}); resetForm() ">{{operation}}</v-btn>
-            <v-btn color="info" v-else-if="cb" @click="cb=null">Invite ANOTHER</v-btn>
+            <v-btn color="info" v-if="operation === $t('createDialog.operation.accounts')" @click="$emit('createEventHandler',data, ()=>{dialog=false}); resetForm() ">{{operation}}</v-btn>
+            <v-btn color="info" v-else-if="cb" @click="cb=null">{{$t('createDialog.cb.btn')}}</v-btn>
             <v-btn color="info" v-else @click="$emit('inviteEventHandler',data, (res)=>{cb = res; resetForm()})">{{operation}}</v-btn>
-            <v-btn color="info" @click="dialog=false; resetForm()">close</v-btn>
+            <v-btn color="info" @click="dialog=false; resetForm()">{{$t('createDialog.cb.closeBtn')}}</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>
