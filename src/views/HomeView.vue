@@ -8,7 +8,7 @@ import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/
 
 import { useI18n } from 'vue-i18n';
 const { tm } = useI18n();
-console.log(tm('createDialog'));
+
 const route = useRoute()
 const alert = alerts()
 
