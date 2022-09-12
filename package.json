@@ -8,14 +8,12 @@
     "test:e2e": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress open --e2e'",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "dev": "vite --port 3001",
-    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
     "preview": "vite preview --port 4173",
     "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress run --e2e'"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
     "@sweetalert2/theme-material-ui": "^5.0.11",
-    "@vue/cli-shared-utils": "^5.0.8",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.14",
     "pinia-list-store": "^0.0.1",
@@ -30,7 +28,6 @@
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
-    "@intlify/vue-i18n-loader": "^3.0.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-prettier": "^7.0.0",
@@ -52,7 +49,6 @@
     "vite-plugin-static-copy": "^0.6.1",
     "vite-plugin-vuetify": "^1.0.0-alpha.0",
     "vitest": "^0.13.0",
-    "vue-cli-plugin-i18n": "~2.3.1",
     "vue-cli-plugin-vuetify": "~2.5.1"
   },
   "type": "module"

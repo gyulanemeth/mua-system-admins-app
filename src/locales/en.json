@@ -35,11 +35,11 @@
   },
   "changeEmail" : {
     "header": "Change E-mail Address",
-    "currentEmailLabel":"Current E-mail Address",
-    "newEmailLabel":"New E-mail Address",
-    "newEmailPlaceHolder":"your@email.com",
-    "confirmEmailLabel":"Confirm New E-mail Address",
-    "confirmEmailPlaceHolder":"your@email.com",
+    "currentEmailLabel": "Current E-mail Address",
+    "newEmailLabel": "New E-mail Address",
+    "newEmailPlaceHolder": "your@email.com",
+    "confirmEmailLabel": "Confirm New E-mail Address",
+    "confirmEmailPlaceHolder": "your@email.com",
     "submitBtn": "Change my E-mail",
     "verifyMessage": "You have successfully verified your new e-mail address.",
     "cb":{

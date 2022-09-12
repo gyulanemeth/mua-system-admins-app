@@ -6,8 +6,8 @@ import CardList from '../components/CardsList.vue'
 import alerts from '../alerts/alert.js'
 import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/index.js'
 
-import { useI18n } from 'vue-i18n';
-const { tm } = useI18n();
+import { useI18n } from 'vue-i18n'
+const { tm } = useI18n()
 
 const route = useRoute()
 const alert = alerts()

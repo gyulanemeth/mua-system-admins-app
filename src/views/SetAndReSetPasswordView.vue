@@ -2,6 +2,7 @@
 
 import { watchEffect, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 import SetAndReSetPassword from '../components/SetAndReSetPassword.vue'
 import alerts from '../alerts/alert.js'
@@ -10,6 +11,7 @@ import { useCurrentUserStore } from '../stores/index.js'
 const store = useCurrentUserStore()
 const route = useRoute()
 const router = useRouter()
+const { tm } = useI18n()
 
 const alert = alerts()
 
@@ -18,12 +20,12 @@ const formData = ref()
 async function loadData () {
   if (route.name === 'accept-invitation') {
     formData.value = {
-      text: 'Set up your account' //$t('setAndReSetPassword.acceptHeader')
+      text: tm('setAndReSetPassword.acceptHeader')
     }
   }
   if (route.name === 'forgot-password-reset') {
     formData.value = {
-      text: 'Reset your password' //$t('setAndReSetPassword.forgotHeader')
+      text: tm('setAndReSetPassword.forgotHeader')
     }
   }
 }

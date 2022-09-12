@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n';
-const { tm } = useI18n();
+import { useI18n } from 'vue-i18n'
+const { tm } = useI18n()
 
 const props = defineProps({
   name: String,
@@ -60,9 +60,9 @@ const resetForm = () => {
         </v-card-text>
         <v-card-actions>
             <v-btn color="info" v-if="operation === $t('createDialog.operation.accounts')" @click="$emit('createEventHandler',data, ()=>{dialog=false}); resetForm() ">{{operation}}</v-btn>
-            <v-btn color="info" v-else-if="cb" @click="cb=null">{{$t('createDialog.cb.btn')}}</v-btn>
+            <v-btn color="info" v-else-if="cb" @click="cb=null">{{$t('createDialog.cb.resetbtn')}}</v-btn>
             <v-btn color="info" v-else @click="$emit('inviteEventHandler',data, (res)=>{cb = res; resetForm()})">{{operation}}</v-btn>
-            <v-btn color="info" @click="dialog=false; resetForm()">{{$t('createDialog.cb.closeBtn')}}</v-btn>
+            <v-btn color="info" @click="dialog=false; cb=undefined; resetForm()">{{$t('createDialog.cb.closeBtn')}}</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>
