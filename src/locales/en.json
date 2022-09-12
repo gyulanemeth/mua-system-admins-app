@@ -37,9 +37,9 @@
     "header": "Change E-mail Address",
     "currentEmailLabel": "Current E-mail Address",
     "newEmailLabel": "New E-mail Address",
-    "newEmailPlaceHolder": "your@email.com",
+    "newEmailPlaceHolder": "your{'@'}email.com",
     "confirmEmailLabel": "Confirm New E-mail Address",
-    "confirmEmailPlaceHolder": "your@email.com",
+    "confirmEmailPlaceHolder": "your{'@'}email.com",
     "submitBtn": "Change my E-mail",
     "verifyMessage": "You have successfully verified your new e-mail address.",
     "cb":{
@@ -97,7 +97,7 @@
   "forgotPasswordForm": {
     "header": "Password recovery",
     "emailLabel": "Email",
-    "emailPlaceHolder": "your@email.com",
+    "emailPlaceHolder": "your{'@'}email.com",
     "checkboxLabel": "I am human.",
     "submitBtn": "Reset password",
     "cb": {
