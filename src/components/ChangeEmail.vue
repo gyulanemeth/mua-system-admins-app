@@ -27,12 +27,12 @@ const resetForm = () => {
 
 <v-layout class="d-flex flex-wrap">
     <v-col class="pt-3">
-        <h3 class="font-weight-bold">Change E-mail Address</h3>
+        <h3 class="font-weight-bold"> {{$t('changeEmail.header')}}</h3>
         <v-divider />
 
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">Current E-mail Address</p>
+                <p class="font-weight-bold"> {{$t('changeEmail.currentEmailLabel')}}</p>
             </v-col>
 
             <v-text-field hide-details density="compact" class=" my-5 pt-2 pl-3 rounded" variant="plain" name="currentEmail" v-model="data.email" disabled>
@@ -41,10 +41,10 @@ const resetForm = () => {
 
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">New E-mail Address</p>
+                <p class="font-weight-bold">{{$t('changeEmail.newEmailLabel')}}</p>
             </v-col>
             <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="newEmail"
-            :placeholder="data.newEmail ||'your@email.com'"
+            :placeholder="data.newEmail || $t('changeEmail.newEmailPlaceHolder')"
             :value="data.newEmail"
             @update:modelValue="res => data.newEmail = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
             >
@@ -52,23 +52,23 @@ const resetForm = () => {
         </v-row>
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">Confirm New E-mail Address</p>
+                <p class="font-weight-bold">{{$t('changeEmail.confirmEmailLabel')}}</p>
             </v-col>
             <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="confirmNewEmail"
-            :placeholder="data.confirmNewEmail ||'your@email.com'"
+            :placeholder="data.confirmNewEmail || $t('changeEmail.confirmEmailPlaceHolder')"
             :value="data.confirmNewEmail"
             @update:modelValue="res => data.confirmNewEmail = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
             >
             </v-text-field>
 
         </v-row>
-        <v-btn color="info mt-3" @click="$emit('updateEmailHandler',data, (res) => {cb = res; resetForm()})"> Change my E-mail</v-btn>
+        <v-btn color="info mt-3" @click="$emit('updateEmailHandler',data, (res) => {cb = res; resetForm()})"> {{$t('changeEmail.submitBtn')}}</v-btn>
         <div v-if="cb">
-            <h2 class="mt-4">Request sent.</h2>
-            <p class="mt-4">Please check your inbox and click the link we sent you to verify your e-mail address.</p>
+            <h2 class="mt-4">{{$t('changeEmail.cb.header')}}</h2>
+            <p class="mt-4">{{$t('changeEmail.cb.message')}}</p>
         </div>
         <div v-else-if="route.query.tab === 'changeEmail'">
-            <p class="mt-4">You have successfully verified your new e-mail address.</p>
+            <p class="mt-4">{{$t('changeEmail.verifyMessage')}}</p>
         </div>
     </v-col>
 </v-layout>

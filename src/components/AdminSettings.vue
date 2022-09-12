@@ -17,12 +17,12 @@ function redirectDeleteHandler (data) {
 
 <v-layout class="d-flex flex-wrap">
     <v-col class="pt-3">
-        <h3 class="font-weight-bold">Account Settings</h3>
+        <h3 class="font-weight-bold"> {{ $t('adminSettings.header') }}</h3>
         <v-divider />
 
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">New Profile Picture</p>
+                <p class="font-weight-bold"> {{ $t('adminSettings.picLabel') }} </p>
             </v-col>
 
             <v-card class="mx-2 my-5 pa-2 align-center w-50">
@@ -31,22 +31,22 @@ function redirectDeleteHandler (data) {
                     <v-btn variant="text" icon="mdi-image-plus" color="grey-lighten-1" type="file"></v-btn>
                 </v-card-title>
                 <v-row class="justify-center py-3 ">
-                    <p>Upload</p>
+                    <p>{{ $t('adminSettings.picBtn') }} </p>
                 </v-row>
             </v-card>
         </v-row>
         <v-row align="center" class="mt-3">
             <v-col>
-                <p class="font-weight-bold">Real user settings will be here</p>
+                <p class="font-weight-bold">{{ $t('adminSettings.inputLabel') }}</p>
             </v-col>
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="example" placeholder="Real user settings will be here">
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="example" :placeholder="$t('adminSettings.inputPlaceholder')">
             </v-text-field>
         </v-row>
 
-        <v-btn color="info mt-3">Update Settings</v-btn>
+        <v-btn color="info mt-3">{{ $t('adminSettings.btnLabel') }}</v-btn>
 
         <v-col class="pt-15">
-            <h3 class="font-weight-bold text-error">Delete Account</h3>
+            <h3 class="font-weight-bold text-error">{{ $t('adminSettings.deleteLabel') }}</h3>
             <v-divider color="error" />
 
             <DeleteMyAccount @deleteEventHandler="redirectDeleteHandler" :data="props.data" />

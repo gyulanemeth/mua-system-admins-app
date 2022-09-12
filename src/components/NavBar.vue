@@ -19,7 +19,7 @@ const appIcon = window.config.appIcon
    <v-col cols="2">
     <span class="text-h4 mx-1 pt-0 "> {{appName}} </span>
   </v-col>
-    <span class="text-h4 ma-0 pt-0 "> {{ route.name === "me"? "My Profile": route.name === "admins"? "Manage Admins": route.name === "accounts" ? "Manage Accounts" : null }}
+    <span class="text-h4 ma-0 pt-0 "> {{ route.name === "me"? $t('navBar.title.me'): route.name === "admins"? $t('navBar.title.admins'): route.name === "accounts" ? $t('navBar.title.accounts') : null }}
     </span>
 
     <v-spacer></v-spacer>
@@ -28,7 +28,7 @@ const appIcon = window.config.appIcon
         <template v-slot:activator="{ props }">
             <v-avatar size="large" color="grey-darken-3">
                 <v-btn v-bind="props">
-                    Pic
+                    {{$t('navBar.picLabel')}}
                 </v-btn>
             </v-avatar>
         </template>
@@ -37,7 +37,7 @@ const appIcon = window.config.appIcon
                 <v-list-item-icon>
                     mdi-logout
                 </v-list-item-icon>
-                <v-list-item-title> Logout </v-list-item-title>
+                <v-list-item-title> {{$t('navBar.logoutBtn')}} </v-list-item-title>
             </v-list-item>
         </v-list>
     </v-menu>

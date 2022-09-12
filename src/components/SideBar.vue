@@ -29,9 +29,9 @@
 
     <v-navigation-drawer class="elevation-2" permanent>
         <v-list>
-            <v-list-item active-class="text-info" class="pb-3" title="My Profile" to="/me" />
-            <v-list-item active-class="text-info" class="pb-3" title="Manage Admins" to="/admins" />
-            <v-list-item active-class="text-info" class="pb-3" title="Manage Accounts" to="/accounts" />
+            <v-list-item active-class="text-info" class="pb-3" :title="$t('sideBar.me')" to="/me" />
+            <v-list-item active-class="text-info" class="pb-3" :title="$t('sideBar.admins')" to="/admins" />
+            <v-list-item active-class="text-info" class="pb-3" :title="$t('sideBar.accounts')" to="/accounts" />
         </v-list>
     </v-navigation-drawer>
 

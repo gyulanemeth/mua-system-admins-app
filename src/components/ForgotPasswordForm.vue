@@ -1,10 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps({
-  formData: Object
-})
-
 const cb = ref()
 const data = ref('')
 const title = window.config.title
@@ -27,22 +23,22 @@ const appIcon = window.config.appIcon
     </v-card>
     <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
         <v-card-text align="center">
-            <h6 class="text-h6">{{props.formData.text}}</h6>
+            <h6 class="text-h6">{{$t('forgotPasswordForm.header')}}</h6>
 
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" :name="props.formData.inputText" :label="props.formData.inputText" :type="props.formData.inputType" :disabled="cb"
-            :placeholder="data ||'your@email.com'"
+            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
+            :placeholder="data ||$t('forgotPasswordForm.emailPlaceHolder')"
             :value="data"
             @update:modelValue="res => data = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
              required />
-            <v-checkbox v-if="props.formData.text === 'Password recovery' && !cb" label="I am human." color="info" value="I am human" hide-details></v-checkbox>
+            <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info" value="I am human" hide-details></v-checkbox>
             <div v-if="!cb">
-                <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{props.formData.btnText}}</v-btn>
+                <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{$t('forgotPasswordForm.submitBtn')}}</v-btn>
                 <button hidden @click.enter.prevent="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})" />
             </div>
             <div v-if="cb">
 
-                <p class="mt-4">We have sent you an e-mail with instructions on how to reset your password. Please check your inbox.</p>
-                <v-btn color="white" class="mt-4" to="/">continue</v-btn>
+                <p class="mt-4">{{$t('forgotPasswordForm.cb.header')}}</p>
+                <v-btn color="white" class="mt-4" to="/">{{$t('forgotPasswordForm.cb.cbBtn')}}</v-btn>
             </div>
         </v-card-text>
 

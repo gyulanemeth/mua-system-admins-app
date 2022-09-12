@@ -1,7 +1,6 @@
 {
   "name": "mua-system-admins-app",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
@@ -23,6 +22,7 @@
     "standard-json-api-connectors": "^0.1.2",
     "sweetalert2": "^11.4.23",
     "vue": "^3.2.36",
+    "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.15",
     "vuetify": "^3.0.0-beta.0",
     "webfontloader": "^1.0.0"
@@ -50,5 +50,6 @@
     "vite-plugin-vuetify": "^1.0.0-alpha.0",
     "vitest": "^0.13.0",
     "vue-cli-plugin-vuetify": "~2.5.1"
-  }
+  },
+  "type": "module"
 }

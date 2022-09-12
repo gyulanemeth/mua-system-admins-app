@@ -49,10 +49,10 @@ const tab = ref(route.query.tab)
     <v-layout class="d-flex flex-wrap">
         <v-card class="w-100">
             <v-tabs v-model="tab">
-                <v-tab value="me" color="info" prepend-icon="mdi-account">MY details</v-tab>
-                <v-tab value="changePassword" color="info" prepend-icon="mdi-lock">Change password</v-tab>
-                <v-tab value="changeEmail" color="info" prepend-icon="mdi-at">Change e-mail</v-tab>
-                <v-tab value="settings" color="info" prepend-icon="mdi-cog">Settings</v-tab>
+                <v-tab value="me" color="info" prepend-icon="mdi-account">{{$t('meDetails.tabs.meLabel')}}</v-tab>
+                <v-tab value="changePassword" color="info" prepend-icon="mdi-lock">{{$t('meDetails.tabs.changePasswordLabel')}}</v-tab>
+                <v-tab value="changeEmail" color="info" prepend-icon="mdi-at">{{$t('meDetails.tabs.changeEmailLabel')}}</v-tab>
+                <v-tab value="settings" color="info" prepend-icon="mdi-cog">{{$t('meDetails.tabs.settingsLabel')}}</v-tab>
 
             </v-tabs>
 
