@@ -106,7 +106,7 @@ async function searchBarHandler (filter) {
       }
     }
   }
-  await store.load()
+  await store.loadPage(1)
   data.value = store.items
 }
 
