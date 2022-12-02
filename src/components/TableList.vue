@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadNext'])
+const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadPage'])
 const props = defineProps({
   items: Array,
   btn: Object,
@@ -31,12 +31,12 @@ function redirectCreateEventHandler (data, cb) {
   emit('createEventHandler', data, cb)
 }
 
-function nextPage () {
-  emit('loadNext', page.value, rows.value)
+function loadPage () {
+  emit('loadPage', page.value, rows.value)
 }
 
 watch(rows, async (newValue) => {
-  nextPage()
+  loadPage()
 })
 
 watchEffect(async () => {
@@ -114,10 +114,10 @@ watchEffect(async () => {
         </p>
         <p class="ma-2">{{page}} of {{numOfPages}} </p>
         <v-col cols="3">
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-left" :disabled="page === 1 " size="small" @click="page = page - 1; nextPage()" />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-right" :disabled="page  === numOfPages " size="small" @click="page = page + 1; nextPage()" />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-first" size="small" @click="page =  1; nextPage()" />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages; nextPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-left" :disabled="page === 1 " size="small" @click="page = page - 1; loadPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-right" :disabled="page  === numOfPages " size="small" @click="page = page + 1; loadPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-first" size="small" @click="page =  1; loadPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages; loadPage()" />
         </v-col>
     </v-layout>
 </v-container>

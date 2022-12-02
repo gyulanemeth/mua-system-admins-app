@@ -90,7 +90,7 @@ async function handleCreateEvent (params, statusCallBack) {
   }
 }
 
-async function loadNext (page, rows) {
+async function loadPage (page, rows) {
   store.itemsPerPage = rows
   await store.loadPage(page)
   data.value = store.items
@@ -117,6 +117,6 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadNext="loadNext" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
+  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadPage="loadPage" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 
 </template>
