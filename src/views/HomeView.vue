@@ -2,7 +2,7 @@
 import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import CardList from '../components/CardsList.vue'
+import CardList from '../components/TableList.vue'
 import alerts from '../alerts/alert.js'
 import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/index.js'
 
@@ -90,7 +90,7 @@ async function handleCreateEvent (params, statusCallBack) {
   }
 }
 
-async function loadMore (page, rows) {
+async function loadNext (page, rows) {
   store.itemsPerPage = rows
   await store.loadPage(page)
   data.value = store.items
@@ -117,6 +117,6 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadMore="loadMore" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
+  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadNext="loadNext" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 
 </template>

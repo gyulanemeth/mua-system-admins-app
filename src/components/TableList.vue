@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadMore'])
+const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadNext'])
 const props = defineProps({
   items: Array,
   btn: Object,
@@ -32,7 +32,7 @@ function redirectCreateEventHandler (data, cb) {
 }
 
 function nextPage () {
-  emit('loadMore', page.value, rows.value)
+  emit('loadNext', page.value, rows.value)
 }
 
 watch(rows, async (newValue) => {
