@@ -2,7 +2,7 @@
 import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import CardList from '../components/CardsList.vue'
+import CardList from '../components/TableList.vue'
 import alerts from '../alerts/alert.js'
 import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/index.js'
 
@@ -20,7 +20,7 @@ let store
 async function loadData () {
   if (route.name === 'admins') {
     store = useAdminsStore()
-    await store.load()
+    await store.loadPage(1)
     data.value = store.items
     btn.value = {
       header: tm('createDialog.inviteHeader'),
@@ -38,7 +38,7 @@ async function loadData () {
     }
   } else if (route.name === 'accounts') {
     store = useAccountStore()
-    await store.load()
+    await store.loadPage(1)
     data.value = store.items
     btn.value = {
       header: tm('createDialog.detailsHeader'),
@@ -90,6 +90,12 @@ async function handleCreateEvent (params, statusCallBack) {
   }
 }
 
+async function loadPage (page, rows) {
+  store.itemsPerPage = rows
+  await store.loadPage(page)
+  data.value = store.items
+}
+
 async function searchBarHandler (filter) {
   if (filter === '') {
     store.filter = {}
@@ -100,7 +106,7 @@ async function searchBarHandler (filter) {
       }
     }
   }
-  await store.load()
+  await store.loadPage(1)
   data.value = store.items
 }
 
@@ -111,7 +117,6 @@ watchEffect(async () => {
 </script>
 
 <template>
-
-  <CardList v-if="data" :items="data" :btn="btn" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
+  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadPage="loadPage" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 
 </template>

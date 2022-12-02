@@ -1,21 +1,22 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler'])
+const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadPage'])
 const props = defineProps({
   items: Array,
-  btn: Object
+  btn: Object,
+  numOfPages: Number
 })
 
 const route = useRoute()
-const numOfPages = computed(() => Math.ceil(props.items.length / rows.value))
+const numOfPages = ref(props.numOfPages)
 
 const filter = ref('')
-const rows = ref(5)
+const rows = ref(10)
 const page = ref(1)
 
 function redirectDeleteEventHandler (data) {
@@ -29,6 +30,18 @@ function redirectInviteEventHandler (data, cb) {
 function redirectCreateEventHandler (data, cb) {
   emit('createEventHandler', data, cb)
 }
+
+function loadPage () {
+  emit('loadPage', page.value, rows.value)
+}
+
+watch(rows, async (newValue) => {
+  loadPage()
+})
+
+watchEffect(async () => {
+  numOfPages.value = props.numOfPages
+})
 
 </script>
 
@@ -74,7 +87,7 @@ function redirectCreateEventHandler (data, cb) {
             </thead>
             <tbody>
 
-                <tr v-for="item in props.items.slice((Math.ceil(page) - 1) * rows, Math.ceil(page) * rows)" :key="item._id">
+                <tr v-for="item in props.items" :key="item._id">
                     <td>{{ item.data.name }}</td>
                     <td v-if="route.name === 'admins'">{{ item.data.email }}</td>
                     <td v-else>{{ item.data.urlFriendlyName }}</td>
@@ -101,10 +114,10 @@ function redirectCreateEventHandler (data, cb) {
         </p>
         <p class="ma-2">{{page}} of {{numOfPages}} </p>
         <v-col cols="3">
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-left" :disabled="page === 1 " size="small" @click="page = page - 1" />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-right" :disabled="page  === numOfPages " size="small" @click="page = page + 1" />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-first" size="small" @click="page =  1" />
-            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-left" :disabled="page === 1 " size="small" @click="page = page - 1; loadPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-chevron-right" :disabled="page  === numOfPages " size="small" @click="page = page + 1; loadPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-first" size="small" @click="page =  1; loadPage()" />
+            <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages; loadPage()" />
         </v-col>
     </v-layout>
 </v-container>
