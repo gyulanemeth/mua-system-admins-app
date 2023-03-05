@@ -40,7 +40,7 @@ email.value = jwtDecode(route.query.token).user.email
 
             <v-text-field v-if="operation === 'setPassword' " hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" type="text" :value="email" :placeholder="email" disabled required />
 
-            <v-text-field v-if="operation === 'setPassword' " hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
+            <v-text-field v-if="operation === 'setPassword' " data-test-id="setAndRestPassword-nameField" hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
             name="name" :label="$t('setAndReSetPassword.nameLabel')" type="text"
             :placeholder="data.name ||$t('setAndReSetPassword.namePlaceHolder')"
             :value="data.name"
@@ -48,14 +48,14 @@ email.value = jwtDecode(route.query.token).user.email
             required />
 
             <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
-            name="newPassword" :label="$t('setAndReSetPassword.newPasswordLabel')" type="password"
+            name="newPassword" data-test-id="setAndRestPassword-newPasswordField" :label="$t('setAndReSetPassword.newPasswordLabel')" type="password"
             :placeholder="data.newPassword ||$t('setAndReSetPassword.newPasswordPlaceholder')"
             :value="data.newPassword"
             @update:modelValue="res => data.newPassword = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
             required />
 
             <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain"
-            name="newPasswordAgain" :label="$t('setAndReSetPassword.confirmNewPasswordLabel')" type="password"
+            name="newPasswordAgain" data-test-id="setAndRestPassword-newPasswordAgainField" :label="$t('setAndReSetPassword.confirmNewPasswordLabel')" type="password"
             :placeholder="data.newPasswordAgain ||$t('setAndReSetPassword.confirmNewPasswordPlaceholder')"
             :value="data.newPasswordAgain"
             @update:modelValue="res => data.newPasswordAgain = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
@@ -64,11 +64,11 @@ email.value = jwtDecode(route.query.token).user.email
             <v-checkbox :label="$t('setAndReSetPassword.checkboxLabel')" color="info" value="I am human" hide-details></v-checkbox>
 
             <v-col v-if="operation === 'resetPassword'">
-                <v-btn color="info" @click="$emit('resetPasswordEventHandler',{token:route.query.token,...data},(res)=>{cb = res})">{{props.formData.text}}</v-btn>
+                <v-btn color="info" data-test-id="setAndRestPassword-submitBtn"  @click="$emit('resetPasswordEventHandler',{token:route.query.token,...data},(res)=>{cb = res})">{{props.formData.text}}</v-btn>
                 <button hidden @click.enter.prevent="$emit('resetPasswordEventHandler',{token:route.query.token,...data},(res)=>{cb = res})" />
             </v-col>
             <v-col v-if="operation === 'setPassword'">
-                <v-btn color="info" @click="$emit('setPasswordEventHandler',{token:route.query.token,...data})">{{props.formData.text}}</v-btn>
+                <v-btn color="info" data-test-id="setAndRestPassword-submitBtn" @click="$emit('setPasswordEventHandler',{token:route.query.token,...data})">{{props.formData.text}}</v-btn>
                 <button hidden @click.enter.prevent="$emit('setPasswordEventHandler',{token:route.query.token,...data})" />
             </v-col>
         </v-card-text>
@@ -76,7 +76,7 @@ email.value = jwtDecode(route.query.token).user.email
 
             <h2 class="mt-4">{{$t('setAndReSetPassword.cb.header')}}</h2>
             <p class="mt-4">{{$t('setAndReSetPassword.cb.message')}}
-                <router-link tag="span" style="text-decoration: none; color: inherit;" to="/me" class="font-weight-bold">{{$t('setAndReSetPassword.cb.cbBtn')}}</router-link> {{$t('setAndReSetPassword.cb.subMessage')}}</p>
+                <router-link tag="span" data-test-id="setAndRestPassword-continueBtn" style="text-decoration: none; color: inherit;" to="/me" class="font-weight-bold">{{$t('setAndReSetPassword.cb.cbBtn')}}</router-link> {{$t('setAndReSetPassword.cb.subMessage')}}</p>
 
         </v-card-text>
 

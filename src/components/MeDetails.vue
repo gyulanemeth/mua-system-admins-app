@@ -39,7 +39,7 @@ const tab = ref(route.query.tab)
 <v-container class="elevation-0 mx-10 pa-0  rounded">
     <v-layout class="d-flex flex-wrap align-end justify-end">
 
-        <p class="text-h4 ">{{props.data.name}}
+        <p class="text-h4" data-test-id="meDetails-userName">{{props.data.name}}
           <span class="text-subtitle-1 font-weight-bold ">Administrator</span>
         </p>
 
@@ -49,10 +49,10 @@ const tab = ref(route.query.tab)
     <v-layout class="d-flex flex-wrap">
         <v-card class="w-100">
             <v-tabs v-model="tab">
-                <v-tab value="me" color="info" prepend-icon="mdi-account">{{$t('meDetails.tabs.meLabel')}}</v-tab>
-                <v-tab value="changePassword" color="info" prepend-icon="mdi-lock">{{$t('meDetails.tabs.changePasswordLabel')}}</v-tab>
-                <v-tab value="changeEmail" color="info" prepend-icon="mdi-at">{{$t('meDetails.tabs.changeEmailLabel')}}</v-tab>
-                <v-tab value="settings" color="info" prepend-icon="mdi-cog">{{$t('meDetails.tabs.settingsLabel')}}</v-tab>
+                <v-tab value="me" color="info" data-test-id="meDetails-meTab" prepend-icon="mdi-account">{{$t('meDetails.tabs.meLabel')}}</v-tab>
+                <v-tab value="changePassword" data-test-id="meDetails-changePasswordTab" color="info" prepend-icon="mdi-lock">{{$t('meDetails.tabs.changePasswordLabel')}}</v-tab>
+                <v-tab value="changeEmail" data-test-id="meDetails-changeEmailTab" color="info" prepend-icon="mdi-at">{{$t('meDetails.tabs.changeEmailLabel')}}</v-tab>
+                <v-tab value="settings" data-test-id="meDetails-settingsTab" color="info" prepend-icon="mdi-cog">{{$t('meDetails.tabs.settingsLabel')}}</v-tab>
 
             </v-tabs>
 

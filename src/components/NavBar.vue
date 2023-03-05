@@ -27,13 +27,13 @@ const appIcon = window.config.appIcon
     <v-menu location="bottom " origin="end top">
         <template v-slot:activator="{ props }">
             <v-avatar size="large" color="grey-darken-3">
-                <v-btn v-bind="props">
+                <v-btn  data-test-id="navbarMenu" v-bind="props">
                     {{$t('navBar.picLabel')}}
                 </v-btn>
             </v-avatar>
         </template>
         <v-list>
-            <v-list-item @click="store.logout()">
+            <v-list-item data-test-id="navbarMenu-logout" @click="store.logout()">
                 <v-list-item-icon>
                     mdi-logout
                 </v-list-item-icon>

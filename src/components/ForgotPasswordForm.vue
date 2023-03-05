@@ -25,20 +25,20 @@ const appIcon = window.config.appIcon
         <v-card-text align="center">
             <h6 class="text-h6">{{$t('forgotPasswordForm.header')}}</h6>
 
-            <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
+            <v-text-field hide-details data-test-id="forgotPassword-emailField" density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
             :placeholder="data ||$t('forgotPasswordForm.emailPlaceHolder')"
             :value="data"
             @update:modelValue="res => data = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
              required />
             <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info" value="I am human" hide-details></v-checkbox>
             <div v-if="!cb">
-                <v-btn color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{$t('forgotPasswordForm.submitBtn')}}</v-btn>
+                <v-btn data-test-id="forgotPassword-submitBtn" color="info" @click="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})">{{$t('forgotPasswordForm.submitBtn')}}</v-btn>
                 <button hidden @click.enter.prevent="$emit('passwordRecoveryEventHandler',data, (res)=>{cb=res})" />
             </div>
             <div v-if="cb">
 
                 <p class="mt-4">{{$t('forgotPasswordForm.cb.header')}}</p>
-                <v-btn color="white" class="mt-4" to="/">{{$t('forgotPasswordForm.cb.cbBtn')}}</v-btn>
+                <v-btn color="white" data-test-id="forgotPassword-continueBtn" class="mt-4" to="/">{{$t('forgotPasswordForm.cb.cbBtn')}}</v-btn>
             </div>
         </v-card-text>
 
