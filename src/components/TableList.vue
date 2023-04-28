@@ -54,7 +54,7 @@ watchEffect(async () => {
         </v-col>
         <v-spacer />
         <v-col cols="5">
-            <v-text-field density="compact" label="Search" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary" @change="$emit('searchEvent',filter)"></v-text-field>
+            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary" @change="$emit('searchEvent',filter)"></v-text-field>
         </v-col>
 
         <v-col cols="2" class="pt-3">
@@ -87,13 +87,13 @@ watchEffect(async () => {
             </thead>
             <tbody>
 
-                <tr v-for="item in props.items" :key="item._id">
-                    <td>{{ item.data.name }}</td>
+                <tr v-for="(item, i) in props.items" :key="item._id">
+                    <td :data-test-id="`tableList-${i}-name`" >{{ item.data.name }}</td>
                     <td v-if="route.name === 'admins'">{{ item.data.email }}</td>
                     <td v-else>{{ item.data.urlFriendlyName }}</td>
                     <td>{{ new Date(item.data.createdAt).toLocaleDateString() }}</td>
                     <td>{{ new Date(item.data.updatedAt).toLocaleDateString() }}</td>
-                    <td v-if="route.name === 'admins'" class="text-right">
+                    <td v-if="route.name === 'admins'" :data-test-id="`tableList-${i}-deleteBtn`" class="text-right">
                         <DeleteMyAccount @deleteEventHandler='redirectDeleteEventHandler' :data="item.data" />
                     </td>
                     <td v-else class="text-right">

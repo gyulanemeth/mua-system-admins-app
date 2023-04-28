@@ -29,9 +29,9 @@
 
     <v-navigation-drawer class="elevation-2" permanent>
         <v-list>
-            <v-list-item active-class="text-info" class="pb-3" :title="$t('sideBar.me')" to="/me" />
-            <v-list-item active-class="text-info" class="pb-3" :title="$t('sideBar.admins')" to="/admins" />
-            <v-list-item active-class="text-info" class="pb-3" :title="$t('sideBar.accounts')" to="/accounts" />
+            <v-list-item active-class="text-info" data-test-id="sideBar-meTab" class="pb-3" :title="$t('sideBar.me')" to="/me" />
+            <v-list-item active-class="text-info" data-test-id="sideBar-adminsTab" class="pb-3" :title="$t('sideBar.admins')" to="/admins" />
+            <v-list-item active-class="text-info" data-test-id="sideBar-accountsTab" class="pb-3" :title="$t('sideBar.accounts')" to="/accounts" />
         </v-list>
     </v-navigation-drawer>
 
