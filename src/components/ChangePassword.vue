@@ -15,7 +15,7 @@ const resetForm = () => {
 
 <template>
 
-<v-layout class="d-flex flex-wrap">
+<v-layout class="d-flex flex-wrap w-75">
     <v-col class="pt-3">
         <h3 class="font-weight-bold">{{$t('changePassword.header')}}</h3>
         <v-divider />
