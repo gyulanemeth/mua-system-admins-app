@@ -11,10 +11,10 @@ export default (connectors) => {
     actions: {
       loadPage: loadPage(connectors.admins.list, useSystemMessagesStore().addError, { metaFirst: false }),
       delete: deleteAdmin(connectors.admins.deleteOne, useSystemMessagesStore().addError, { optimistic: false }),
-      async deleteOne ({ id, password }) {
+      async deleteOne({ id, password }) {
         try {
           await connectors.admins.deletePermission(password)
-          const res = await this.delete(id)
+          const res = await connectors.admins.deleteOne({id, password})
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
