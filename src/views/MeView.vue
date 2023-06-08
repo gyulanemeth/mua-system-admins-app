@@ -43,11 +43,9 @@ async function handleUpdateNameEvent (params) {
   }
 }
 
-async function handleUpdatePasswordEvent (params) {
+async function handleUpdatePasswordEvent (params, statusCallBack) {
   const res = await store.patchPassword(params.oldPassword, params.newPassword, params.confirmNewPassword)
-  if (!res.message) {
-    await alert.message('Password updated successfully')
-  }
+  statusCallBack(!res.message)
 }
 async function handleUpdateEmailEvent (params, statusCallBack) {
   const res = await store.patchEmail(params.newEmail, params.confirmNewEmail)

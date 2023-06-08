@@ -24,8 +24,8 @@ async function redirectUpdateNameHandler (data) {
 async function redirectUpdateEmailHandler (data, cb) {
   emit('updateEmailHandler', data, cb)
 }
-async function redirectUpdatePasswordHandler (data) {
-  emit('updatePasswordHandler', data)
+async function redirectUpdatePasswordHandler (data, cb) {
+  emit('updatePasswordHandler', data, cb)
 }
 async function redirectDeleteHandler (data) {
   emit('deleteEventHandler', data)

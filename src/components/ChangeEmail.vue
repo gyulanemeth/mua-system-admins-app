@@ -1,17 +1,15 @@
 <script setup >
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-
+import alerts from '../alerts/alert.js'
 const props = defineProps({
   email: String
 })
 
-const route = useRoute()
-
+const alert = alerts()
+const processing = ref(false)
 const data = ref({
   email: props.email
 })
-const cb = ref()
 
 const resetForm = () => {
   data.value = {
@@ -62,14 +60,14 @@ const resetForm = () => {
             </v-text-field>
 
         </v-row>
-        <v-btn color="info mt-3" data-test-id="meDetails-changeEmailTab-submitBtn" @click="$emit('updateEmailHandler',data, (res) => {cb = res; resetForm()})"> {{$t('changeEmail.submitBtn')}}</v-btn>
-        <div v-if="cb">
-            <h2 data-test-id="meDetails-changeEmailTab-emailSentHeader" class="mt-4">{{$t('changeEmail.cb.header')}}</h2>
-            <p class="mt-4">{{$t('changeEmail.cb.message')}}</p>
-        </div>
-        <div v-else-if="route.query.tab === 'changeEmail'">
-            <p class="mt-4" data-test-id="meDetails-changeEmailTab-emailChanged" >{{$t('changeEmail.verifyMessage')}}</p>
-        </div>
+        <v-btn color="info mt-3" data-test-id="meDetails-changeEmailTab-submitBtn" @click="processing = true; $emit('updateEmailHandler',data, (res) => {res && alert.message($t('changeEmail.cb.header'), $t('changeEmail.cb.message')); resetForm(); processing= false})">
+             {{!processing? $t('changeEmail.submitBtn'):''}}
+
+                   <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+       indeterminate
+     ></v-progress-circular>{{processing? $t('processing'):''}}
+
+            </v-btn>
     </v-col>
 </v-layout>
 
