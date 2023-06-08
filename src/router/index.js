@@ -6,7 +6,7 @@ import ForgotPasswordView from '../views/ForgotPasswordView.vue'
 import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
 import AdminLogin from '../components/AdminLogin.vue'
 import MeView from '../views/MeView.vue'
-import RedirectToLoginMessage from '../views/redirectToLoginMessage.vue'
+import RedirectToLoginMessage from '../views/RedirectToLoginMessage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
