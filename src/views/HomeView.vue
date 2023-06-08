@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CardList from '../components/TableList.vue'
@@ -70,6 +70,7 @@ async function handleDetailsEvent (params) {
 async function handleDeleteEvent (params) {
   const res = await store.deleteOne(params)
   if (!res.message) {
+    loadData()
     alert.message('Deleted successfully')
   }
 }
@@ -101,18 +102,19 @@ async function searchBarHandler (filter) {
     store.filter = {}
   } else {
     store.filter = {
-      $text: {
-        $search: `"${filter}"`
-      }
+      $regex: filter,
+      $options: 'i'
     }
   }
   await store.loadPage(1)
   data.value = store.items
 }
 
-watchEffect(async () => {
+watch(route, () => {
   loadData()
 })
+
+loadData()
 
 </script>
 
