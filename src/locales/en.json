@@ -152,5 +152,13 @@
     "me":"My Profile",
     "admins": "Manage Admins",
     "accounts": "Manage Accounts"
+  },
+  "redirectToLoginMessage": {
+    "title":"Login required",
+    "autoRedirectMessage": "You will be automatically redirected in",
+    "bodyPart1": "seconds",
+    "bodyPart2": "Please",
+    "redirectBtn": "click here",
+    "bodyPart3": "if you are not redirected"
   }
 }

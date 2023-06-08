@@ -13,7 +13,7 @@ export default (connectors) => {
   const storedAccessToken = localStorage.getItem('accessToken')
   if (!storedAccessToken || Date.now() >= jwtDecode(storedAccessToken).exp * 1000) {
     if (window.location.pathname !== '/forgot-password/reset' && window.location.pathname !== '/invitation/accept' && window.location.pathname !== '/forgot-password' && window.location.pathname !== '/' && window.location.pathname !== '/verify-email') {
-      router.push('/')
+      router.push('/redirectToLoginMessage')
     }
   } else {
     storage.user = jwtDecode(storedAccessToken).user
@@ -30,7 +30,7 @@ export default (connectors) => {
     }),
     getters: {
       loggedIn () {
-        return !!this.user
+        return !!this.user && !!localStorage.getItem('accessToken')
       }
     },
     actions: {

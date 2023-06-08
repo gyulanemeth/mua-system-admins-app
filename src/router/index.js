@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import jwtDecode from 'jwt-decode'
 
 import HomeView from '../views/HomeView.vue'
 import ForgotPasswordView from '../views/ForgotPasswordView.vue'
 import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
 import AdminLogin from '../components/AdminLogin.vue'
 import MeView from '../views/MeView.vue'
+import RedirectToLoginMessage from '../views/redirectToLoginMessage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,8 +56,26 @@ const router = createRouter({
       path: '/admins/:id',
       name: 'admin',
       component: HomeView
+    },
+    {
+      path: '/redirectToLoginMessage',
+      name: 'redirectToLoginMessage',
+      component: RedirectToLoginMessage
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (localStorage.getItem('accessToken') && to.path !== '/redirectToLoginMessage') {
+    const decoded = jwtDecode(localStorage.getItem('accessToken'))
+    const now = Date.now().valueOf() / 1000
+    if (typeof decoded.exp !== 'undefined' && decoded.exp < now) {
+      window.location.href = window.location.hostname + '/redirectToLoginMessage'
+    }
+  }
+  if (!localStorage.getItem('accessToken') && to.path !== '/' && to.path !== '/redirectToLoginMessage') {
+    window.location.href = window.location.hostname + '/redirectToLoginMessage'
+  } else next()
 })
 
 export default router
