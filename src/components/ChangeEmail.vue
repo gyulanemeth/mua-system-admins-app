@@ -46,7 +46,7 @@ const resetForm = () => {
             <v-text-field hide-details density="compact" data-test-id="meDetails-changeEmailTab-newEmail" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="newEmail"
             :placeholder="data.newEmail || $t('changeEmail.newEmailPlaceHolder')"
             :value="data.newEmail"
-            @update:modelValue="res => data.newEmail = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+            @update:modelValue="res => data.newEmail = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')"
             >
             </v-text-field>
         </v-row>
@@ -57,7 +57,7 @@ const resetForm = () => {
             <v-text-field hide-details density="compact" data-test-id="meDetails-changeEmailTab-newEmailAgain" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="confirmNewEmail"
             :placeholder="data.confirmNewEmail || $t('changeEmail.confirmEmailPlaceHolder')"
             :value="data.confirmNewEmail"
-            @update:modelValue="res => data.confirmNewEmail = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+            @update:modelValue="res => data.confirmNewEmail = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')"
             >
             </v-text-field>
 
