@@ -35,7 +35,7 @@ async function submit () {
             <v-text-field hide-details density="compact" data-test-id="login-emailField" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" :label="$t('adminLogin.emailLabel')" id="email" type="email"
              :placeholder="email ||'your@email.com'"
              :value="email"
-             @update:modelValue="res => email = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+             @update:modelValue="res => email = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')"
              required />
             <v-text-field hide-details density="compact" data-test-id="login-passwordField" class="elevation-2 my-5 pt-2 pl-3 rounded" color="info"
             variant="plain" name="password" :label="$t('adminLogin.passwordLabel')" id="password" type="password"

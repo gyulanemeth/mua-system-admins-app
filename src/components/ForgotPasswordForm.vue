@@ -28,7 +28,7 @@ const appIcon = window.config.appIcon
             <v-text-field hide-details data-test-id="forgotPassword-emailField" density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
             :placeholder="data ||$t('forgotPasswordForm.emailPlaceHolder')"
             :value="data"
-            @update:modelValue="res => data = res.replace(/[^a-z0-9@ \.,_-]/gim, '')"
+            @update:modelValue="res => data = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')"
              required />
             <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info" value="I am human" hide-details></v-checkbox>
             <div v-if="!cb">
