@@ -32,7 +32,7 @@ async function redirectDeleteHandler (data) {
 }
 
 const route = useRoute()
-const tab = ref(route.query.tab)
+const tab = ref('me')
 
 if (route.query.logout) {
   store.logout()

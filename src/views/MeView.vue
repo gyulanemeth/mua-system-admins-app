@@ -18,18 +18,7 @@ const data = ref()
 if (route.name === 'verify-email') {
   const res = await store.patchEmailConfirm(route.query.token)
   if (!res.message) {
-    router.push({
-      path: '/me',
-      query: {
-        tab: 'changeEmail'
-      }
-    })
-    await new Promise(resolve => setTimeout(resolve, 5000))
-    router.push({
-      path: '/me',
-      query: {},
-      replace: true
-    })
+    router.push('/me')
   }
 } else if (!store.user || !store.user.name) {
   await store.readOne()
