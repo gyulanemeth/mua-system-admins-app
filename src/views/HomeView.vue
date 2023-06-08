@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CardList from '../components/TableList.vue'
@@ -109,6 +109,11 @@ async function searchBarHandler (filter) {
   await store.loadPage(1)
   data.value = store.items
 }
+
+watch(route, () => {
+  loadData()
+})
+
 loadData()
 
 </script>
