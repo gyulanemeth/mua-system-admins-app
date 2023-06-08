@@ -6,12 +6,14 @@ import Settings from './AdminSettings.vue'
 import ChangeEmail from './ChangeEmail.vue'
 import ChangePassword from './ChangePassword.vue'
 import MyDetails from './MyDetails.vue'
+import { useCurrentUserStore } from '../stores/index.js'
 
 const emit = defineEmits(['updateNameHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteEventHandler'])
 const props = defineProps({
   data: Object
 })
 
+const store = useCurrentUserStore()
 const changeTab = (tabId) => {
   tab.value = tabId
 }
@@ -31,6 +33,10 @@ async function redirectDeleteHandler (data) {
 
 const route = useRoute()
 const tab = ref(route.query.tab)
+
+if (route.query.logout) {
+  store.logout()
+}
 
 </script>
 
