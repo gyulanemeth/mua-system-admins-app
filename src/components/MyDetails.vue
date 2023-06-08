@@ -15,7 +15,7 @@ const editMode = ref()
 
 <template>
 
-<v-layout class="d-flex flex-wrap">
+<v-layout class="d-flex flex-wrap w-75">
     <v-col cols="8" class="pt-3">
         <h3 class="font-weight-bold">{{$t('myDetails.header')}}</h3>
         <v-divider />
