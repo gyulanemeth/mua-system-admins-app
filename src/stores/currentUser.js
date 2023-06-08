@@ -30,7 +30,7 @@ export default (connectors) => {
     }),
     getters: {
       loggedIn () {
-        return !!this.user && !!localStorage.getItem('accessToken')
+        return !!this.user
       }
     },
     actions: {
