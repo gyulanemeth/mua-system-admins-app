@@ -12,9 +12,10 @@ export default function () {
     })
   }
 
-  async function message (msg) {
+  async function message (title, text) {
     return Swal.fire({
-      title: msg,
+      title,
+      text,
       showDenyButton: true,
       icon: 'success',
       showConfirmButton: false,
