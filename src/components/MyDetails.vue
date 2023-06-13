@@ -18,14 +18,24 @@ const editMode = ref()
 
 const handleDeleteAvatar = () => {
   processing.value = true
-  emit('deleteAvatarHandler', (res) => { res ? avatar.value = 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg' : null; processing.value = false })
+  emit('deleteAvatarHandler', (res) => {
+    if (res) {
+      avatar.value = 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg'
+    }
+    processing.value = false
+  })
 }
 
 const handleFileChange = (event) => {
   processing.value = true
   const formData = new FormData()
   formData.append('avatar', event.target.files[0])
-  emit('uploadAvatarHandler', formData, (url) => { url ? avatar.value = url : null; processing.value = false })
+  emit('uploadAvatarHandler', formData, (url) => {
+    if (url) {
+      avatar.value = url
+    }
+    processing.value = false
+  })
 }
 
 const openFileInput = () => {
@@ -83,8 +93,8 @@ const openFileInput = () => {
             <v-divider />
             <v-col align="center" class="mt-3">
                 <v-hover v-slot="{ isHovering, props }">
-                    <v-progress-circular v-if="processing" :size="180" class="pa-3 ma-3"
-                        indeterminate>{{ $t('processing') }}</v-progress-circular>
+                    <v-progress-circular v-if="processing" :size="180" class="pa-3 ma-3" indeterminate>{{ $t('processing')
+                    }}</v-progress-circular>
                     <v-avatar v-else v-bind="props" class="elevation-3 " size="180">
                         <v-img :src="avatar" class="align-self-stretch" cover />
 

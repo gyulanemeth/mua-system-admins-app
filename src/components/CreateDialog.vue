@@ -25,6 +25,7 @@ const resetForm = () => {
   Object.keys(data.value).forEach(key => {
     data.value[key] = null
   })
+  previewUrl.value = null
 }
 
 const handleFileChange = (event) => {
