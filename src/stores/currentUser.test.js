@@ -107,9 +107,21 @@ describe('Current User Store', () => {
       }
       return 'success'
     }
+    const mockUploadAvatar = async function (params, formData) {
+      if (!params || !params.id || !formData) {
+        throw new RouteError('param and form Data Is Required')
+      }
+      return { success: true, avatar: 'test' }
+    }
 
+    const mockDeleteAvatar = async function (params) {
+      if (!params || !params.id) {
+        throw new RouteError('User Id Is Required')
+      }
+      return { success: true }
+    }
     return {
-      admins: { login: mockLogin, getAccessToken: mockgetAccessToken, readOne: mockgetReadOne, patchName: mockPatchName, patchPassword: mockPatchPassword, patchEmail: mockPatchEmail, patchEmailConfirm: mockPatchEmailConfirm },
+      admins: { deleteAvatar: mockDeleteAvatar, uploadAvatar: mockUploadAvatar, login: mockLogin, getAccessToken: mockgetAccessToken, readOne: mockgetReadOne, patchName: mockPatchName, patchPassword: mockPatchPassword, patchEmail: mockPatchEmail, patchEmailConfirm: mockPatchEmailConfirm },
       forgotPassword: { send: mockSendForgetPasssword, reset: mockReset },
       invitation: { send: mockSendInvitation, accept: mockAccept }
     }
@@ -325,5 +337,37 @@ describe('Current User Store', () => {
     const userStore = currentUser()
     const res = await userStore.readOne()
     expect(res.message).toEqual('Admin ID Is Required')
+  })
+
+  test('test success uploadAvatar', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    userStore.user = { _id: '12test12' }
+    const res = await userStore.uploadAvatar({ avatar: 'test' })
+    expect(res.success).toEqual(true)
+  })
+
+  test('test success deleteAvatar', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    userStore.user = { _id: '12test12', avatar: 'test' }
+    const res = await userStore.deleteAvatar()
+    expect(res.success).toEqual(true)
+  })
+
+  test('test uploadAvatar params error', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    userStore.user = { _id: '12test12' }
+    const res = await userStore.uploadAvatar()
+    expect(res.message).toEqual('param and form Data Is Required')
+  })
+
+  test('test success deleteAvatar params error', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    userStore.user = { }
+    const res = await userStore.deleteAvatar()
+    expect(res.message).toEqual('User Id Is Required')
   })
 })

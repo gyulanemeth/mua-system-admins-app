@@ -171,8 +171,27 @@ export default (connectors) => {
           useSystemMessagesStore().addError(e)
           return e
         }
+      },
+      async uploadAvatar (formData) {
+        try {
+          const res = await connectors.admins.uploadAvatar({ id: this.user._id }, formData)
+          this.user.avatar = res.avatar
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
+      },
+      async deleteAvatar () {
+        try {
+          const res = await connectors.admins.deleteAvatar({ id: this.user._id })
+          delete this.user.avatar
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
       }
-
     }
   })
 

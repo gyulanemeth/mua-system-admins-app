@@ -32,11 +32,16 @@ describe('accounts Store', () => {
       if (!formData || !formData.name || !formData.urlFriendlyName) {
         throw new RouteError('FormData Name And UrlFriendlyName Is Required')
       }
+      return { name: 'accountExampleNew', urlFriendlyName: 'urlFriendlyNameNew', _id: '112test112' }
+    }
+    const mockUploadAvatar = async function (params, formData) {
+      if (!params || !params.id || !formData) {
+        throw new RouteError('param and form Data Is Required')
+      }
       return { success: true }
     }
-
     return {
-      account: { list: mockList, createOne: mockCreateOne }
+      account: { list: mockList, createOne: mockCreateOne, uploadAvatar: mockUploadAvatar }
     }
   }
 
@@ -56,14 +61,14 @@ describe('accounts Store', () => {
   test('test success createOne', async () => {
     const accountStore = useAccountsStore(mokeConnector())
     const store = accountStore()
-    const res = await store.createOne({ name: 'testName', urlFriendlyName: 'testurlFriendlyName' })
+    const res = await store.createOne({ name: 'testName', urlFriendlyName: 'testurlFriendlyName', avatar: { test: 'success' } })
     expect(res).toEqual('success')
   })
 
-  test('test createOne', async () => {
+  test('test createOne params error', async () => {
     const accountStore = useAccountsStore(mokeConnector())
     const store = accountStore()
-    const res = await store.createOne()
+    const res = await store.createOne({})
     expect(res.message).toEqual('FormData Name And UrlFriendlyName Is Required')
   })
 })

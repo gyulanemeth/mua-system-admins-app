@@ -50,10 +50,20 @@ async function handleDeleteEvent (params) {
   }
 }
 
+async function uploadAvatar (params, statusCallBack) {
+  const res = await store.uploadAvatar(params)
+  statusCallBack(res.avatar)
+}
+
+async function deleteAvatar (statusCallBack) {
+  const res = await store.deleteAvatar()
+  statusCallBack(res)
+}
+
 </script>
 
 <template>
 
-<MeDetails v-if='data' :data="data" @updateNameHandler='handleUpdateNameEvent' @updatePasswordHandler='handleUpdatePasswordEvent' @updateEmailHandler='handleUpdateEmailEvent' @deleteEventHandler='handleDeleteEvent' />
+<MeDetails v-if='data' :data="data" @deleteAvatarHandler="deleteAvatar" @uploadAvatarHandler="uploadAvatar" @updateNameHandler='handleUpdateNameEvent' @updatePasswordHandler='handleUpdatePasswordEvent' @updateEmailHandler='handleUpdateEmailEvent' @deleteEventHandler='handleDeleteEvent' />
 
 </template>

@@ -541,4 +541,70 @@ describe('test admin connectors', () => {
     })
     await expect(admin(fetch, apiUrl).admins.deletePermission()).rejects.toThrowError('Password Is Required')
   })
+
+  test('test upload admin avatar', async () => {
+    const fetch = vi.fn()
+
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.uploadAvatar({ id: '123' }, { avatar: 'test' })
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/123/upload-avatar/',
+      {
+        method: 'POST',
+        body: { avatar: 'test' },
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
+  test('test upload admin avatar error ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
+    })
+    await expect(admin(fetch, apiUrl).admins.uploadAvatar()).rejects.toThrowError('param and form Data Is Required')
+  })
+
+  test('test delete admin avatar', async () => {
+    const fetch = vi.fn()
+
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.deleteAvatar({ id: '123' }, { avatar: 'test' })
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/123/delete-avatar',
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
+  test('test delete admin avatar error ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
+    })
+    await expect(admin(fetch, apiUrl).admins.deleteAvatar()).rejects.toThrowError('User Id Is Required')
+  })
 })

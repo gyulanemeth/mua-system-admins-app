@@ -25,7 +25,23 @@ export default function (fetch, apiUrl) {
     return res
   }
 
+  const uploadAvatar = async function (params, formData) {
+    if (!params || !params.id || !formData) {
+      throw new RouteError('param and form Data Is Required')
+    }
+    const url = `${apiUrl}/v1/accounts/${params.id}/upload-avatar/`
+
+    const requestOptions = {
+      method: 'POST',
+      headers: generateAdditionalHeaders(),
+      body: formData
+    }
+    let res = await fetch(url, requestOptions)
+    res = await res.json()
+    return res.result
+  }
+
   return {
-    account: { list, createOne }
+    account: { list, createOne, uploadAvatar }
   }
 }
