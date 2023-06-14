@@ -34,7 +34,7 @@ describe('accounts Store', () => {
       }
       return { name: 'accountExampleNew', urlFriendlyName: 'urlFriendlyNameNew', _id: '112test112' }
     }
-    const mockUploadProfilePicture= async function (params, formData) {
+    const mockUploadProfilePicture = async function (params, formData) {
       if (!params || !params.id || !formData) {
         throw new RouteError('param and form Data Is Required')
       }

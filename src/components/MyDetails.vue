@@ -9,7 +9,7 @@ const componentProps = defineProps({
 
 const name = ref(componentProps.name)
 const email = ref(componentProps.email)
-const profilePicture = ref(componentProps.profilePicture || 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg')
+const profilePicture = ref(componentProps.profilePicture || import.meta.env.BASE_URL + 'placeholder.jpg')
 const processing = ref(false)
 
 const emit = defineEmits(['uploadProfilePictureHandler', 'deleteProfilePictureHandler'])
@@ -20,7 +20,7 @@ const handleDeleteProfilePicture = () => {
   processing.value = true
   emit('deleteProfilePictureHandler', (res) => {
     if (res) {
-        profilePicture.value = 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg'
+      profilePicture.value = import.meta.env.BASE_URL + 'placeholder.jpg'
     }
     processing.value = false
   })
@@ -32,7 +32,7 @@ const handleFileChange = (event) => {
   formData.append('profilePicture', event.target.files[0])
   emit('uploadProfilePictureHandler', formData, (url) => {
     if (url) {
-        profilePicture.value = url
+      profilePicture.value = url
     }
     processing.value = false
   })

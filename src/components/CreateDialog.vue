@@ -18,7 +18,7 @@ const dialog = ref(false)
 const processing = ref(false)
 const data = ref({})
 const cb = ref()
-const profilePicture = ref('https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg')
+const profilePicture = ref(import.meta.env.BASE_URL + 'placeholder.jpg')
 const previewUrl = ref(null)
 
 const resetForm = () => {
