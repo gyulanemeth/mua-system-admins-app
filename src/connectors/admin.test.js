@@ -542,7 +542,7 @@ describe('test admin connectors', () => {
     await expect(admin(fetch, apiUrl).admins.deletePermission()).rejects.toThrowError('Password Is Required')
   })
 
-  test('test upload admin avatar', async () => {
+  test('test upload admin profilePicture', async () => {
     const fetch = vi.fn()
 
     fetch.mockResolvedValue({
@@ -552,12 +552,12 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await admin(fetch, apiUrl).admins.uploadAvatar({ id: '123' }, { avatar: 'test' })
+    const res = await admin(fetch, apiUrl).admins.uploadProfilePicture({ id: '123' }, { profilePicture: 'test' })
     expect(spy).toHaveBeenLastCalledWith(
-      'https:/mua/admin/v1/admins/123/upload-avatar/',
+      'https:/mua/admin/v1/admins/123/profile-picture/',
       {
         method: 'POST',
-        body: { avatar: 'test' },
+        body: { profilePicture: 'test' },
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
         }
@@ -565,17 +565,17 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
-  test('test upload admin avatar error ', async () => {
+  test('test upload admin profilePicture error ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
       ok: true,
       headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
     })
-    await expect(admin(fetch, apiUrl).admins.uploadAvatar()).rejects.toThrowError('param and form Data Is Required')
+    await expect(admin(fetch, apiUrl).admins.uploadProfilePicture()).rejects.toThrowError('param and form Data Is Required')
   })
 
-  test('test delete admin avatar', async () => {
+  test('test delete admin profilePicture', async () => {
     const fetch = vi.fn()
 
     fetch.mockResolvedValue({
@@ -585,9 +585,9 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await admin(fetch, apiUrl).admins.deleteAvatar({ id: '123' }, { avatar: 'test' })
+    const res = await admin(fetch, apiUrl).admins.deleteProfilePicture({ id: '123' }, { profilePicture: 'test' })
     expect(spy).toHaveBeenLastCalledWith(
-      'https:/mua/admin/v1/admins/123/delete-avatar',
+      'https:/mua/admin/v1/admins/123/profile-picture',
       {
         method: 'DELETE',
         headers: {
@@ -598,13 +598,13 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
-  test('test delete admin avatar error ', async () => {
+  test('test delete admin profilePicture error ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
       ok: true,
       headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
     })
-    await expect(admin(fetch, apiUrl).admins.deleteAvatar()).rejects.toThrowError('User Id Is Required')
+    await expect(admin(fetch, apiUrl).admins.deleteProfilePicture()).rejects.toThrowError('User Id Is Required')
   })
 })

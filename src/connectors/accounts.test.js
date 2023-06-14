@@ -83,7 +83,7 @@ describe('test admin connectors', () => {
     await expect(accounts(fetch, apiUrl).account.createOne()).rejects.toThrowError('Name And UrlFriendlyName Is Required')
   })
 
-  test('test upload account Avatar ', async () => {
+  test('test upload account ProfilePicture ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
       ok: true,
@@ -92,10 +92,10 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await accounts(fetch, apiUrl).account.uploadAvatar({ id: '123test123' }, { test: 'test' })
+    const res = await accounts(fetch, apiUrl).account.uploadProfilePicture({ id: '123test123' }, { test: 'test' })
 
     expect(spy).toHaveBeenLastCalledWith(
-      'https:/mua/accounts/v1/accounts/123test123/upload-avatar/',
+      'https:/mua/accounts/v1/accounts/123test123/profile-picture/',
       {
         method: 'POST',
         body: { test: 'test' },
@@ -113,6 +113,6 @@ describe('test admin connectors', () => {
       headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { success: true } })
     })
-    await expect(accounts(fetch, apiUrl).account.uploadAvatar()).rejects.toThrowError('param and form Data Is Required')
+    await expect(accounts(fetch, apiUrl).account.uploadProfilePicture()).rejects.toThrowError('param and form Data Is Required')
   })
 })

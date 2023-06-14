@@ -8,7 +8,7 @@ import ChangePassword from './ChangePassword.vue'
 import MyDetails from './MyDetails.vue'
 import { useCurrentUserStore } from '../stores/index.js'
 
-const emit = defineEmits(['updateNameHandler', 'deleteAvatarHandler', 'uploadAvatarHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteEventHandler'])
+const emit = defineEmits(['updateNameHandler', 'deleteProfilePictureHandler', 'uploadProfilePictureHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteEventHandler'])
 const props = defineProps({
   data: Object
 })
@@ -18,11 +18,11 @@ const changeTab = (tabId) => {
   tab.value = tabId
 }
 
-async function redirectDeleteAvatarHandler (cb) {
-  emit('deleteAvatarHandler', cb)
+async function redirectDeleteProfilePictureHandler (cb) {
+  emit('deleteProfilePictureHandler', cb)
 }
-async function redirectUploadAvatarHandler (data, cb) {
-  emit('uploadAvatarHandler', data, cb)
+async function redirectUploadProfilePictureHandler (data, cb) {
+  emit('uploadProfilePictureHandler', data, cb)
 }
 async function redirectUpdateNameHandler (data) {
   emit('updateNameHandler', data)
@@ -72,7 +72,7 @@ if (route.query.logout) {
                 <v-window v-model="tab">
 
                     <v-window-item value="me">
-                        <MyDetails @updateNameHandler="redirectUpdateNameHandler" @deleteAvatarHandler="redirectDeleteAvatarHandler" @uploadAvatarHandler="redirectUploadAvatarHandler" @changeTab="changeTab" :email="props.data.email" :name="props.data.name" :avatar="props.data.avatar" />
+                        <MyDetails @updateNameHandler="redirectUpdateNameHandler" @deleteProfilePictureHandler="redirectDeleteProfilePictureHandler" @uploadProfilePictureHandler="redirectUploadProfilePictureHandler" @changeTab="changeTab" :email="props.data.email" :name="props.data.name" :profilePicture="props.data.profilePicture" />
                     </v-window-item>
 
                     <v-window-item value="changePassword">

@@ -4,23 +4,23 @@ import { ref } from 'vue'
 const componentProps = defineProps({
   name: String,
   email: String,
-  avatar: String
+  profilePicture: String
 })
 
 const name = ref(componentProps.name)
 const email = ref(componentProps.email)
-const avatar = ref(componentProps.avatar || 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg')
+const profilePicture = ref(componentProps.profilePicture || 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg')
 const processing = ref(false)
 
-const emit = defineEmits(['uploadAvatarHandler', 'deleteAvatarHandler'])
+const emit = defineEmits(['uploadProfilePictureHandler', 'deleteProfilePictureHandler'])
 
 const editMode = ref()
 
-const handleDeleteAvatar = () => {
+const handleDeleteProfilePicture = () => {
   processing.value = true
-  emit('deleteAvatarHandler', (res) => {
+  emit('deleteProfilePictureHandler', (res) => {
     if (res) {
-      avatar.value = 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg'
+        profilePicture.value = 'https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg'
     }
     processing.value = false
   })
@@ -29,10 +29,10 @@ const handleDeleteAvatar = () => {
 const handleFileChange = (event) => {
   processing.value = true
   const formData = new FormData()
-  formData.append('avatar', event.target.files[0])
-  emit('uploadAvatarHandler', formData, (url) => {
+  formData.append('profilePicture', event.target.files[0])
+  emit('uploadProfilePictureHandler', formData, (url) => {
     if (url) {
-      avatar.value = url
+        profilePicture.value = url
     }
     processing.value = false
   })
@@ -96,14 +96,14 @@ const openFileInput = () => {
                     <v-progress-circular v-if="processing" :size="180" class="pa-3 ma-3" indeterminate>{{ $t('processing')
                     }}</v-progress-circular>
                     <v-avatar v-else v-bind="props" class="elevation-3 " size="180">
-                        <v-img :src="avatar" class="align-self-stretch" cover />
+                        <v-img :src="profilePicture" class="align-self-stretch" cover />
 
                         <input ref="fileInput" type="file" style="display: none" @change="handleFileChange">
 
                         <v-expand-transition>
                             <v-container v-if="isHovering"
                                 class="d-flex justify-center align-end w-100 h-100 v-card--reveal">
-                                <v-btn v-if="componentProps.avatar" @click="handleDeleteAvatar" color="white"
+                                <v-btn v-if="componentProps.profilePicture" @click="handleDeleteProfilePicture" color="white"
                                     class="align-center" variant="text" icon="mdi-delete-forever-outline" size="small" />
                                 <v-btn v-else color="white" @click="openFileInput" variant="text" class="align-center"
                                     icon="mdi-camera-plus-outline" size="small" />

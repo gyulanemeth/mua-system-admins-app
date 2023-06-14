@@ -172,20 +172,20 @@ export default (connectors) => {
           return e
         }
       },
-      async uploadAvatar (formData) {
+      async uploadProfilePicture (formData) {
         try {
-          const res = await connectors.admins.uploadAvatar({ id: this.user._id }, formData)
-          this.user.avatar = res.avatar
+          const res = await connectors.admins.uploadProfilePicture({ id: this.user._id }, formData)
+          this.user.profilePicture = res.profilePicture
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
           return e
         }
       },
-      async deleteAvatar () {
+      async deleteProfilePicture () {
         try {
-          const res = await connectors.admins.deleteAvatar({ id: this.user._id })
-          delete this.user.avatar
+          const res = await connectors.admins.deleteProfilePicture({ id: this.user._id })
+          delete this.user.profilePicture
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)

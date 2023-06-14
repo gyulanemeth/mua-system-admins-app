@@ -25,11 +25,11 @@ export default function (fetch, apiUrl) {
     return res
   }
 
-  const uploadAvatar = async function (params, formData) {
+  const uploadProfilePicture = async function (params, formData) {
     if (!params || !params.id || !formData) {
       throw new RouteError('param and form Data Is Required')
     }
-    const url = `${apiUrl}/v1/accounts/${params.id}/upload-avatar/`
+    const url = `${apiUrl}/v1/accounts/${params.id}/profile-picture/`
 
     const requestOptions = {
       method: 'POST',
@@ -42,6 +42,6 @@ export default function (fetch, apiUrl) {
   }
 
   return {
-    account: { list, createOne, uploadAvatar }
+    account: { list, createOne, uploadProfilePicture }
   }
 }

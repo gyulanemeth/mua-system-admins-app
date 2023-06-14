@@ -27,7 +27,7 @@ const appIcon = window.config.appIcon
     <v-menu location="bottom " origin="end top">
         <template v-slot:activator="{ props }">
             <v-avatar size="large" color="grey-darken-3">
-                <v-img style="cursor: pointer;" v-if="store.user && store.user.avatar" :src="store.user.avatar" v-bind="props" class="align-self-stretch" cover />
+                <v-img style="cursor: pointer;" v-if="store.user && store.user.profilePicture" :src="store.user.profilePicture" v-bind="props" class="align-self-stretch" cover />
                 <v-btn v-else data-test-id="navbarMenu" v-bind="props">
                     {{$t('navBar.picLabel')}}
                 </v-btn>

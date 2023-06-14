@@ -12,9 +12,9 @@ export default (connectors) => {
       loadPage: loadPage(connectors.account.list, useSystemMessagesStore().addError, { metaFirst: false }),
       async createOne (formData) {
         try {
-          const avatar = formData.avatar
+          const profilePicture = formData.profilePicture
           const accountData = await connectors.account.createOne(formData)
-          await connectors.account.uploadAvatar({ id: accountData._id }, avatar)
+          await connectors.account.uploadProfilePicture({ id: accountData._id }, profilePicture)
           return 'success'
         } catch (e) {
           useSystemMessagesStore().addError(e)
