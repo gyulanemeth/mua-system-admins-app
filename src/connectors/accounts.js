@@ -29,7 +29,7 @@ export default function (fetch, apiUrl) {
     if (!params || !params.id || !formData) {
       throw new RouteError('param and form Data Is Required')
     }
-    const url = `${apiUrl}/v1/accounts/${params.id}/profile-picture/`
+    const url = `${apiUrl}/v1/accounts/${params.id}/logo/`
 
     const requestOptions = {
       method: 'POST',

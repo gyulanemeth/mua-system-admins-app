@@ -83,7 +83,7 @@ describe('test admin connectors', () => {
     await expect(accounts(fetch, apiUrl).account.createOne()).rejects.toThrowError('Name And UrlFriendlyName Is Required')
   })
 
-  test('test upload account ProfilePicture ', async () => {
+  test('test upload account logo ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
       ok: true,
@@ -95,7 +95,7 @@ describe('test admin connectors', () => {
     const res = await accounts(fetch, apiUrl).account.uploadProfilePicture({ id: '123test123' }, { test: 'test' })
 
     expect(spy).toHaveBeenLastCalledWith(
-      'https:/mua/accounts/v1/accounts/123test123/profile-picture/',
+      'https:/mua/accounts/v1/accounts/123test123/logo/',
       {
         method: 'POST',
         body: { test: 'test' },
