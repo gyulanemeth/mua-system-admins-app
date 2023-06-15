@@ -101,7 +101,7 @@ const previewImage = (file) => {
                 <v-btn color="info" v-else-if="cb" data-test-id="formDialog-resetBtn" @click="cb = null">{{
                     $t('createDialog.cb.resetbtn') }}</v-btn>
                 <v-btn color="info" v-else data-test-id="formDialog-inviteAnotherBtn"
-                    @click="processing = true; $emit('inviteEventHandler', data, (res) => { cb = res; processing = false; resetForm() })">
+                    @click="processing = true; $emit('inviteEventHandler', data, (res) => { if(res){ cb = res} processing = false; resetForm() })">
                     {{ !processing ? operation : '' }}
                     <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
                         indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}

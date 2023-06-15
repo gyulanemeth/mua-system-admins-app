@@ -84,8 +84,8 @@ async function handleInviteEvent (params, statusCallBack) {
 
 async function handleCreateEvent (params, statusCallBack) {
   const res = await store.createOne(params)
+  statusCallBack(!res.message)
   if (!res.message) {
-    statusCallBack()
     await alert.message('Account Created successfully')
     loadData()
   }
