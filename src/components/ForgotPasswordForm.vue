@@ -35,7 +35,7 @@ const appIcon = window.config.appIcon
                     hide-details></v-checkbox>
                 <div v-if="!cb">
                     <v-btn data-test-id="forgotPassword-submitBtn" color="info"
-                        @click="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { cb = res; processing = false; })">
+                        @click="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if(res){ cb = res} processing = false; })">
 
                         {{ !processing ? $t('forgotPasswordForm.submitBtn') : '' }}
 
@@ -44,7 +44,7 @@ const appIcon = window.config.appIcon
 
                     </v-btn>
                     <button hidden
-                        @click.enter.prevent="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { cb = res; processing = false; })" />
+                        @click.enter.prevent="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if(res){ cb = res} processing = false; })" />
                 </div>
                 <div v-if="cb">
 

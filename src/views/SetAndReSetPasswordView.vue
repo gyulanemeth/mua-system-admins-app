@@ -39,8 +39,8 @@ async function handleSetPasswordEvent (params) {
 
 async function handleResetPassword (params, statusCallBack) {
   const res = await store.resetForgotPassword(params.token, params.newPassword, params.newPasswordAgain)
+  statusCallBack(!res.message && res)
   if (!res.message) {
-    statusCallBack(res)
     await new Promise(resolve => setTimeout(resolve, 5000))
     router.push('/me')
   }

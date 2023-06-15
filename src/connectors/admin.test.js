@@ -541,4 +541,70 @@ describe('test admin connectors', () => {
     })
     await expect(admin(fetch, apiUrl).admins.deletePermission()).rejects.toThrowError('Password Is Required')
   })
+
+  test('test upload admin profilePicture', async () => {
+    const fetch = vi.fn()
+
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.uploadProfilePicture({ id: '123' }, { profilePicture: 'test' })
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/123/profile-picture/',
+      {
+        method: 'POST',
+        body: { profilePicture: 'test' },
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
+  test('test upload admin profilePicture error ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
+    })
+    await expect(admin(fetch, apiUrl).admins.uploadProfilePicture()).rejects.toThrowError('param and form Data Is Required')
+  })
+
+  test('test delete admin profilePicture', async () => {
+    const fetch = vi.fn()
+
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).admins.deleteProfilePicture({ id: '123' }, { profilePicture: 'test' })
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/admins/123/profile-picture',
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
+  test('test delete admin profilePicture error ', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { permissionToken: 'permissionToken' } })
+    })
+    await expect(admin(fetch, apiUrl).admins.deleteProfilePicture()).rejects.toThrowError('User Id Is Required')
+  })
 })

@@ -12,7 +12,9 @@ export default (connectors) => {
       loadPage: loadPage(connectors.account.list, useSystemMessagesStore().addError, { metaFirst: false }),
       async createOne (formData) {
         try {
-          await connectors.account.createOne(formData)
+          const profilePicture = formData.profilePicture
+          const accountData = await connectors.account.createOne(formData)
+          await connectors.account.uploadProfilePicture({ id: accountData._id }, profilePicture)
           return 'success'
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -21,6 +23,5 @@ export default (connectors) => {
       }
     }
   })
-
   return accountStore
 }

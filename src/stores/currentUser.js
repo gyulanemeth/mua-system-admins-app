@@ -171,8 +171,27 @@ export default (connectors) => {
           useSystemMessagesStore().addError(e)
           return e
         }
+      },
+      async uploadProfilePicture (formData) {
+        try {
+          const res = await connectors.admins.uploadProfilePicture({ id: this.user._id }, formData)
+          this.user.profilePicture = res.profilePicture
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
+      },
+      async deleteProfilePicture () {
+        try {
+          const res = await connectors.admins.deleteProfilePicture({ id: this.user._id })
+          delete this.user.profilePicture
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
       }
-
     }
   })
 

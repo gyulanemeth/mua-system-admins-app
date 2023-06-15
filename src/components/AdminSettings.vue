@@ -11,6 +11,7 @@ function redirectDeleteHandler (data) {
   emit('deleteEventHandler', data)
 }
 
+const defaultImg = import.meta.env.BASE_URL + 'placeholder.jpg'
 </script>
 
 <template >
@@ -26,7 +27,7 @@ function redirectDeleteHandler (data) {
             </v-col>
 
             <v-card class="mx-2 my-5 pa-2 align-center w-50">
-                <v-img src="https://selective.agency/wp-content/uploads/2018/02/placeholder-600x300.jpg" height="150px" cover></v-img>
+                <v-img :src="defaultImg" height="150px" cover></v-img>
                 <v-card-title class="justify-center py-0">
                     <v-btn variant="text" icon="mdi-image-plus" color="grey-lighten-1" type="file"></v-btn>
                 </v-card-title>

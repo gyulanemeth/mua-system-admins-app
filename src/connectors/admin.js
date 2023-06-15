@@ -44,6 +44,7 @@ export default function (fetch, apiUrl) {
   const updateEmail = createPatchConnector(fetch, apiUrl, generatePatchEmailRoute, generateAdditionalHeaders)
   const confirmEmailUpdate = createPatchConnector(fetch, apiUrl, generatePatchConfirmEmailRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('verifyEmailToken')}` }))
   const delPermission = createPostConnector(fetch, apiUrl, generateDeletePermissionRoute, generateAdditionalHeaders)
+  const deleteProfilePictureRoute = createDeleteConnector(fetch, apiUrl, (params) => `/v1/admins/${params.id}/profile-picture`, generateAdditionalHeaders)
 
   const list = async function (param, query) {
     const res = await getAdmin({}, query)
@@ -177,8 +178,31 @@ export default function (fetch, apiUrl) {
     return res
   }
 
+  const uploadProfilePicture = async function (params, formData) {
+    if (!params || !params.id || !formData) {
+      throw new RouteError('param and form Data Is Required')
+    }
+    const url = `${apiUrl}/v1/admins/${params.id}/profile-picture/`
+    const requestOptions = {
+      method: 'POST',
+      headers: generateAdditionalHeaders(),
+      body: formData
+    }
+    let res = await fetch(url, requestOptions)
+    res = await res.json()
+    return res.result
+  }
+
+  const deleteProfilePicture = async function (params) {
+    if (!params || !params.id) {
+      throw new RouteError('User Id Is Required')
+    }
+    const res = await deleteProfilePictureRoute(params)
+    return res
+  }
+
   return {
-    admins: { list, readOne, deleteOne, patchName, patchPassword, getAccessToken, login, patchEmail, patchEmailConfirm, deletePermission },
+    admins: { list, uploadProfilePicture, deleteProfilePicture, readOne, deleteOne, patchName, patchPassword, getAccessToken, login, patchEmail, patchEmailConfirm, deletePermission },
     invitation: { send: sendInvitation, accept },
     forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }

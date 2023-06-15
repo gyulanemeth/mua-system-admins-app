@@ -68,7 +68,7 @@ email.value = jwtDecode(route.query.token).user.email
 
                 <v-col v-if="operation === 'resetPassword'">
                     <v-btn color="info" data-test-id="setAndRestPassword-submitBtn"
-                        @click="processing = true; $emit('resetPasswordEventHandler', { token: route.query.token, ...data }, (res) => { cb = res; processing = false })">
+                        @click="processing = true; $emit('resetPasswordEventHandler', { token: route.query.token, ...data }, (res) => { if(res){ cb = res} processing = false })">
 
                         {{ !processing ? props.formData.text : '' }}
 
@@ -77,7 +77,7 @@ email.value = jwtDecode(route.query.token).user.email
 
                     </v-btn>
                     <button hidden
-                        @click.enter.prevent="processing = true; $emit('resetPasswordEventHandler', { token: route.query.token, ...data }, (res) => { cb = res; processing = false })" />
+                        @click.enter.prevent="processing = true; $emit('resetPasswordEventHandler', { token: route.query.token, ...data }, (res) => { if(res){ cb = res} processing = false })" />
                 </v-col>
                 <v-col v-if="operation === 'setPassword'">
                     <v-btn color="info" data-test-id="setAndRestPassword-submitBtn"

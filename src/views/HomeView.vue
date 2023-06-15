@@ -84,8 +84,8 @@ async function handleInviteEvent (params, statusCallBack) {
 
 async function handleCreateEvent (params, statusCallBack) {
   const res = await store.createOne(params)
+  statusCallBack(!res.message)
   if (!res.message) {
-    statusCallBack()
     await alert.message('Account Created successfully')
     loadData()
   }
@@ -129,6 +129,7 @@ loadData()
 </script>
 
 <template>
-  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadPage="loadPage" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent" @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
-
+  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadPage="loadPage"
+    @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent"
+    @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 </template>
