@@ -18,7 +18,7 @@ const dialog = ref(false)
 const processing = ref(false)
 const data = ref({})
 const cb = ref()
-const profilePicture = ref(import.meta.env.BASE_URL + 'placeholder.jpg')
+const logo = ref(import.meta.env.BASE_URL + 'placeholder.jpg')
 const previewUrl = ref(null)
 
 const resetForm = () => {
@@ -30,8 +30,8 @@ const resetForm = () => {
 
 const handleFileChange = (event) => {
   const formData = new FormData()
-  formData.append('profilePicture', event.target.files[0])
-  data.value.profilePicture = formData
+  formData.append('logo', event.target.files[0])
+  data.value.logo = formData
   previewImage(event.target.files[0])
 }
 
@@ -70,7 +70,7 @@ const previewImage = (file) => {
                         <v-card v-if="input.type === 'file'" class="mx-2 my-5 pa-2" min-width="275">
                             <input ref="fileInput" type="file" style="display: none" @change="handleFileChange">
 
-                            <v-img :src="previewUrl || profilePicture" height="150px" cover></v-img>
+                            <v-img :src="previewUrl || logo" height="150px" cover></v-img>
                             <v-card-title class="justify-center py-0">
                                 <v-btn @click="openFileInput" variant="text" icon="mdi-image-plus"
                                     :data-test-id="`formDialog-field-${i}`" color="grey-lighten-1" type="file"></v-btn>
