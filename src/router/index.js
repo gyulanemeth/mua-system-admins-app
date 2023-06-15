@@ -70,6 +70,7 @@ router.beforeEach((to, from, next) => {
     const decoded = jwtDecode(localStorage.getItem('accessToken'))
     const now = Date.now().valueOf() / 1000
     if (typeof decoded.exp !== 'undefined' && decoded.exp < now) {
+      localStorage.removeItem('accessToken')
       window.location.href = '/redirectToLoginMessage'
     }
   }
