@@ -92,7 +92,7 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await accounts(fetch, apiUrl).account.uploadProfilePicture({ id: '123test123' }, { test: 'test' })
+    const res = await accounts(fetch, apiUrl).account.uploadLogo({ id: '123test123' }, { test: 'test' })
 
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/accounts/v1/accounts/123test123/logo/',
@@ -113,6 +113,6 @@ describe('test admin connectors', () => {
       headers: { get: () => 'application/json' },
       json: () => Promise.resolve({ result: { success: true } })
     })
-    await expect(accounts(fetch, apiUrl).account.uploadProfilePicture()).rejects.toThrowError('param and form Data Is Required')
+    await expect(accounts(fetch, apiUrl).account.uploadLogo()).rejects.toThrowError('param and form Data Is Required')
   })
 })
