@@ -1,5 +1,5 @@
 <script setup >
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 
 const componentProps = defineProps({
   name: String,
@@ -11,6 +11,7 @@ const name = ref(componentProps.name)
 const email = ref(componentProps.email)
 const profilePicture = ref(componentProps.profilePicture || import.meta.env.BASE_URL + 'placeholder.jpg')
 const processing = ref(false)
+const nameInput = ref(null)
 
 const emit = defineEmits(['uploadProfilePictureHandler', 'deleteProfilePictureHandler'])
 
@@ -23,6 +24,12 @@ const handleDeleteProfilePicture = () => {
       profilePicture.value = import.meta.env.BASE_URL + 'placeholder.jpg'
     }
     processing.value = false
+  })
+}
+
+const setFocus = () => {
+  nextTick(() => {
+    nameInput.value.focus()
   })
 }
 
@@ -56,7 +63,7 @@ const openFileInput = () => {
                     <p class="font-weight-bold">{{ $t('myDetails.nameLabel') }}</p>
                 </v-col>
 
-                <v-text-field hide-details density="compact" :disabled='!editMode' data-test-id="meDetails-meTab-nameField"
+                <v-text-field ref="nameInput" hide-details density="compact" :disabled='!editMode' data-test-id="meDetails-meTab-nameField"
                     color="info" variant="underlined" name="name" :placeholder="name || $t('myDetails.namePlaceHolder')"
                     :value="name" @keydown.enter="$emit('updateNameHandler', name); editMode = false"
                     @keydown.esc="editMode = false; name = componentProps.name"
@@ -71,7 +78,7 @@ const openFileInput = () => {
                 </template>
                 <template v-else>
                     <v-btn color="info" variant="text" class="ma-2" icon="mdi-pencil-outline" size="small"
-                        data-test-id="meDetails-meTab-editNameBtn" @click='editMode = true' />
+                        data-test-id="meDetails-meTab-editNameBtn" @click='editMode = true; setFocus()' />
                 </template>
 
             </v-row>
