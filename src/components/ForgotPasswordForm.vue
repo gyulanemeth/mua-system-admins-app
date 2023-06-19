@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const cb = ref()
 const data = ref('')
 const processing = ref(false)
-
+const checkbox = ref()
 const title = window.config.title
 const appIcon = window.config.appIcon
 
@@ -31,10 +31,10 @@ const appIcon = window.config.appIcon
                     :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
                     :placeholder="data || $t('forgotPasswordForm.emailPlaceHolder')" :value="data"
                     @update:modelValue="res => data = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')" required />
-                <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info" value="I am human"
+                <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info"  v-model="checkbox"
                     hide-details></v-checkbox>
                 <div v-if="!cb">
-                    <v-btn data-test-id="forgotPassword-submitBtn" color="info"
+                    <v-btn data-test-id="forgotPassword-submitBtn" :disabled="!checkbox" color="info"
                         @click="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if(res){ cb = res} processing = false; })">
 
                         {{ !processing ? $t('forgotPasswordForm.submitBtn') : '' }}
@@ -43,7 +43,7 @@ const appIcon = window.config.appIcon
                             indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                     </v-btn>
-                    <button hidden
+                    <button hidden :disabled="!checkbox"
                         @click.enter.prevent="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if(res){ cb = res} processing = false; })" />
                 </div>
                 <div v-if="cb">
