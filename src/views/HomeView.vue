@@ -64,7 +64,7 @@ async function loadData () {
 
 async function handleDetailsEvent (params) {
   const getToken = localStorage.getItem('accessToken')
-  window.location.href = `${window.config.accountsAppBaseUrl}?token=${getToken}&accountId=${params.id}`
+  window.location.href = `${window.config.accountsAppBaseUrl}${params.urlFriendlyName}?token=${getToken}&accountId=${params.id}`
 }
 
 async function handleDeleteEvent (params) {

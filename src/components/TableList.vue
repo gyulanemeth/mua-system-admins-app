@@ -97,7 +97,7 @@ watchEffect(async () => {
                         <DeleteMyAccount @deleteEventHandler='redirectDeleteEventHandler' :data="item.data" />
                     </td>
                     <td v-else class="text-right">
-                        <v-btn color="grey" variant="text" class="ma-2" icon="mdi-arrow-right" size="small" @click="$emit('detailsEventHandler',{id: item._id})" />
+                        <v-btn color="grey" variant="text" class="ma-2" icon="mdi-arrow-right" size="small" @click="$emit('detailsEventHandler',{id: item._id, urlFriendlyName: item.data.urlFriendlyName})" />
                     </td>
                 </tr>
             </tbody>
