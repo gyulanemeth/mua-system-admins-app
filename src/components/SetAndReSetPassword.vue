@@ -13,6 +13,7 @@ const operation = computed(() => route.name === 'accept-invitation' ? 'setPasswo
 const email = ref()
 const data = ref({})
 const cb = ref()
+const checkbox = ref()
 const processing = ref(false)
 
 const title = window.config.title
@@ -63,11 +64,11 @@ email.value = jwtDecode(route.query.token).user.email
                     @update:modelValue="res => data.newPasswordAgain = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')"
                     required />
 
-                <v-checkbox :label="$t('setAndReSetPassword.checkboxLabel')" color="info" value="I am human"
+                <v-checkbox :label="$t('setAndReSetPassword.checkboxLabel')" color="info" v-model="checkbox"
                     hide-details></v-checkbox>
 
                 <v-col v-if="operation === 'resetPassword'">
-                    <v-btn color="info" data-test-id="setAndRestPassword-submitBtn"
+                    <v-btn color="info" data-test-id="setAndRestPassword-submitBtn" :disabled="!checkbox"
                         @click="processing = true; $emit('resetPasswordEventHandler', { token: route.query.token, ...data }, (res) => { if(res){ cb = res} processing = false })">
 
                         {{ !processing ? props.formData.text : '' }}
@@ -76,11 +77,11 @@ email.value = jwtDecode(route.query.token).user.email
                             indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                     </v-btn>
-                    <button hidden
+                    <button hidden :disabled="!checkbox"
                         @click.enter.prevent="processing = true; $emit('resetPasswordEventHandler', { token: route.query.token, ...data }, (res) => { if(res){ cb = res} processing = false })" />
                 </v-col>
                 <v-col v-if="operation === 'setPassword'">
-                    <v-btn color="info" data-test-id="setAndRestPassword-submitBtn"
+                    <v-btn :disabled="!checkbox" color="info" data-test-id="setAndRestPassword-submitBtn"
                         @click="processing = true; $emit('setPasswordEventHandler', { token: route.query.token, ...data }); processing = true">
                         {{ !processing ? props.formData.text : '' }}
 
@@ -88,7 +89,7 @@ email.value = jwtDecode(route.query.token).user.email
                             indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                     </v-btn>
-                    <button hidden
+                    <button hidden :disabled="!checkbox"
                         @click.enter.prevent="processing = true; $emit('setPasswordEventHandler', { token: route.query.token, ...data }); processing = false" />
                 </v-col>
             </v-card-text>
