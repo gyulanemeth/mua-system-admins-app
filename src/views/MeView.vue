@@ -18,6 +18,7 @@ const data = ref()
 if (route.name === 'verify-email') {
   const res = await store.patchEmailConfirm(route.query.token)
   if (!res.message) {
+    await store.readOne()
     router.push('/me')
   }
 } else if (!store.user || !store.user.name) {
