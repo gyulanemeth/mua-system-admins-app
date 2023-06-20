@@ -25,7 +25,7 @@ export default function (fetch, apiUrl) {
     return res
   }
 
-  const uploadProfilePicture = async function (params, formData) {
+  const uploadLogo = async function (params, formData) {
     if (!params || !params.id || !formData) {
       throw new RouteError('param and form Data Is Required')
     }
@@ -42,6 +42,6 @@ export default function (fetch, apiUrl) {
   }
 
   return {
-    account: { list, createOne, uploadProfilePicture }
+    account: { list, createOne, uploadLogo }
   }
 }

@@ -34,14 +34,14 @@ describe('accounts Store', () => {
       }
       return { name: 'accountExampleNew', urlFriendlyName: 'urlFriendlyNameNew', _id: '112test112' }
     }
-    const mockUploadProfilePicture = async function (params, formData) {
+    const mockUploadLogo = async function (params, formData) {
       if (!params || !params.id || !formData) {
         throw new RouteError('param and form Data Is Required')
       }
       return { success: true }
     }
     return {
-      account: { list: mockList, createOne: mockCreateOne, uploadProfilePicture: mockUploadProfilePicture }
+      account: { list: mockList, createOne: mockCreateOne, uploadLogo: mockUploadLogo }
     }
   }
 
@@ -61,7 +61,7 @@ describe('accounts Store', () => {
   test('test success createOne', async () => {
     const accountStore = useAccountsStore(mokeConnector())
     const store = accountStore()
-    const res = await store.createOne({ name: 'testName', urlFriendlyName: 'testurlFriendlyName', profilePicture: { test: 'success' } })
+    const res = await store.createOne({ name: 'testName', urlFriendlyName: 'testurlFriendlyName', logo: { test: 'success' } })
     expect(res).toEqual('success')
   })
 
