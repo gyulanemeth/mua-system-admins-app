@@ -9,13 +9,14 @@
   },
   "adminSettings": {
     "header" : "Account Settings",
-    "picLabel": "New Profile Picture",
-    "picBtn": "New Profile Picture",
-    "picSubmit": "Upload",
-    "inputLabel": "Real user settings will be here",
-    "inputPlaceholder": "Real user settings will be here",
     "btnLabel": "Update Settings",
-    "deleteLabel": "Delete Account"
+    "noteHeader": "Please note the following before proceeding:",
+    "noteFooter": "Ensure your decision aligns with your app’s goals. Deleting an admin cannot be undone. Proceed with caution.",
+    "notePoint1": "At least one admin must remain in the system. If the last admin is deleted, the deletion will be unsuccessful.",
+    "notePoint2": "Deleted admins permanently lose access privileges and permissions.",
+    "notePoint3": "All actions performed by deleted admins will no longer be attributed to them.",
+    "notePoint4": "Deleted admins cannot manage user accounts, assign roles, or modify system settings.",
+    "deleteLabel": "Delete Admin"
   },
   "cardsList": {
     "header": {
