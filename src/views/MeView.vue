@@ -28,7 +28,7 @@ data.value = store.user
 
 async function handleUpdateNameEvent (params) {
   const res = await store.patchName(params)
-  if (res) {
+  if (!res.message) {
     await alert.message('Name updated successfully')
   }
 }
