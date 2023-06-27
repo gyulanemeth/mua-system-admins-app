@@ -71,7 +71,6 @@ router.beforeEach((to, from, next) => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('loginToken')
     next({path: '/'})
-    console.log('hereeeeeeeeeeeee');
   }
   if (localStorage.getItem('accessToken') && to.path !== '/redirectToLoginMessage') {
     const decoded = jwtDecode(localStorage.getItem('accessToken'))
