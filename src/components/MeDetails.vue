@@ -1,19 +1,16 @@
 <script setup >
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 
 import Settings from './AdminSettings.vue'
 import ChangeEmail from './ChangeEmail.vue'
 import ChangePassword from './ChangePassword.vue'
 import MyDetails from './MyDetails.vue'
-import { useCurrentUserStore } from '../stores/index.js'
 
 const emit = defineEmits(['updateNameHandler', 'deleteProfilePictureHandler', 'uploadProfilePictureHandler', 'updateEmailHandler', 'updatePasswordHandler', 'deleteEventHandler'])
 const props = defineProps({
   data: Object
 })
 
-const store = useCurrentUserStore()
 const changeTab = (tabId) => {
   tab.value = tabId
 }
@@ -37,12 +34,7 @@ async function redirectDeleteHandler (data) {
   emit('deleteEventHandler', data)
 }
 
-const route = useRoute()
 const tab = ref('me')
-
-if (route.query.logout) {
-  store.logout()
-}
 
 </script>
 

@@ -17,8 +17,8 @@ onMounted(() => {
 </script>
 <template>
   <v-app>
-    <NavBar v-if="store.loggedIn && route.name !== 'forgot-password-reset' && route.name !== 'accept-invitation'"/>
-    <SideBar v-if="store.loggedIn && route.name !== 'forgot-password-reset' && route.name !== 'accept-invitation'"/>
+    <NavBar v-if="store.loggedIn && route.name !=='login' && route.name !== 'forgot-password-reset' && route.name !== 'accept-invitation'"/>
+    <SideBar v-if="store.loggedIn && route.name !=='login' && route.name !== 'forgot-password-reset' && route.name !== 'accept-invitation'"/>
     <v-main >
       <ErrorMessage/>
       <Suspense>
