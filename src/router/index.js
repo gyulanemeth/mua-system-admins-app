@@ -77,9 +77,10 @@ router.beforeEach((to, from, next) => {
     const now = Date.now().valueOf() / 1000
     if (typeof decoded.exp !== 'undefined' && decoded.exp < now) {
       localStorage.removeItem('accessToken')
-      window.location.href = '/redirectToLoginMessage'
+      return window.location.href = '/redirectToLoginMessage'
     }
   }
+
   if (!localStorage.getItem('accessToken') && to.path !== '/' && to.path !== '/redirectToLoginMessage' && to.path !== '/forgot-password/reset' && to.path !== '/invitation/accept' && to.path !== '/forgot-password' && to.path !== '/verify-email') {
     next({path: '/'})
   } else next()
