@@ -66,23 +66,23 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
   if (to.query.logout) {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('loginToken')
-    next({path: '/'})
+    next({ path: '/' })
   }
   if (localStorage.getItem('accessToken') && to.path !== '/redirectToLoginMessage') {
     const decoded = jwtDecode(localStorage.getItem('accessToken'))
     const now = Date.now().valueOf() / 1000
     if (typeof decoded.exp !== 'undefined' && decoded.exp < now) {
       localStorage.removeItem('accessToken')
-      return window.location.href = '/redirectToLoginMessage'
+      window.location.href = '/redirectToLoginMessage'
+      return
     }
   }
 
   if (!localStorage.getItem('accessToken') && to.path !== '/' && to.path !== '/redirectToLoginMessage' && to.path !== '/forgot-password/reset' && to.path !== '/invitation/accept' && to.path !== '/forgot-password' && to.path !== '/verify-email') {
-    next({path: '/'})
+    next({ path: '/' })
   } else next()
 })
 
