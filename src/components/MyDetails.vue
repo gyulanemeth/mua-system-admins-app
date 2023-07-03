@@ -7,11 +7,11 @@ const componentProps = defineProps({
   profilePicture: String
 })
 
-const staticServerUrl = window.config.staticServerUrl
+const cdnBaseUrl = window.config.cdnBaseUrl
 
 const name = ref(componentProps.name)
 const email = ref(componentProps.email)
-const profilePicture = ref(componentProps.profilePicture ? staticServerUrl + componentProps.profilePicture : import.meta.env.BASE_URL + 'placeholder.jpg')
+const profilePicture = ref(componentProps.profilePicture ? cdnBaseUrl + componentProps.profilePicture : import.meta.env.BASE_URL + 'placeholder.jpg')
 const processing = ref(false)
 const nameInput = ref(null)
 
@@ -41,7 +41,7 @@ const handleFileChange = (event) => {
   formData.append('profilePicture', event.target.files[0])
   emit('uploadProfilePictureHandler', formData, (url) => {
     if (url) {
-      profilePicture.value = staticServerUrl + url
+      profilePicture.value = cdnBaseUrl + url
     }
     processing.value = false
   })

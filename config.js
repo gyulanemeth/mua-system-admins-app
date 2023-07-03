@@ -6,5 +6,5 @@ window.config = {
   appTitle: 'MUA admin\'s UI',
   appIcon: 'https://codebluefox.com/wp-content/uploads/2022/08/Blue-Fox-Pvt-LTd-04.png',
   title: 'Administration Panel',
-  staticServerUrl: 'http://localhost:10006/'
+  cdnBaseUrl: 'http://localhost:10006/'
 }
