@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
-
+import { onMounted } from 'vue'
 import { useCurrentUserStore } from '../stores/index.js'
 
 const route = useRoute()
@@ -8,6 +8,13 @@ const store = useCurrentUserStore()
 const appName = window.config.appName
 const appIcon = window.config.appIcon
 const cdnBaseUrl = window.config.cdnBaseUrl
+
+onMounted(async () => {
+  if (!store.user.name) {
+    await store.readOne()
+  }
+})
+
 </script>
 
 <template>
