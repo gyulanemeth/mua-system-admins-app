@@ -28,7 +28,7 @@ const cdnBaseUrl = window.config.cdnBaseUrl
     <v-menu location="bottom " origin="end top">
         <template v-slot:activator="{ props }">
             <v-avatar size="large" color="grey-darken-3">
-                <v-img style="cursor: pointer;" v-if="store.user && store.user.profilePicture" :src="cdnBaseUrl + store.user.profilePicture" v-bind="props" class="align-self-stretch" cover />
+                <v-img style="cursor: pointer;" v-if="store.user && store.user.profilePicturePath" :src="cdnBaseUrl + store.user.profilePicturePath" v-bind="props" class="align-self-stretch" cover />
                 <v-btn v-else data-test-id="navbarMenu" v-bind="props">
                     {{$t('navBar.picLabel')}}
                 </v-btn>
