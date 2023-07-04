@@ -552,12 +552,12 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await admin(fetch, apiUrl).admins.uploadProfilePicture({ id: '123' }, { profilePicture: 'test' })
+    const res = await admin(fetch, apiUrl).admins.uploadProfilePicture({ id: '123' }, { profilePicturePath: 'test' })
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/admins/123/profile-picture/',
       {
         method: 'POST',
-        body: { profilePicture: 'test' },
+        body: { profilePicturePath: 'test' },
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
         }
@@ -585,7 +585,7 @@ describe('test admin connectors', () => {
     })
 
     const spy = vi.spyOn(fetch, 'impl')
-    const res = await admin(fetch, apiUrl).admins.deleteProfilePicture({ id: '123' }, { profilePicture: 'test' })
+    const res = await admin(fetch, apiUrl).admins.deleteProfilePicture({ id: '123' }, { profilePicturePath: 'test' })
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/admins/123/profile-picture',
       {
