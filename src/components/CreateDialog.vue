@@ -68,7 +68,7 @@ const previewImage = (file) => {
                     </v-col>
                     <v-col cols="8" align='center'>
                         <v-card v-if="input.type === 'file'" class="mx-2 my-5 pa-2" min-width="275">
-                            <input ref="fileInput" type="file" style="display: none" @change="handleFileChange">
+                            <input ref="fileInput" type="file" style="display: none" @change="handleFileChange" accept=".png, .jpeg, .jpg, .gif">
 
                             <v-img :src="previewUrl || logo" height="150px" cover></v-img>
                             <v-card-title class="justify-center py-0">

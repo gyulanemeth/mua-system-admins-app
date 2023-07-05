@@ -107,7 +107,7 @@ const openFileInput = () => {
                     <v-avatar v-else v-bind="props" class="elevation-3 " size="180">
                         <v-img :src="profilePicture" class="align-self-stretch" cover />
 
-                        <input ref="fileInput" type="file" style="display: none" @change="handleFileChange">
+                        <input ref="fileInput" type="file" style="display: none" @change="handleFileChange" accept=".png, .jpeg, .jpg, .gif">
 
                         <v-expand-transition>
                             <v-container v-if="isHovering"
