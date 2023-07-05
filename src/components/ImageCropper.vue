@@ -54,12 +54,3 @@ const cancelCrop = () => {
           </v-card>
         </v-dialog>
 </template>
-
-<style scoped>
-.v-card--reveal {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.6);
-    transition: ease;
-    opacity: .9;
-}
-</style>

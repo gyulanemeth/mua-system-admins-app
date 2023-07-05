@@ -121,7 +121,7 @@ const previewImage = (file) => {
                     @click="dialog = false; cb = undefined; resetForm()">{{ $t('createDialog.cb.closeBtn') }}</v-btn>
             </v-card-actions>
         </v-card>
-        <ImgCropper v-if="imageFile" :profilePicture="imageFile" :showCropperDialog="showCropperDialog" @uploadProfilePictureHandler="previewImage" @closeCropperHandler="showCropperDialog = false" />
+        <ImgCropper v-if="imageFile" :profilePicture="imageFile" :showCropperDialog="showCropperDialog" @uploadProfilePictureHandler="previewImage" @closeCropperHandler="processing = false; showCropperDialog = false" />
 
     </v-dialog>
 </template>

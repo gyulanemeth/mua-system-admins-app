@@ -136,7 +136,7 @@ const openFileInput = () => {
                 </v-hover>
             </v-col>
         </v-col>
-        <ImgCropper v-if="imageFile" :profilePicture="imageFile" :showCropperDialog="showCropperDialog" @uploadProfilePictureHandler="uploadProfilePicture" @closeCropperHandler="showCropperDialog = false" />
+        <ImgCropper v-if="imageFile" :profilePicture="imageFile" :showCropperDialog="showCropperDialog" @uploadProfilePictureHandler="uploadProfilePicture" @closeCropperHandler="processing = false; showCropperDialog = false" />
     </v-layout>
 </template>
 
