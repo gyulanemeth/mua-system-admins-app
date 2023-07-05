@@ -2,6 +2,8 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import ImgCropper from './ImageCropper.vue'
+
 const { tm } = useI18n()
 
 const props = defineProps({
@@ -20,6 +22,8 @@ const data = ref({})
 const cb = ref()
 const logo = ref(import.meta.env.BASE_URL + 'placeholder.jpg')
 const previewUrl = ref(null)
+const showCropperDialog = ref(false)
+const imageFile = ref(false)
 
 const resetForm = () => {
   Object.keys(data.value).forEach(key => {
@@ -29,10 +33,12 @@ const resetForm = () => {
 }
 
 const handleFileChange = (event) => {
-  const formData = new FormData()
-  formData.append('logo', event.target.files[0])
-  data.value.logo = formData
-  previewImage(event.target.files[0])
+  const reader = new FileReader()
+  reader.onload = () => {
+    imageFile.value = reader.result
+    showCropperDialog.value = true
+  }
+  reader.readAsDataURL(event.target.files[0])
 }
 
 const openFileInput = () => {
@@ -41,6 +47,10 @@ const openFileInput = () => {
 }
 
 const previewImage = (file) => {
+  const formData = new FormData()
+  formData.append('logo', file)
+  data.value.logo = formData
+  showCropperDialog.value = false
   const reader = new FileReader()
   reader.onload = () => {
     previewUrl.value = reader.result
@@ -111,5 +121,7 @@ const previewImage = (file) => {
                     @click="dialog = false; cb = undefined; resetForm()">{{ $t('createDialog.cb.closeBtn') }}</v-btn>
             </v-card-actions>
         </v-card>
+        <ImgCropper v-if="imageFile" :profilePicture="imageFile" :showCropperDialog="showCropperDialog" @uploadProfilePictureHandler="previewImage" @closeCropperHandler="processing = false; showCropperDialog = false" />
+
     </v-dialog>
 </template>
