@@ -162,5 +162,10 @@
     "redirectBtn": "click here",
     "bodyPart3": "if you are not redirected"
   },
-  "processing": "processing..."
+  "processing": "processing...",
+  "imageCropper": {
+    "header": "Image Cropper" ,
+    "cropBtn": "Crop" ,
+    "cancelBtn": "Cancel"
+  }
 }

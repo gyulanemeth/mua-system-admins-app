@@ -43,13 +43,13 @@ const cancelCrop = () => {
 <template>
         <v-dialog persistent v-model="showCropperDialog" max-width="800">
           <v-card>
-            <v-card-title>Image Cropper</v-card-title>
+            <v-card-title class="ma-auto">{{$t('imageCropper.header')}}</v-card-title>
             <v-card-text>
               <Cropper ref="cropperRef" :src="componentProps.profilePicture" :autoCrop="true" :viewMode="1" :aspectRatio="1" />
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" @click="cropImage">Crop</v-btn>
-              <v-btn @click="cancelCrop">Cancel</v-btn>
+              <v-btn color="primary" @click="cropImage">{{$t('imageCropper.cropBtn')}}</v-btn>
+              <v-btn @click="cancelCrop">{{$t('imageCropper.cancelBtn')}}</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
