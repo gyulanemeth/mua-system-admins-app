@@ -1,5 +1,6 @@
 <script setup >
 import { ref, nextTick } from 'vue'
+import ImgCropper from './ImageCropper.vue'
 
 const componentProps = defineProps({
   name: String,
@@ -14,6 +15,8 @@ const email = ref(componentProps.email)
 const profilePicture = ref(componentProps.profilePicturePath ? cdnBaseUrl + componentProps.profilePicturePath : import.meta.env.BASE_URL + 'placeholder.jpg')
 const processing = ref(false)
 const nameInput = ref(null)
+const showCropperDialog = ref(false)
+const imageFile = ref(false)
 
 const emit = defineEmits(['uploadProfilePictureHandler', 'deleteProfilePictureHandler'])
 
@@ -35,16 +38,26 @@ const setFocus = () => {
   })
 }
 
-const handleFileChange = (event) => {
-  processing.value = true
+const uploadProfilePicture = (image) => {
+  showCropperDialog.value = false
   const formData = new FormData()
-  formData.append('profilePicture', event.target.files[0])
+  formData.append('profilePicture', image)
   emit('uploadProfilePictureHandler', formData, (url) => {
     if (url) {
       profilePicture.value = cdnBaseUrl + url
     }
     processing.value = false
   })
+}
+
+const handleFileChange = (event) => {
+  processing.value = true
+  const reader = new FileReader()
+  reader.onload = () => {
+    imageFile.value = reader.result
+    showCropperDialog.value = true
+  }
+  reader.readAsDataURL(event.target.files[0])
 }
 
 const openFileInput = () => {
@@ -96,7 +109,6 @@ const openFileInput = () => {
             </v-row>
 
         </v-col>
-
         <v-col cols="4" class="pt-3">
             <h3 class="font-weight-bold">{{ $t('myDetails.picLabel') }}</h3>
             <v-divider />
@@ -124,6 +136,7 @@ const openFileInput = () => {
                 </v-hover>
             </v-col>
         </v-col>
+        <ImgCropper v-if="imageFile" :profilePicture="imageFile" :showCropperDialog="showCropperDialog" @uploadProfilePictureHandler="uploadProfilePicture" @closeCropperHandler="showCropperDialog = false" />
     </v-layout>
 </template>
 
