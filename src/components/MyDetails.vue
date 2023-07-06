@@ -5,13 +5,13 @@ import ImgCropper from './ImageCropper.vue'
 const componentProps = defineProps({
   name: String,
   email: String,
-  profilePicturePath: String
+  profilePicture: String
 })
 
 
 const name = ref(componentProps.name)
 const email = ref(componentProps.email)
-const profilePicture = ref(componentProps.profilePicturePath || import.meta.env.BASE_URL + 'placeholder.jpg')
+const profilePicture = ref(componentProps.profilePicture || import.meta.env.BASE_URL + 'placeholder.jpg')
 const processing = ref(false)
 const nameInput = ref(null)
 const showCropperDialog = ref(false)
@@ -123,7 +123,7 @@ const openFileInput = () => {
                         <v-expand-transition>
                             <v-container v-if="isHovering"
                                 class="d-flex justify-center align-end w-100 h-100 v-card--reveal">
-                                <v-btn v-if="componentProps.profilePicturePath" @click="handleDeleteProfilePicture" color="white"
+                                <v-btn v-if="componentProps.profilePicture" @click="handleDeleteProfilePicture" color="white"
                                     class="align-center" variant="text" icon="mdi-delete-forever-outline" size="small" />
                                 <v-btn v-else color="white" @click="openFileInput" variant="text" class="align-center"
                                     icon="mdi-camera-plus-outline" size="small" />
