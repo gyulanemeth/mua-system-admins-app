@@ -111,7 +111,7 @@ describe('Current User Store', () => {
       if (!params || !params.id || !formData) {
         throw new RouteError('param and form Data Is Required')
       }
-      return { profilePicturePath: 'test' }
+      return { profilePicture: 'test' }
     }
 
     const mockDeleteProfilePicture = async function (params) {
@@ -343,14 +343,14 @@ describe('Current User Store', () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     userStore.user = { _id: '12test12' }
-    const res = await userStore.uploadProfilePicture({ profilePicturePath: 'test' })
-    expect(res.profilePicturePath).toEqual('test')
+    const res = await userStore.uploadProfilePicture({ profilePicture: 'test' })
+    expect(res.profilePicture).toEqual('test')
   })
 
   test('test success delete profilePicture', async () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
-    userStore.user = { _id: '12test12', profilePicturePath: 'test' }
+    userStore.user = { _id: '12test12', profilePicture: 'test' }
     const res = await userStore.deleteProfilePicture()
     expect(res.success).toEqual(true)
   })

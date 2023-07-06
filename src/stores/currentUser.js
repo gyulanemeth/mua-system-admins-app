@@ -175,7 +175,7 @@ export default (connectors) => {
       async uploadProfilePicture (formData) {
         try {
           const res = await connectors.admins.uploadProfilePicture({ id: this.user._id }, formData)
-          this.user.profilePicturePath = res.profilePicturePath
+          this.user.profilePicture = res.profilePicture
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
@@ -185,7 +185,7 @@ export default (connectors) => {
       async deleteProfilePicture () {
         try {
           const res = await connectors.admins.deleteProfilePicture({ id: this.user._id })
-          delete this.user.profilePicturePath
+          delete this.user.profilePicture
           return res
         } catch (e) {
           useSystemMessagesStore().addError(e)
