@@ -10,14 +10,13 @@ const route = useRoute()
 
 const password = ref()
 const dialog = ref()
-const cdnBaseUrl = window.config.cdnBaseUrl
 
 const resetForm = () => {
   password.value = null
   dialog.value = false
 }
 
-const profilePicture = ref(props.data.profilePicturePath ? cdnBaseUrl + props.data.profilePicturePath : import.meta.env.BASE_URL + 'placeholder.jpg')
+const profilePicture = ref(props.data.profilePicturePath || import.meta.env.BASE_URL + 'placeholder.jpg')
 
 </script>
 
