@@ -7,6 +7,7 @@ import SetAndReSetPasswordView from '../views/SetAndReSetPasswordView.vue'
 import AdminLogin from '../components/AdminLogin.vue'
 import MeView from '../views/MeView.vue'
 import RedirectToLoginMessage from '../views/RedirectToLoginMessage.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,54 +15,92 @@ const router = createRouter({
     {
       path: '/admins',
       name: 'admins',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: '/accounts',
       name: 'accounts',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: '/verify-email',
       name: 'verify-email',
-      component: MeView
+      component: MeView,
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '/me',
       name: 'me',
-      component: MeView
+      component: MeView,
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: '/',
       name: 'login',
-      component: AdminLogin
+      component: AdminLogin,
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '/forgot-password',
       name: 'forgot-password',
-      component: ForgotPasswordView
+      component: ForgotPasswordView,
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '/forgot-password/reset',
       name: 'forgot-password-reset',
-      component: SetAndReSetPasswordView
+      component: SetAndReSetPasswordView,
+      meta: {
+        requiresAuth: false,
+      }
     },
 
     {
       path: '/invitation/accept',
       name: 'accept-invitation',
-      component: SetAndReSetPasswordView
+      component: SetAndReSetPasswordView,
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '/admins/:id',
       name: 'admin',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: '/redirectToLoginMessage',
       name: 'redirectToLoginMessage',
-      component: RedirectToLoginMessage
-    }
+      component: RedirectToLoginMessage,
+      meta: {
+        requiresAuth: false,
+      }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound', 
+      component: NotFoundView,
+      meta: {
+        requiresAuth: false,
+      }
+    },
   ]
 })
 
@@ -71,6 +110,7 @@ router.beforeEach((to, from, next) => {
     localStorage.removeItem('loginToken')
     next({ path: '/' })
   }
+  
   if (localStorage.getItem('accessToken') && to.path !== '/redirectToLoginMessage') {
     const decoded = jwtDecode(localStorage.getItem('accessToken'))
     const now = Date.now().valueOf() / 1000
@@ -81,7 +121,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  if (!localStorage.getItem('accessToken') && to.path !== '/' && to.path !== '/redirectToLoginMessage' && to.path !== '/forgot-password/reset' && to.path !== '/invitation/accept' && to.path !== '/forgot-password' && to.path !== '/verify-email') {
+  if (!localStorage.getItem('accessToken') && to.meta.requiresAuth) {
     next({ path: '/' })
   } else next()
 })
