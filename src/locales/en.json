@@ -167,5 +167,14 @@
     "header": "Image Cropper" ,
     "cropBtn": "Crop" ,
     "cancelBtn": "Cancel"
+  },
+  "notFoundView": {
+    "title":"404 Page Not Found",
+    "header": "Oops! The page you're looking for does not exist.",
+    "autoRedirectMessage": "You will be automatically redirected in",
+    "bodyPart1": "seconds",
+    "bodyPart2": "Please",
+    "redirectBtn": "click here",
+    "bodyPart3": "if you are not redirected"
   }
 }
