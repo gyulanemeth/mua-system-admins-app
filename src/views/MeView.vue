@@ -53,11 +53,13 @@ async function handleDeleteEvent (params) {
 
 async function uploadProfilePicture (params, statusCallBack) {
   const res = await store.uploadProfilePicture(params)
+  data.value = store.user
   statusCallBack(res.profilePicture)
 }
 
 async function deleteProfilePicture (statusCallBack) {
   const res = await store.deleteProfilePicture()
+  data.value = store.user
   statusCallBack(res)
 }
 
