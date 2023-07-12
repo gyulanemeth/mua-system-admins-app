@@ -101,6 +101,8 @@
     "emailPlaceHolder": "your{'@'}email.com",
     "checkboxLabel": "I am human.",
     "submitBtn": "Reset password",
+    "redirectToLoginMessage":"Ready to log in?",
+    "redirectToLoginBtn": "Click here",
     "cb": {
       "message" : "We have sent you an e-mail with instructions on how to reset your password. Please check your inbox.",
       "cbBtn":"continue"
