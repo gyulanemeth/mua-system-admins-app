@@ -31,11 +31,12 @@ const appIcon = window.config.appIcon
                     :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
                     :placeholder="data || $t('forgotPasswordForm.emailPlaceHolder')" :value="data"
                     @update:modelValue="res => data = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')" required />
-                <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info"  v-model="checkbox"
+                <v-checkbox v-if="!cb" :label="$t('forgotPasswordForm.checkboxLabel')" color="info" v-model="checkbox"
                     hide-details></v-checkbox>
+
                 <div v-if="!cb">
-                    <v-btn data-test-id="forgotPassword-submitBtn" :disabled="!checkbox" color="info"
-                        @click="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if(res){ cb = res} processing = false; })">
+                    <v-btn data-test-id="forgotPassword-submitBtn" :disabled="!checkbox || !data" color="info"
+                        @click="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if (res) { cb = res } processing = false; })">
 
                         {{ !processing ? $t('forgotPasswordForm.submitBtn') : '' }}
 
@@ -44,11 +45,16 @@ const appIcon = window.config.appIcon
 
                     </v-btn>
                     <button hidden :disabled="!checkbox"
-                        @click.enter.prevent="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if(res){ cb = res} processing = false; })" />
+                        @click.enter.prevent="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if (res) { cb = res } processing = false; })" />
+
+                    <p class="mt-4 pa-4">{{ $t('forgotPasswordForm.redirectToLoginMessage') }}
+                        <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/">{{
+                            $t('forgotPasswordForm.redirectToLoginBtn') }}</router-link>
+                    </p>
                 </div>
                 <div v-if="cb">
 
-                    <p class="mt-4">{{ $t('forgotPasswordForm.cb.header') }}</p>
+                    <p class="mt-4">{{ $t('forgotPasswordForm.cb.message') }}</p>
                     <v-btn color="white" data-test-id="forgotPassword-continueBtn" class="mt-4" to="/">{{
                         $t('forgotPasswordForm.cb.cbBtn') }}</v-btn>
                 </div>
