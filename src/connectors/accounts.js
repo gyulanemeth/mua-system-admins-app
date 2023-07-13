@@ -1,6 +1,8 @@
 import { createGetConnector, createPostConnector } from 'standard-json-api-connectors'
 
 import RouteError from '../errors/RouteError.js'
+import PayloadTooLargeError from '../errors/PayloadTooLargeError.js'
+
 
 export default function (fetch, apiUrl) {
   const generateAdditionalHeaders = () => {
@@ -38,6 +40,9 @@ export default function (fetch, apiUrl) {
     }
     let res = await fetch(url, requestOptions)
     res = await res.json()
+    if (res.error) {
+      throw new PayloadTooLargeError(res.error.message) 
+    }
     return res.result
   }
 
