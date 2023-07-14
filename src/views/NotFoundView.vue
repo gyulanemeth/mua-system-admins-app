@@ -17,12 +17,12 @@ setInterval(redirect, 1000)
   <v-layout class="d-flex flex-wrap w-100 align-center justify-center">
     <v-card class="pa-5 ma-5 elevation-4 w-50">
         <v-card-text class="text-center">
-      
+
         <v-icon icon="mdi-magnify-remove-outline" color="info" size="90"></v-icon>
 
       </v-card-text>
       <v-card-text class="text-center">
-       
+
         <h1 class="text-info d-inline">{{ $t('notFoundView.title') }}</h1>
       </v-card-text>
       <v-card-text class="text-center">

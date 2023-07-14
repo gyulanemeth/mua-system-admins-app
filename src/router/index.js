@@ -17,7 +17,7 @@ const router = createRouter({
       name: 'admins',
       component: HomeView,
       meta: {
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
@@ -25,7 +25,7 @@ const router = createRouter({
       name: 'accounts',
       component: HomeView,
       meta: {
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
@@ -33,7 +33,7 @@ const router = createRouter({
       name: 'verify-email',
       component: MeView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
     {
@@ -41,7 +41,7 @@ const router = createRouter({
       name: 'me',
       component: MeView,
       meta: {
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
@@ -49,7 +49,7 @@ const router = createRouter({
       name: 'login',
       component: AdminLogin,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
     {
@@ -57,7 +57,7 @@ const router = createRouter({
       name: 'forgot-password',
       component: ForgotPasswordView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
     {
@@ -65,7 +65,7 @@ const router = createRouter({
       name: 'forgot-password-reset',
       component: SetAndReSetPasswordView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
 
@@ -74,7 +74,7 @@ const router = createRouter({
       name: 'accept-invitation',
       component: SetAndReSetPasswordView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
     {
@@ -82,7 +82,7 @@ const router = createRouter({
       name: 'admin',
       component: HomeView,
       meta: {
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
@@ -90,17 +90,17 @@ const router = createRouter({
       name: 'redirectToLoginMessage',
       component: RedirectToLoginMessage,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
     {
       path: '/:catchAll(.*)',
-      name: 'notFound', 
+      name: 'notFound',
       component: NotFoundView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
-    },
+    }
   ]
 })
 
@@ -110,7 +110,7 @@ router.beforeEach((to, from, next) => {
     localStorage.removeItem('loginToken')
     next({ path: '/' })
   }
-  
+
   if (localStorage.getItem('accessToken') && to.path !== '/redirectToLoginMessage') {
     const decoded = jwtDecode(localStorage.getItem('accessToken'))
     const now = Date.now().valueOf() / 1000

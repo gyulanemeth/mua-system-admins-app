@@ -8,7 +8,6 @@ const componentProps = defineProps({
   profilePicture: String
 })
 
-
 const name = ref(componentProps.name)
 const email = ref(componentProps.email)
 const profilePicture = ref(componentProps.profilePicture || import.meta.env.BASE_URL + 'placeholder.jpg')
