@@ -54,7 +54,7 @@ watchEffect(async () => {
         </v-col>
         <v-spacer />
         <v-col cols="5">
-            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary" @change="$emit('searchEvent',filter)"></v-text-field>
+            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary" @input="$emit('searchEvent',filter)"></v-text-field>
         </v-col>
 
         <v-col cols="2" class="pt-3">
