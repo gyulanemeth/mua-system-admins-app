@@ -12,6 +12,7 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "@sweetalert2/theme-material-ui": "^5.0.11",
+    "@vueuse/core": "^10.2.1",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.14",
     "pinia-list-store": "^0.0.2",

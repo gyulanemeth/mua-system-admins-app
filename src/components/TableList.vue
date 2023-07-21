@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-
+import { useThrottleFn } from '@vueuse/core'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
@@ -18,6 +18,10 @@ const numOfPages = ref(props.numOfPages)
 const filter = ref('')
 const rows = ref(10)
 const page = ref(1)
+
+const throttledFn = useThrottleFn(() => {
+  emit('searchEvent',filter.value)
+}, 300)
 
 function redirectDeleteEventHandler (data) {
   emit('deleteEventHandler', data)
@@ -54,7 +58,7 @@ watchEffect(async () => {
         </v-col>
         <v-spacer />
         <v-col cols="5">
-            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary" @change="$emit('searchEvent',filter)"></v-text-field>
+            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary"  @input="throttledFn"></v-text-field>
         </v-col>
 
         <v-col cols="2" class="pt-3">
