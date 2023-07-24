@@ -4,7 +4,7 @@ window.config = {
   accountsAppBaseUrl: 'http://accounts.emailfox.link/',
   appName: 'MUA admin\'s UI',
   appTitle: 'MUA admin\'s UI',
-  appIcon: 'https://codebluefox.com/wp-content/uploads/2022/08/Blue-Fox-Pvt-LTd-04.png',
+  appIcon: 'https://bluefox.email/assets/bluefoxemail-logo.png',
   title: 'Administration Panel',
   cdnBaseUrl: 'http://localhost:10006/'
 }

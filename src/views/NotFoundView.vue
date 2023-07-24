@@ -1,20 +1,21 @@
 <script setup>
-import { ref } from 'vue'
-
-const countDown = ref(5)
-function redirect () {
-  if (countDown.value === 0) {
-    window.location.href = '/'
-  } else {
-    countDown.value = countDown.value - 1
-  }
-};
-
-setInterval(redirect, 1000)
+const title = window.config.title
+const appIcon = window.config.appIcon
 </script>
 
 <template>
-  <v-layout class="d-flex flex-wrap w-100 align-center justify-center">
+  <v-layout class="d-flex flex-wrap w-100 h-screen align-center justify-center">
+    <div class="w-100 ma-auto d-flex flex-wrap align-center justify-center">
+    <v-card elevation="0" class="w-100">
+      <v-card-text align="center">
+          <v-avatar size="100">
+              <v-img :src="appIcon" cover></v-img>
+          </v-avatar>
+      </v-card-text>
+      <v-card-title class="justify-center py-0">
+          <h4 class="text-h4"> {{ title }} </h4>
+      </v-card-title>
+    </v-card>
     <v-card class="pa-5 ma-5 elevation-4 w-50">
         <v-card-text class="text-center">
 
@@ -25,19 +26,16 @@ setInterval(redirect, 1000)
 
         <h1 class="text-info d-inline">{{ $t('notFoundView.title') }}</h1>
       </v-card-text>
+
       <v-card-text class="text-center">
-        <v-alert class="w-100" color="info" prominent>
           {{ $t('notFoundView.header') }}
-        </v-alert>
-
       </v-card-text>
+     
       <v-card-text class="text-center">
-        {{ $t('notFoundView.autoRedirectMessage') }} {{ countDown }} {{ $t('notFoundView.bodyPart1')
-        }}<br /> {{ $t('notFoundView.bodyPart2') }} <a style="text-decoration: none; color: black;"
-          href="/"><b> {{ $t('notFoundView.redirectBtn') }} </b></a> {{
-            $t('notFoundView.bodyPart3') }}
-
+         {{ $t('notFoundView.bodyPart1') }} <a style="text-decoration: none; color: black;"
+          href="/"><b> {{ $t('notFoundView.redirectBtn') }} </b></a> {{ $t('notFoundView.bodyPart2') }}
       </v-card-text>
     </v-card>
+    </div>
   </v-layout>
 </template>

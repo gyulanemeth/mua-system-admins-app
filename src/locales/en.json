@@ -173,10 +173,8 @@
   "notFoundView": {
     "title":"404 Page Not Found",
     "header": "Oops! The page you're looking for does not exist.",
-    "autoRedirectMessage": "You will be automatically redirected in",
-    "bodyPart1": "seconds",
-    "bodyPart2": "Please",
+    "bodyPart1": "Please",
     "redirectBtn": "click here",
-    "bodyPart3": "if you are not redirected"
+    "bodyPart2": "to be redirected"
   }
 }
