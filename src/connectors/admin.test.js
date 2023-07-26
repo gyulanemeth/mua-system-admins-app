@@ -311,6 +311,29 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
+  test('test reSendInvitation admin', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    const spy = vi.spyOn(fetch, 'impl')
+    const res = await admin(fetch, apiUrl).invitation.reSend({ email: 'newUser@gmail.com' })
+    expect(spy).toHaveBeenLastCalledWith(
+      'https:/mua/admin/v1/invitation/resend',
+      {
+        method: 'POST',
+        body: JSON.stringify({ email: 'newUser@gmail.com' }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      })
+    expect(res).toEqual({ success: true })
+  })
+
   test('test sendInvitation undefined input admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -319,7 +342,18 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
-    await expect(admin(fetch, apiUrl).invitation.send()).rejects.toThrowError('Email and confirm Email Required')
+    await expect(admin(fetch, apiUrl).invitation.send()).rejects.toThrowError('Email is Required')
+  })
+
+  test('test reSendInvitation undefined input admin', async () => {
+    const fetch = vi.fn()
+    fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'application/json' },
+      json: () => Promise.resolve({ result: { success: true } })
+    })
+
+    await expect(admin(fetch, apiUrl).invitation.reSend()).rejects.toThrowError('Email is Required')
   })
 
   test('test accept invitation admin', async () => {

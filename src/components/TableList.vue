@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { useDebounceFn  } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
@@ -19,8 +19,8 @@ const filter = ref('')
 const rows = ref(10)
 const page = ref(1)
 
-const debouncedFn = useDebounceFn (() => {
-  emit('searchEvent',filter.value)
+const debouncedFn = useDebounceFn(() => {
+  emit('searchEvent', filter.value)
 }, 300)
 
 function redirectDeleteEventHandler (data) {
@@ -97,7 +97,9 @@ watchEffect(async () => {
                     <td v-else>{{ item.data.urlFriendlyName }}</td>
                     <td>{{ new Date(item.data.createdAt).toLocaleDateString() }}</td>
                     <td>{{ new Date(item.data.updatedAt).toLocaleDateString() }}</td>
+
                     <td v-if="route.name === 'admins'" :data-test-id="`tableList-${i}-deleteBtn`" class="text-right">
+                        <v-btn color="grey" v-if="!item.data.name"  variant="text" class="ma-2" icon="mdi-email-sync" size="small" @click="$emit('reSendInvitationEventHandler',{ email: item.data.email })" />
                         <DeleteMyAccount @deleteEventHandler='redirectDeleteEventHandler' :data="item.data" />
                     </td>
                     <td v-else class="text-right">

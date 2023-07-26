@@ -30,7 +30,7 @@ const appIcon = window.config.appIcon
       <v-card-text class="text-center">
           {{ $t('notFoundView.header') }}
       </v-card-text>
-     
+
       <v-card-text class="text-center">
          {{ $t('notFoundView.bodyPart1') }} <a style="text-decoration: none; color: black;"
           href="/"><b> {{ $t('notFoundView.redirectBtn') }} </b></a> {{ $t('notFoundView.bodyPart2') }}

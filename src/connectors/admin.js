@@ -25,6 +25,7 @@ export default function (fetch, apiUrl) {
 
   const generateLoginRoute = () => '/v1/login'
   const generateSendInvitationRoute = () => '/v1/invitation/send'
+  const generateReSendInvitationRoute = () => '/v1/invitation/resend'
   const generateAcceptInvitationRoute = () => '/v1/invitation/accept'
   const generateSendForgotPasswordRoute = () => '/v1/forgot-password/send'
   const generateResetForgotPasswordRoute = () => '/v1/forgot-password/reset'
@@ -39,6 +40,7 @@ export default function (fetch, apiUrl) {
   const updatePassword = createPatchConnector(fetch, apiUrl, generatePatchPasswordRoute, generateAdditionalHeaders)
   const postLogin = createPostConnector(fetch, apiUrl, generateLoginRoute)
   const postSendInvitation = createPostConnector(fetch, apiUrl, generateSendInvitationRoute, generateAdditionalHeaders)
+  const postReSendInvitation = createPostConnector(fetch, apiUrl, generateReSendInvitationRoute, generateAdditionalHeaders)
   const postAcceptedInvitaion = createPostConnector(fetch, apiUrl, generateAcceptInvitationRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('invitationToken')}` }))
   const postSendForgotPassword = createPostConnector(fetch, apiUrl, generateSendForgotPasswordRoute)
   const postResetForgotPassword = createPostConnector(fetch, apiUrl, generateResetForgotPasswordRoute, () => ({ Authorization: `Bearer ${localStorage.getItem('resetPasswordToken')}` }))
@@ -116,9 +118,17 @@ export default function (fetch, apiUrl) {
 
   const sendInvitation = async function (data) {
     if (!data || !data.email) {
-      throw new RouteError('Email and confirm Email Required')
+      throw new RouteError('Email is Required')
     }
     const res = await postSendInvitation({}, { email: data.email })
+    return res
+  }
+
+  const reSendInvitation = async function (data) {
+    if (!data || !data.email) {
+      throw new RouteError('Email is Required')
+    }
+    const res = await postReSendInvitation({}, { email: data.email })
     return res
   }
 
@@ -207,7 +217,7 @@ export default function (fetch, apiUrl) {
 
   return {
     admins: { list, uploadProfilePicture, deleteProfilePicture, readOne, deleteOne, patchName, patchPassword, getAccessToken, login, patchEmail, patchEmailConfirm, deletePermission },
-    invitation: { send: sendInvitation, accept },
+    invitation: { send: sendInvitation, accept, reSend: reSendInvitation },
     forgotPassword: { send: sendForgotPassword, reset },
     config: { getConfig }
   }
