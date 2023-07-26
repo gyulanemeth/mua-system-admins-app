@@ -83,6 +83,17 @@ export default (connectors) => {
           return e
         }
       },
+
+      async reSendInvitation (email) {
+        try {
+          const res = await connectors.invitation.reSend({ email })
+          return res
+        } catch (e) {
+          useSystemMessagesStore().addError(e)
+          return e
+        }
+      },
+
       async acceptInvitation (acceptInvitationToken, newPassword, newPasswordAgain, name) {
         try {
           const invitationToken = await connectors.invitation.accept({ token: acceptInvitationToken, newPassword, newPasswordAgain, name })

@@ -82,6 +82,14 @@ async function handleInviteEvent (params, statusCallBack) {
   loadData()
 }
 
+async function handleReInviteEvent (params) {
+  store = useCurrentUserStore()
+  const res = await store.reSendInvitation(params.email)
+  if (!res.message) {
+    alert.message('Invitation sent successfully')
+  }
+}
+
 async function handleCreateEvent (params, statusCallBack) {
   const res = await store.createOne(params)
   statusCallBack(!res.message)
@@ -130,6 +138,6 @@ loadData()
 
 <template>
   <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadPage="loadPage"
-    @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent"
+    @reSendInvitationEventHandler="handleReInviteEvent" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent"
     @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 </template>

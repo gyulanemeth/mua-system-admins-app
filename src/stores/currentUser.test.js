@@ -75,6 +75,13 @@ describe('Current User Store', () => {
       return { success: true }
     }
 
+    const mockReSendInvitation = async function (data) {
+      if (data === undefined || data.email === undefined) {
+        throw new RouteError('Email Is Required')
+      }
+      return { success: true }
+    }
+
     const mockAccept = async function (formData) {
       if (formData === undefined || formData.newPassword === undefined || formData.newPasswordAgain === undefined) {
         throw new RouteError('Admin Password Is Required')
@@ -123,7 +130,7 @@ describe('Current User Store', () => {
     return {
       admins: { deleteProfilePicture: mockDeleteProfilePicture, uploadProfilePicture: mockUploadProfilePicture, login: mockLogin, getAccessToken: mockgetAccessToken, readOne: mockgetReadOne, patchName: mockPatchName, patchPassword: mockPatchPassword, patchEmail: mockPatchEmail, patchEmailConfirm: mockPatchEmailConfirm },
       forgotPassword: { send: mockSendForgetPasssword, reset: mockReset },
-      invitation: { send: mockSendInvitation, accept: mockAccept }
+      invitation: { send: mockSendInvitation, accept: mockAccept, reSend: mockReSendInvitation }
     }
   }
 
@@ -208,10 +215,24 @@ describe('Current User Store', () => {
     expect(res.success).toEqual(true)
   })
 
+  test('test success send admin Invitation', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    const res = await userStore.reSendInvitation('user1@gmail.com')
+    expect(res.success).toEqual(true)
+  })
+
   test('test send admin Invitation fail email required ', async () => {
     const currentUser = useCurrentUserStore(mokeConnector())
     const userStore = currentUser()
     const res = await userStore.sendInvitation()
+    expect(res.message).toEqual('Email Is Required')
+  })
+
+  test('test resend admin Invitation fail email required ', async () => {
+    const currentUser = useCurrentUserStore(mokeConnector())
+    const userStore = currentUser()
+    const res = await userStore.reSendInvitation()
     expect(res.message).toEqual('Email Is Required')
   })
 
