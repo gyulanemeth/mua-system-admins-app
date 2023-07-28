@@ -99,7 +99,11 @@ watchEffect(async () => {
                     <td>{{ new Date(item.data.updatedAt).toLocaleDateString() }}</td>
 
                     <td v-if="route.name === 'admins'" :data-test-id="`tableList-${i}-deleteBtn`" class="text-right">
-                        <v-btn color="grey" v-if="!item.data.name"  variant="text" class="ma-2" icon="mdi-email-sync" size="small" @click="$emit('reSendInvitationEventHandler',{ email: item.data.email })" />
+                        <v-tooltip :text="$t('cardsList.resendMessage')">
+                            <template v-slot:activator="{ props }">
+                                <v-btn v-bind="props" color="grey" v-if="!item.data.name" variant="text" class="ma-2" icon="mdi-email-sync" size="small" @click="$emit('reSendInvitationEventHandler',{ email: item.data.email })" />
+                            </template>
+                        </v-tooltip>
                         <DeleteMyAccount @deleteEventHandler='redirectDeleteEventHandler' :data="item.data" />
                     </td>
                     <td v-else class="text-right">
