@@ -32,7 +32,8 @@
     },
     "tableFooter": {
       "label" : "Rows per page"
-    }
+    },
+    "resendMessage": "Resend invitation"
   },
   "changeEmail" : {
     "header": "Change E-mail Address",
