@@ -128,7 +128,7 @@
   },
   "navBar": {
     "title": {
-      "me":"My Profile",
+      "myProfile":"My Profile",
       "admins":"Manage Admins",
       "accounts": "Manage Accounts"
     },

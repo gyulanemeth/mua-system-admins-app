@@ -17,7 +17,8 @@ const router = createRouter({
       name: 'admins',
       component: HomeView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        header: 'admins'
       }
     },
     {
@@ -25,7 +26,8 @@ const router = createRouter({
       name: 'accounts',
       component: HomeView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        header: 'accounts'
       }
     },
     {
@@ -41,7 +43,8 @@ const router = createRouter({
       name: 'me',
       component: MeView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        header: 'myProfile'
       }
     },
     {
@@ -49,7 +52,8 @@ const router = createRouter({
       name: 'changePassword',
       component: MeView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        header:'myProfile'
       }
     },
     {
@@ -57,7 +61,8 @@ const router = createRouter({
       name: 'changeEmail',
       component: MeView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        header: 'myProfile'
       }
     },
     {
@@ -65,7 +70,8 @@ const router = createRouter({
       name: 'settings',
       component: MeView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        header: 'myProfile'
       }
     },
     {
