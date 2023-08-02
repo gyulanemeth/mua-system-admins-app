@@ -45,6 +45,30 @@ const router = createRouter({
       }
     },
     {
+      path: '/change-password',
+      name: 'changePassword',
+      component: MeView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/change-email',
+      name: 'changeEmail',
+      component: MeView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: MeView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/',
       name: 'login',
       component: AdminLogin,
