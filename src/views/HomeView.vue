@@ -13,6 +13,8 @@ const route = useRoute()
 const alert = alerts()
 
 const data = ref()
+const numOfPages = ref()
+
 const btn = ref()
 
 let store
@@ -21,7 +23,9 @@ async function loadData () {
   if (route.name === 'admins') {
     store = useAdminsStore()
     store.filter = {}
+
     await store.loadPage(1)
+    numOfPages.value = store.numOfPages
     data.value = store.items
     btn.value = {
       header: tm('createDialog.inviteHeader'),
@@ -41,6 +45,7 @@ async function loadData () {
     store = useAccountStore()
     store.filter = {}
     await store.loadPage(1)
+    numOfPages.value = store.numOfPages
     data.value = store.items
     btn.value = {
       header: tm('createDialog.detailsHeader'),
@@ -104,6 +109,7 @@ async function handleCreateEvent (params, statusCallBack) {
 async function loadPage (page, rows) {
   store.itemsPerPage = rows
   await store.loadPage(page)
+  numOfPages.value = store.numOfPages
   data.value = store.items
 }
 
@@ -140,7 +146,7 @@ loadData()
 </script>
 
 <template>
-  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="store.numOfPages" @loadPage="loadPage"
+  <CardList v-if="data" :items="data" :btn="btn" :numOfPages="numOfPages" @loadPage="loadPage"
     @reSendInvitationEventHandler="handleReInviteEvent" @detailsEventHandler="handleDetailsEvent" @deleteEventHandler="handleDeleteEvent"
     @inviteEventHandler="handleInviteEvent" @createEventHandler="handleCreateEvent" @searchEvent="searchBarHandler" />
 </template>

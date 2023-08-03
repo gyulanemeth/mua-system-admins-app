@@ -53,7 +53,7 @@ const router = createRouter({
       component: MeView,
       meta: {
         requiresAuth: true,
-        header:'myProfile'
+        header: 'myProfile'
       }
     },
     {

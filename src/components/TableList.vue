@@ -43,8 +43,10 @@ watch(rows, async () => {
   loadPage()
 })
 
-watch(()=> route.name, async () => {
+watch(() => route.name, async () => {
   filter.value = ''
+  page.value = 1
+  numOfPages.value = props.numOfPages
 })
 
 watchEffect(async () => {
