@@ -53,10 +53,10 @@ const tab = ref('me')
     <v-layout class="d-flex flex-wrap">
         <v-card class="w-100">
             <v-tabs v-model="tab">
-                <v-tab value="me" to="/me" color="info" data-test-id="meDetails-meTab" prepend-icon="mdi-account">{{$t('meDetails.tabs.meLabel')}}</v-tab>
-                <v-tab value="changePassword" to="/change-password" data-test-id="meDetails-changePasswordTab" color="info" prepend-icon="mdi-lock">{{$t('meDetails.tabs.changePasswordLabel')}}</v-tab>
-                <v-tab value="changeEmail" to="/change-email" data-test-id="meDetails-changeEmailTab" color="info" prepend-icon="mdi-at">{{$t('meDetails.tabs.changeEmailLabel')}}</v-tab>
-                <v-tab value="settings" to="/settings" data-test-id="meDetails-settingsTab" color="info" prepend-icon="mdi-cog">{{$t('meDetails.tabs.settingsLabel')}}</v-tab>
+                <v-tab value="me" selected-class="text-decoration: none; font-weight-bold" to="/me" color="info" data-test-id="meDetails-meTab" prepend-icon="mdi-account">{{$t('meDetails.tabs.meLabel')}}</v-tab>
+                <v-tab value="changePassword" selected-class="text-decoration: none; font-weight-bold" to="/change-password" data-test-id="meDetails-changePasswordTab" color="info" prepend-icon="mdi-lock">{{$t('meDetails.tabs.changePasswordLabel')}}</v-tab>
+                <v-tab value="changeEmail" selected-class="text-decoration: none; font-weight-bold" to="/change-email" data-test-id="meDetails-changeEmailTab" color="info" prepend-icon="mdi-at">{{$t('meDetails.tabs.changeEmailLabel')}}</v-tab>
+                <v-tab value="settings" selected-class="text-decoration: none; font-weight-bold" to="/settings" data-test-id="meDetails-settingsTab" color="info" prepend-icon="mdi-cog">{{$t('meDetails.tabs.settingsLabel')}}</v-tab>
 
             </v-tabs>
 
