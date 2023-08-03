@@ -26,7 +26,7 @@ onMounted(async () => {
    <v-col cols="2">
     <span class="text-h4 mx-1 pt-0 "> {{appName}} </span>
   </v-col>
-    <span class="text-h4 ma-0 pt-0 "> {{ route.name === "me"? $t('navBar.title.me'): route.name === "admins"? $t('navBar.title.admins'): route.name === "accounts" ? $t('navBar.title.accounts') : null }}
+    <span class="text-h4 ma-0 pt-0 "> {{ route.meta.header ? $t(`navBar.title.${route.meta.header}`) : '' }}
     </span>
 
     <v-spacer></v-spacer>
