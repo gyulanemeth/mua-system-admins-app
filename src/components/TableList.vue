@@ -5,7 +5,7 @@ import { useDebounceFn } from '@vueuse/core'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadPage'])
+const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadPage', 'searchEvent'])
 const props = defineProps({
   items: Array,
   btn: Object,

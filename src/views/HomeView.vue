@@ -20,6 +20,7 @@ let store
 async function loadData () {
   if (route.name === 'admins') {
     store = useAdminsStore()
+    store.filter = {}
     await store.loadPage(1)
     data.value = store.items
     btn.value = {
@@ -38,6 +39,7 @@ async function loadData () {
     }
   } else if (route.name === 'accounts') {
     store = useAccountStore()
+    store.filter = {}
     await store.loadPage(1)
     data.value = store.items
     btn.value = {
@@ -106,6 +108,7 @@ async function loadPage (page, rows) {
 }
 
 async function searchBarHandler (filter) {
+  const filterParam = route.name === 'admins' ? 'email' : 'urlFriendlyName'
   if (filter === '') {
     store.filter = {}
   } else {
@@ -117,7 +120,7 @@ async function searchBarHandler (filter) {
         }
       },
       {
-        email: {
+        [filterParam]: {
           $regex: filter,
           $options: 'i'
         }
