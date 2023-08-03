@@ -5,7 +5,7 @@ import { useDebounceFn } from '@vueuse/core'
 import Dialog from '../components/CreateDialog.vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
-const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadPage', 'searchEvent'])
+const emit = defineEmits(['deleteEventHandler', 'inviteEventHandler', 'createEventHandler', 'loadPage', 'searchEvent', 'reSendInvitationEventHandler'])
 const props = defineProps({
   items: Array,
   btn: Object,
@@ -39,8 +39,12 @@ function loadPage () {
   emit('loadPage', page.value, rows.value)
 }
 
-watch(rows, async (newValue) => {
+watch(rows, async () => {
   loadPage()
+})
+
+watch(()=> route.name, async () => {
+  filter.value = ''
 })
 
 watchEffect(async () => {
