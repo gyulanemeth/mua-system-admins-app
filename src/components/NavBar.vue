@@ -33,12 +33,15 @@ onMounted(async () => {
 
     <v-menu location="bottom " origin="end top">
         <template v-slot:activator="{ props }">
+          <v-badge  color="error" bordered location="bottom end"
+          icon="mdi-shield-account-variant-outline">
             <v-avatar size="large" color="grey-darken-3">
                 <v-img style="cursor: pointer;" v-if="store.user && store.user.profilePicture" :src="store.user.profilePicture+ '?' +Date.now()" v-bind="props" class="align-self-stretch" cover />
                 <v-btn v-else data-test-id="navbarMenu" v-bind="props">
                     {{$t('navBar.picLabel')}}
                 </v-btn>
             </v-avatar>
+            </v-badge>
         </template>
         <v-list>
             <v-list-item data-test-id="navbarMenu-logout" @click="store.logout()">
