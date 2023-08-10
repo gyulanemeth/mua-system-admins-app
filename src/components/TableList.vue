@@ -52,6 +52,7 @@ watch(() => route.name, async () => {
 watchEffect(async () => {
   numOfPages.value = props.numOfPages
 })
+const appIcon = window.config.appIcon
 
 </script>
 
@@ -69,9 +70,36 @@ watchEffect(async () => {
 
         <v-col cols="2" class="pt-3">
             <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
+            <div v-if="filter.length === 0 && props.items.length === 0">
+                <v-col cols="5">
+                <v-icon  class="ml-10" color="info" icon="mdi-arrow-up" size="x-large" />
+              </v-col>
+              <v-card-text class="pt-0">
+                <p class="font-weight-medium" >{{ route.name === 'admins'? $t('emptyList.inviteFirstAdmin') : $t('emptyList.addFirstAccount')}} </p>
+              </v-card-text>
+            </div>
         </v-col>
     </v-layout>
 
+    <v-layout v-if="props.items.length === 0" :class="`ma-auto d-flex flex-wrap pa-4 ${filter.length > 0 ? 'h-75':'h-50'}`">
+          <v-card class="ma-auto align-self-start elevation-0 text-center" :min-width="filter.length === 0 ? route.name === 'admins'?  320 : 280: 400">
+            <v-avatar size="150">
+            <v-img :src="appIcon" cover></v-img>
+          </v-avatar>
+            <v-row class="mt-2" >
+               <v-col cols="2" class="pt-3 mr-0 pr-0">
+                   <v-icon color="error" icon="mdi-cancel" size="x-large"></v-icon>
+               </v-col>
+               <v-col cols="10" class="pt-4 ml-0 pl-0">
+                 <h3  v-if="filter.length === 0">{{ $t('emptyList.NoElementsYet', {name: route.name === 'admins'?  $t('cardsList.header.admin') : $t('cardsList.header.account')}) }}</h3>
+                 <h3  v-else >{{ $t('emptyList.searchNoResult') }}</h3>
+                </v-col>
+              </v-row>
+              <h3 class="w-100" v-if="filter.length > 0" >{{ filter }}</h3>
+          </v-card>
+        </v-layout>
+
+    <div v-else>
     <v-layout class="d-flex flex-wrap">
         <v-table fixed-header class="w-100">
             <thead>
@@ -136,6 +164,7 @@ watchEffect(async () => {
             <v-btn color="grey" variant="text" class="ma-2" icon="mdi-page-last" size="small" @click="page = numOfPages; loadPage()" />
         </v-col>
     </v-layout>
+</div>
 </v-container>
 
 </template>
