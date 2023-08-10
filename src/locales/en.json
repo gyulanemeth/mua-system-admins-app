@@ -177,5 +177,11 @@
     "bodyPart1": "Please",
     "redirectBtn": "click here",
     "bodyPart2": "to be redirected"
+  },
+  "emptyList": {
+    "inviteFirstAdmin": "Invite Your first Admin.",
+    "addFirstAccount": "Add Your first Account.",
+    "searchNoResult": "There are no results for the search term:",
+    "NoElementsYet": "There Are No { name } yet"    
   }
 }
