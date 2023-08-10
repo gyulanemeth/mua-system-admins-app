@@ -18,13 +18,16 @@ const numOfPages = ref(props.numOfPages)
 const filter = ref('')
 const rows = ref(10)
 const page = ref(1)
+const loading = ref()
 
 const debouncedFn = useDebounceFn(() => {
-  emit('searchEvent', filter.value)
+  loading.value = true
+  emit('searchEvent', filter.value, () => { loading.value = false })
 }, 300)
 
 function redirectDeleteEventHandler (data) {
-  emit('deleteEventHandler', data)
+  loading.value = true
+  emit('deleteEventHandler', data, () => { loading.value = false })
 }
 
 function redirectInviteEventHandler (data, cb) {
@@ -52,6 +55,7 @@ watch(() => route.name, async () => {
 watchEffect(async () => {
   numOfPages.value = props.numOfPages
 })
+
 const appIcon = window.config.appIcon
 
 </script>
@@ -65,12 +69,12 @@ const appIcon = window.config.appIcon
         </v-col>
         <v-spacer />
         <v-col cols="5">
-            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="primary"  @input="debouncedFn"></v-text-field>
+            <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="info"  @input="loading = true; debouncedFn()"></v-text-field>
         </v-col>
 
         <v-col cols="2" class="pt-3">
             <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
-            <div v-if="filter.length === 0 && props.items.length === 0">
+            <div v-if="filter.length === 0 && props.items.length === 0 && !loading">
                 <v-col cols="5">
                 <v-icon  class="ml-10" color="info" icon="mdi-arrow-up" size="x-large" />
               </v-col>
@@ -81,7 +85,14 @@ const appIcon = window.config.appIcon
         </v-col>
     </v-layout>
 
-    <v-layout v-if="props.items.length === 0" :class="`ma-auto d-flex flex-wrap pa-4 ${filter.length > 0 ? 'h-75':'h-50'}`">
+    <v-layout v-if="loading" class="ma-auto d-flex flex-wrap pa-4 h-75">
+          <v-card class="ma-auto align-self-start elevation-0 text-center" min-width="400">
+            <v-progress-circular color="info" indeterminate :size="90"></v-progress-circular>
+            <h4 class="mt-3" >{{ $t('loading') }}</h4>
+          </v-card>
+        </v-layout>
+
+    <v-layout v-else-if="props.items.length === 0" :class="`ma-auto d-flex flex-wrap pa-4 ${filter.length > 0 ? 'h-75':'h-50'}`">
           <v-card class="ma-auto align-self-start elevation-0 text-center" :min-width="filter.length === 0 ? route.name === 'admins'?  320 : 280: 400">
             <v-avatar size="150">
             <v-img :src="appIcon" cover></v-img>

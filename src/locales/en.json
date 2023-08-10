@@ -166,6 +166,7 @@
     "bodyPart3": "if you are not redirected"
   },
   "processing": "processing...",
+  "loading": "loading",
   "imageCropper": {
     "header": "Image Cropper" ,
     "cropBtn": "Crop" ,
