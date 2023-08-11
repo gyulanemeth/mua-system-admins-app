@@ -113,7 +113,7 @@ async function loadPage (page, rows) {
   data.value = store.items
 }
 
-async function searchBarHandler (filter) {
+async function searchBarHandler (filter, statusCallBack) {
   const filterParam = route.name === 'admins' ? 'email' : 'urlFriendlyName'
   if (filter === '') {
     store.filter = {}
@@ -135,6 +135,7 @@ async function searchBarHandler (filter) {
   }
   await store.loadPage(1)
   data.value = store.items
+  statusCallBack()
 }
 
 watch(route, () => {
