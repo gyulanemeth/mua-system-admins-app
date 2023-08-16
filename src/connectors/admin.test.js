@@ -1,6 +1,7 @@
 import { test, beforeEach, expect, describe, vi } from 'vitest'
 
 import admin from './admin.js'
+import connectorsCatchTest from '../helpers/connectorsCatchTest.js'
 
 describe('test admin connectors', () => {
   global.localStorage = {
@@ -52,6 +53,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ items: [{ _id: '123', name: 'user1', email: 'user1@gamil.com' }], count: 1 })
   })
 
+  connectorsCatchTest('test list admin', (fetch) => admin(fetch, apiUrl).admins.list, [])
+
   test('test list admins with query', async () => {
     const fetch = vi.fn()
 
@@ -101,6 +104,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ _id: '123', name: 'user1', email: 'user1@gamil.com' })
   })
 
+  connectorsCatchTest('test readOne admin', (fetch) => admin(fetch, apiUrl).admins.readOne, [{ id: '123' }])
+
   test('test readOne admin Error no Id', async () => {
     const fetch = vi.fn()
 
@@ -137,6 +142,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual({ accessToken: 'Token' })
   })
+
+  connectorsCatchTest('test getAccessToken admin', (fetch) => admin(fetch, apiUrl).admins.getAccessToken, [{ id: '123' }])
 
   test('test getAccessToken admin id Error', async () => {
     const fetch = vi.fn()
@@ -175,6 +182,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ _id: '123', name: 'user1', email: 'user1@gamil.com' })
   })
 
+  connectorsCatchTest('test deleteOne admin', (fetch) => admin(fetch, apiUrl).admins.deleteOne, [{ id: '123' }])
+
   test('test delete without id admin', async () => {
     const fetch = vi.fn()
 
@@ -211,6 +220,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
+  connectorsCatchTest('test patch admin name', (fetch) => admin(fetch, apiUrl).admins.patchName, [{ id: '123', name: 'newUserName' }])
+
   test('test patchName with undefined input admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -246,6 +257,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
+  connectorsCatchTest('test patch admin password', (fetch) => admin(fetch, apiUrl).admins.patchPassword, [{ id: '123', oldPassword: 'oldPassword', newPassword: 'newPassword', newPasswordAgain: 'newPassword' }])
+
   test('test patchPassword with undefined input admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -276,6 +289,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual('Token')
   })
+
+  connectorsCatchTest('test login admin', (fetch) => admin(fetch, apiUrl).admins.login, [{ email: 'user1@gmail.com', password: 'user1Password' }])
 
   test('test login with undefined input admin', async () => {
     const fetch = vi.fn()
@@ -311,6 +326,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
+  connectorsCatchTest('test sendInvitation admin', (fetch) => admin(fetch, apiUrl).invitation.send, [{ email: 'newUser@gmail.com' }])
+
   test('test reSendInvitation admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -333,6 +350,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual({ success: true })
   })
+
+  connectorsCatchTest('test reSendInvitation admin', (fetch) => admin(fetch, apiUrl).invitation.reSend, [{ email: 'newUser@gmail.com' }])
 
   test('test sendInvitation undefined input admin', async () => {
     const fetch = vi.fn()
@@ -379,6 +398,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual('token')
   })
 
+  connectorsCatchTest('test accept invitation admin', (fetch) => admin(fetch, apiUrl).invitation.accept, [{ token: 'token', newPassword: 'newPassword', newPasswordAgain: 'newPassword', name: 'newName' }])
+
   test('test accept invitation without password admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -409,6 +430,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual({ success: true })
   })
+
+  connectorsCatchTest('test forgotPassword send admin', (fetch) => admin(fetch, apiUrl).forgotPassword.send, [{ email: 'user1@gmail.com' }])
 
   test('test forgotPassword send without email admin', async () => {
     const fetch = vi.fn()
@@ -444,6 +467,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual('token')
   })
 
+  connectorsCatchTest('test forgotPassword reset admin', (fetch) => admin(fetch, apiUrl).forgotPassword.reset, [{ token: 'token', newPassword: 'newPassword', newPasswordAgain: 'newPassword' }])
+
   test('test forgotPassword reset with undefined input admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -474,6 +499,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ accountsApiUrl: 'accountsApiUrl', accountsAppUrl: 'accountsAppUrl', appUrl: 'appUrl' })
   })
 
+  connectorsCatchTest('test getConfig admin', (fetch) => admin(fetch, apiUrl).config.getConfig, [])
+
   test('test success patchEmail ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -497,6 +524,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual({ success: true })
   })
+
+  connectorsCatchTest('test patchEmail admin', (fetch) => admin(fetch, apiUrl).admins.patchEmail, [{ id: '123', newEmail: 'newEmail@gmail.com', newEmailAgain: 'newEmail@gmail.com' }])
 
   test('test patchEmail with undefined input admin', async () => {
     const fetch = vi.fn()
@@ -532,6 +561,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
+  connectorsCatchTest('test patchEmailConfirm admin', (fetch) => admin(fetch, apiUrl).admins.patchEmailConfirm, [{ id: '123', token: 'token' }])
+
   test('test patchEmailConfirm with undefined input admin', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -566,6 +597,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual(undefined)
   })
 
+  connectorsCatchTest('test delete permission admin', (fetch) => admin(fetch, apiUrl).admins.deletePermission, [142536])
+
   test('test deleteMyAccount admin error ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -599,6 +632,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ success: true })
   })
 
+  connectorsCatchTest('test uploadProfilePicture admin', (fetch) => admin(fetch, apiUrl).admins.uploadProfilePicture, [{ id: '123' }, { profilePicture: 'test' }])
+
   test('test upload admin profilePicture error ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -631,6 +666,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual({ success: true })
   })
+
+  connectorsCatchTest('test deleteProfilePicture admin', (fetch) => admin(fetch, apiUrl).admins.deleteProfilePicture, [{ id: '123' }, { profilePicture: 'test' }])
 
   test('test delete admin profilePicture error ', async () => {
     const fetch = vi.fn()

@@ -1,6 +1,7 @@
 import { test, expect, describe, vi } from 'vitest'
 
 import accounts from './accounts.js'
+import connectorsCatchTest from '../helpers/connectorsCatchTest.js'
 
 describe('test admin connectors', () => {
   global.localStorage = {
@@ -49,6 +50,8 @@ describe('test admin connectors', () => {
     expect(res).toEqual({ items: [{ _id: '123', name: 'account1', urlFriendlyName: 'accountFriendlyUrlName' }], count: 1 })
   })
 
+  connectorsCatchTest('test list accounts', (fetch) => accounts(fetch, apiUrl).account.list, [])
+
   test('test createOne account', async () => { // admin
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -83,6 +86,8 @@ describe('test admin connectors', () => {
     await expect(accounts(fetch, apiUrl).account.createOne()).rejects.toThrowError('Name And UrlFriendlyName Is Required')
   })
 
+  connectorsCatchTest('test createOne', (fetch) => accounts(fetch, apiUrl).account.createOne, [{ name: 'AccountName', urlFriendlyName: 'updateUrlFriendlyName' }])
+
   test('test upload account logo ', async () => {
     const fetch = vi.fn()
     fetch.mockResolvedValue({
@@ -105,6 +110,8 @@ describe('test admin connectors', () => {
       })
     expect(res).toEqual({ success: true })
   })
+
+  connectorsCatchTest('test upload account logo', (fetch) => accounts(fetch, apiUrl).account.uploadLogo, [{ id: '123test123' }, { test: 'test' }])
 
   test('test upload with undefined input ', async () => { // admin
     const fetch = vi.fn()

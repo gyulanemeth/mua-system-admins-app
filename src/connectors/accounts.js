@@ -2,6 +2,7 @@ import { createGetConnector, createPostConnector } from 'standard-json-api-conne
 
 import RouteError from '../errors/RouteError.js'
 import { ConnectorError } from '../errors/ConnectorError.js'
+import checkError from '../helpers/connectorsCatch.js'
 
 export default function (fetch, apiUrl) {
   const generateAdditionalHeaders = () => {
@@ -14,16 +15,24 @@ export default function (fetch, apiUrl) {
   const createAccount = createPostConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
 
   const list = async function (params, query) {
-    const res = await getAccounts({}, query)
-    return res
+    try {
+      const res = await getAccounts({}, query)
+      return res
+    } catch (error) {
+      checkError(error)
+    }
   }
 
   const createOne = async function (formData) {
     if (!formData || !formData.name || !formData.urlFriendlyName) {
       throw new RouteError('Name And UrlFriendlyName Is Required')
     }
-    const res = await createAccount({}, { name: formData.name, urlFriendlyName: formData.urlFriendlyName })
-    return res
+    try {
+      const res = await createAccount({}, { name: formData.name, urlFriendlyName: formData.urlFriendlyName })
+      return res
+    } catch (error) {
+      checkError(error)
+    }
   }
 
   const uploadLogo = async function (params, formData) {
@@ -37,12 +46,16 @@ export default function (fetch, apiUrl) {
       headers: generateAdditionalHeaders(),
       body: formData
     }
-    let res = await fetch(url, requestOptions)
-    res = await res.json()
-    if (res.error) {
-      throw new ConnectorError(res.status, res.error.name, res.error.message)
+    try {
+      let res = await fetch(url, requestOptions)
+      res = await res.json()
+      if (res.error) {
+        throw new ConnectorError(res.status, res.error.name, res.error.message)
+      }
+      return res.result
+    } catch (error) {
+      checkError(error)
     }
-    return res.result
   }
 
   return {
