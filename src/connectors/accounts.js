@@ -1,4 +1,4 @@
-import { createGetConnector, createPostConnector } from 'standard-json-api-connectors'
+import { createGetConnector, createPostConnector, createPostBinaryConnector } from 'standard-json-api-connectors'
 
 import RouteError from '../errors/RouteError.js'
 import { ConnectorError } from '../errors/ConnectorError.js'
@@ -9,9 +9,12 @@ export default function (fetch, apiUrl) {
   }
 
   const generateAccountsRoute = () => '/v1/accounts'
+  const generateUploadImageRoute = (params) => `/v1/accounts/${params.id}/logo/`
+
 
   const getAccounts = createGetConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
   const createAccount = createPostConnector(fetch, apiUrl, generateAccountsRoute, generateAdditionalHeaders)
+  const uploadImage = createPostBinaryConnector(fetch, apiUrl, 'logo', generateUploadImageRoute, generateAdditionalHeaders)
 
   const list = async function (params, query) {
     const res = await getAccounts({}, query)
@@ -30,19 +33,8 @@ export default function (fetch, apiUrl) {
     if (!params || !params.id || !formData) {
       throw new RouteError('param and form Data Is Required')
     }
-    const url = `${apiUrl}/v1/accounts/${params.id}/logo/`
-
-    const requestOptions = {
-      method: 'POST',
-      headers: generateAdditionalHeaders(),
-      body: formData
-    }
-    let res = await fetch(url, requestOptions)
-    res = await res.json()
-    if (res.error) {
-      throw new ConnectorError(res.status, res.error.name, res.error.message)
-    }
-    return res.result
+    const res = await uploadImage(params, formData )
+    return res
   }
 
   return {
