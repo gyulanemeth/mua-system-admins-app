@@ -22,6 +22,16 @@ describe('test admin connectors', () => {
     }
   }
 
+  global.FormData = class FormData {
+    constructor () {
+      this.entries = []
+    }
+
+    append (key, value) {
+      this.entries.push([key, value])
+    }
+  }
+
   const apiUrl = 'https:/mua/admin'
   beforeEach(async () => {
     localStorage.setItem('accessToken', 'Token')

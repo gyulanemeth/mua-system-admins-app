@@ -23,6 +23,16 @@ describe('test admin connectors', () => {
     }
   }
 
+  global.FormData = class FormData {
+    constructor () {
+      this.entries = []
+    }
+
+    append (key, value) {
+      this.entries.push([key, value])
+    }
+  }
+
   const apiUrl = 'https:/mua/accounts'
 
   test('test list accounts', async () => {
