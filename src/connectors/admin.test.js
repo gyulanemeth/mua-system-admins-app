@@ -22,6 +22,16 @@ describe('test admin connectors', () => {
     }
   }
 
+  global.FormData = class FormData {
+    constructor () {
+      this.entries = []
+    }
+
+    append (key, value) {
+      this.entries.push([key, value])
+    }
+  }
+
   const apiUrl = 'https:/mua/admin'
   beforeEach(async () => {
     localStorage.setItem('accessToken', 'Token')
@@ -585,13 +595,15 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
+    const formData = new FormData()
+    formData.append('profilePicture', { profilePicture: 'test' })
     const spy = vi.spyOn(fetch, 'impl')
     const res = await admin(fetch, apiUrl).admins.uploadProfilePicture({ id: '123' }, { profilePicture: 'test' })
     expect(spy).toHaveBeenLastCalledWith(
       'https:/mua/admin/v1/admins/123/profile-picture/',
       {
         method: 'POST',
-        body: { profilePicture: 'test' },
+        body: formData,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
         }

@@ -23,6 +23,16 @@ describe('test admin connectors', () => {
     }
   }
 
+  global.FormData = class FormData {
+    constructor () {
+      this.entries = []
+    }
+
+    append (key, value) {
+      this.entries.push([key, value])
+    }
+  }
+
   const apiUrl = 'https:/mua/accounts'
 
   test('test list accounts', async () => {
@@ -91,6 +101,9 @@ describe('test admin connectors', () => {
       json: () => Promise.resolve({ result: { success: true } })
     })
 
+    const formData = new FormData()
+    formData.append('logo', { test: 'test' })
+
     const spy = vi.spyOn(fetch, 'impl')
     const res = await accounts(fetch, apiUrl).account.uploadLogo({ id: '123test123' }, { test: 'test' })
 
@@ -98,7 +111,7 @@ describe('test admin connectors', () => {
       'https:/mua/accounts/v1/accounts/123test123/logo/',
       {
         method: 'POST',
-        body: { test: 'test' },
+        body: formData,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken')
         }

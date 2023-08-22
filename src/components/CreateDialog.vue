@@ -47,9 +47,7 @@ const openFileInput = () => {
 }
 
 const previewImage = (file) => {
-  const formData = new FormData()
-  formData.append('logo', file)
-  data.value.logo = formData
+  data.value.logo = file
   showCropperDialog.value = false
   const reader = new FileReader()
   reader.onload = () => {

@@ -38,9 +38,7 @@ const setFocus = () => {
 
 const uploadProfilePicture = (image) => {
   showCropperDialog.value = false
-  const formData = new FormData()
-  formData.append('profilePicture', image)
-  emit('uploadProfilePictureHandler', formData, (url) => {
+  emit('uploadProfilePictureHandler', image, (url) => {
     if (url) {
       profilePicture.value = url + '?' + Date.now()
     }
