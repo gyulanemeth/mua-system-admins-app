@@ -54,3 +54,9 @@ const cancelCrop = () => {
           </v-card>
         </v-dialog>
 </template>
+<style>
+.cropper-crop-box {
+  border-radius: 50%;
+  overflow: hidden;
+}
+</style>
