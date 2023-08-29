@@ -1,11 +1,12 @@
 <script setup >
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import Cropper from 'vue-cropperjs'
 import 'cropperjs/dist/cropper.css'
 
 const componentProps = defineProps(['profilePicture', 'showCropperDialog'])
 
 const cropperRef = ref(null)
+const zoom = ref(1)
 
 const emit = defineEmits(['uploadProfilePictureHandler', 'closeCropperHandler'])
 
@@ -32,11 +33,17 @@ const cropImage = () => {
   const croppedImage = cropper.getCroppedCanvas().toDataURL()
   const profilePicture = base64ToFile(croppedImage)
   emit('uploadProfilePictureHandler', profilePicture)
+  zoom.value = 1
 }
 
 const cancelCrop = () => {
   emit('closeCropperHandler')
+  zoom.value = 1
 }
+
+watch(zoom, () => {
+  cropperRef.value.cropper.scale(zoom.value)
+})
 
 </script>
 
@@ -46,6 +53,15 @@ const cancelCrop = () => {
             <v-card-title class="ma-auto">{{$t('imageCropper.header')}}</v-card-title>
             <v-card-text>
               <Cropper ref="cropperRef" :src="componentProps.profilePicture" :autoCrop="true" :viewMode="1" :aspectRatio="1" />
+            </v-card-text>
+            <v-card-text>
+              <v-slider
+              v-model="zoom"
+              :min="1"
+              :max="10"
+              :step="1"
+              thumb-label
+            ></v-slider>
             </v-card-text>
             <v-card-actions>
               <v-btn color="primary" @click="cropImage">{{$t('imageCropper.cropBtn')}}</v-btn>
