@@ -11,7 +11,7 @@ const route = useRoute()
 
     <v-navigation-drawer color="grey-lighten-2" class="rounded-te-lg" rail rail-width="65" permanent>
         <v-list bg-color="grey-lighten-2" class="h-100 d-flex flex-column rounded-te-lg align-center" density="compact" nav>
-            <v-list-item class="justify-center align-center" style="filter: drop-shadow(0px 2px 2px #999898)" width="36" height="36" active active-class=" elevation-4 text-white bg-white">
+            <v-list-item class="justify-center align-center" width="36" height="36" active active-class=" elevation-4 active-item text-white bg-white">
                 <v-list-item-icon class="text-black">
                     mdi-shield-account-variant-outline
                 </v-list-item-icon>
@@ -31,3 +31,8 @@ const route = useRoute()
 </v-card>
 
 </template>
+<style>
+.active-item {
+  filter: drop-shadow(0px 2px 2px #999898)
+}
+</style>
