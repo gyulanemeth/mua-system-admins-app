@@ -14,7 +14,6 @@ const profilePicture = ref(componentProps.profilePicture || import.meta.env.BASE
 const processing = ref(false)
 const nameInput = ref(null)
 const showCropperDialog = ref(false)
-const imageFile = ref(false)
 
 const emit = defineEmits(['uploadProfilePictureHandler', 'deleteProfilePictureHandler'])
 
@@ -46,17 +45,8 @@ const uploadProfilePicture = (image) => {
   })
 }
 
-const handleFileChange = (event) => {
-  processing.value = true
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageFile.value = reader.result
-    showCropperDialog.value = true
-  }
-  reader.readAsDataURL(event.target.files[0])
-}
-
 const openFileInput = () => {
+  processing.value = true
   showCropperDialog.value = true
 }
 
@@ -113,10 +103,6 @@ const openFileInput = () => {
           }}</v-progress-circular>
           <v-avatar v-else v-bind="props" class="elevation-3 " size="180">
             <v-img :src="profilePicture" class="align-self-stretch" cover />
-
-            <input ref="fileInput" type="file" style="display: none" @change="handleFileChange"
-              accept=".png, .jpeg, .jpg, .gif">
-
             <v-expand-transition>
               <v-container v-if="isHovering" class="d-flex justify-center align-end w-100 h-100 v-card--reveal">
                 <v-btn v-if="componentProps.profilePicture" @click="handleDeleteProfilePicture" color="white"

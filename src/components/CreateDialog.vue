@@ -23,7 +23,6 @@ const cb = ref()
 const logo = ref(import.meta.env.BASE_URL + 'placeholder.jpg')
 const previewUrl = ref(null)
 const showCropperDialog = ref(false)
-const imageFile = ref(false)
 
 const resetForm = () => {
   Object.keys(data.value).forEach(key => {
@@ -32,18 +31,8 @@ const resetForm = () => {
   previewUrl.value = null
 }
 
-const handleFileChange = (event) => {
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageFile.value = reader.result
-    showCropperDialog.value = true
-  }
-  reader.readAsDataURL(event.target.files[0])
-}
-
 const openFileInput = () => {
-  const fileInput = document.querySelector('input[type=file]')
-  fileInput.click()
+  showCropperDialog.value = true
 }
 
 const previewImage = (file) => {
@@ -76,8 +65,6 @@ const previewImage = (file) => {
                     </v-col>
                     <v-col cols="8" align='center'>
                         <v-card v-if="input.type === 'file'" class="mx-2 my-5 pa-2" min-width="275">
-                            <input ref="fileInput" type="file" style="display: none" @change="handleFileChange" accept=".png, .jpeg, .jpg, .gif">
-
                             <v-img :src="previewUrl || logo" height="150px" ></v-img>
                             <v-card-title class="justify-center py-0">
                                 <v-btn @click="openFileInput" variant="text" icon="mdi-image-plus"
