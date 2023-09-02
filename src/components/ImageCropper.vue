@@ -1,19 +1,10 @@
 <script setup >
-import { ref, computed, watch } from 'vue'
-import Cropper from 'vue-cropperjs'
-import 'cropperjs/dist/cropper.css'
-
-const componentProps = defineProps(['profilePicture', 'showCropperDialog'])
-
-const cropperRef = ref(null)
-const zoom = ref(1)
+import { ref, watch } from 'vue'
+import ImageCropUpload from 'vue-image-crop-upload'
 
 const emit = defineEmits(['uploadProfilePictureHandler', 'closeCropperHandler'])
 
-const showCropperDialog = computed(() => {
-  return componentProps.showCropperDialog
-})
-
+const show = ref(true)
 function base64ToFile (base64String, fileName) {
   const arr = base64String.split(',')
   const mime = arr[0].match(/:(.*?);/)[1]
@@ -28,51 +19,18 @@ function base64ToFile (base64String, fileName) {
   return new File([u8arr], fileName, { type: mime })
 }
 
-const cropImage = () => {
-  const cropper = cropperRef.value.cropper
-  const croppedImage = cropper.getCroppedCanvas().toDataURL()
-  const profilePicture = base64ToFile(croppedImage)
+const cropImage = (imgDataUrl) => {
+  const profilePicture = base64ToFile(imgDataUrl)
   emit('uploadProfilePictureHandler', profilePicture)
-  zoom.value = 1
 }
 
-const cancelCrop = () => {
+watch(show, () => {
   emit('closeCropperHandler')
-  zoom.value = 1
-}
-
-watch(zoom, () => {
-  cropperRef.value.cropper.scale(zoom.value)
 })
 
 </script>
 
 <template>
-        <v-dialog persistent v-model="showCropperDialog" max-width="800">
-          <v-card>
-            <v-card-title class="ma-auto">{{$t('imageCropper.header')}}</v-card-title>
-            <v-card-text>
-              <Cropper ref="cropperRef" :src="componentProps.profilePicture" :autoCrop="true" :viewMode="1" :aspectRatio="1" />
-            </v-card-text>
-            <v-card-text>
-              <v-slider
-              v-model="zoom"
-              :min="1"
-              :max="10"
-              :step="1"
-              thumb-label
-            ></v-slider>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="primary" @click="cropImage">{{$t('imageCropper.cropBtn')}}</v-btn>
-              <v-btn @click="cancelCrop">{{$t('imageCropper.cancelBtn')}}</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+    <ImageCropUpload v-model="show" @crop-success="cropImage" :noSquare="true" :width="300" :height="300" :resize="true"
+        langType="en" :auto-crop="true" :crop-options="{ aspectRatio: 1 }" />
 </template>
-<style>
-.cropper-crop-box {
-  border-radius: 50%;
-  overflow: hidden;
-}
-</style>
