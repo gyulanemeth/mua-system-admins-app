@@ -25,8 +25,8 @@
     },
     "tableHeader": {
       "nameLabel": "Name",
-      "emailLabel": "E-mail address",
-      "urlFriendlyName": "URL Friendly name",
+      "emailLabel": "E-mail Address",
+      "urlFriendlyName": "URL Friendly Name",
       "lastEditedLabel": "Last Edited",
       "creationDateLabel": "Creation Date"
     },
@@ -122,9 +122,9 @@
     "header": "My Details",
     "nameLabel": "Name",
     "namePlaceHolder": "User Name",
-    "emailLabel": "E-mail",
+    "emailLabel": "E-mail Address",
     "emailPlaceHolder": "E-mail",
-    "picLabel": "Profile picture"
+    "picLabel": "Profile Picture"
   },
   "navBar": {
     "title": {
