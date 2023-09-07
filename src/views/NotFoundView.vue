@@ -16,7 +16,7 @@ const appIcon = window.config.appIcon
           <h4 class="text-h4"> {{ title }} </h4>
       </v-card-title>
     </v-card>
-    <v-card class="pa-5 ma-5 elevation-4 w-50">
+    <v-card class="pa-5 ma-5 elevation-4" width="800px">
         <v-card-text class="text-center">
 
         <v-icon icon="mdi-magnify-remove-outline" color="info" size="90"></v-icon>
