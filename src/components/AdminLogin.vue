@@ -31,7 +31,7 @@ async function submit () {
                 <h4 class="text-h4"> {{ title }} </h4>
             </v-card-title>
         </v-card>
-        <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="30%">
+        <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="600px">
             <v-card-text align="center">
                 <h6 class="text-h6">{{ $t('adminLogin.header') }}</h6>
                 <v-text-field hide-details density="compact" data-test-id="login-emailField"
