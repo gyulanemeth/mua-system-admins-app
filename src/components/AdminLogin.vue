@@ -13,15 +13,17 @@ const title = window.config.title
 const appIcon = window.config.appIcon
 
 async function submit () {
-  await userStore.login(email.value, password.value)
-  processing.value = false
+  const res = await userStore.login(email.value, password.value)
+  if (res) {
+    processing.value = false
+  }
 }
 
 </script>
 
 <template>
     <v-form class="d-flex flex-column justify-center align-center h-screen">
-        <v-card elevation="0" class="w-25">
+        <v-card elevation="0">
             <v-card-text align="center">
                 <v-avatar size="80">
                     <v-img :src="appIcon" cover></v-img>
@@ -31,7 +33,7 @@ async function submit () {
                 <h4 class="text-h4"> {{ title }} </h4>
             </v-card-title>
         </v-card>
-        <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="600px">
+        <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="80%" max-width="600px">
             <v-card-text align="center">
                 <h6 class="text-h6">{{ $t('adminLogin.header') }}</h6>
                 <v-text-field hide-details density="compact" data-test-id="login-emailField"
