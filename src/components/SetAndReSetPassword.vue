@@ -32,7 +32,7 @@ email.value = jwtDecode(route.query.token).user.email
                 </v-avatar>
             </v-card-text>
             <v-card-title class="justify-center py-0">
-                <h4 class="text-h4"> {{ title }} </h4>
+                <h4 class="text-h4 text-center"> {{ title }} </h4>
             </v-card-title>
         </v-card>
         <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="80%" max-width="600px">
