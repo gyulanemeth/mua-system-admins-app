@@ -30,7 +30,7 @@ async function submit () {
                 </v-avatar>
             </v-card-text>
             <v-card-title class="justify-center py-0">
-                <h4 class="text-h4"> {{ title }} </h4>
+                <h4 class="text-h4 text-center"> {{ title }} </h4>
             </v-card-title>
         </v-card>
         <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="80%" max-width="600px">
@@ -51,10 +51,17 @@ async function submit () {
                     <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
                         indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
                 </v-btn>
-                <p class="mt-4 pa-4">{{ $t('adminLogin.resetPasswordMsg') }}
-                    <router-link data-test-id="login-resetPasswordBtn" style="text-decoration: none; color: inherit;"
-                        class="font-weight-bold" to="/forgot-password">{{ $t('adminLogin.resetPasswordBtn') }}</router-link>
-                </p>
+                <v-container class="mt-4 pa-4 pl-sm-0 w-100">
+                    <v-row no-gutters class="justify-center align-center">
+                    <v-col cols="12" sm="6" class="text-sm-right pr-sm-1 ">
+                        <p>{{ $t('adminLogin.resetPasswordMsg') }}</p>
+                    </v-col>
+                    <v-col cols="12" sm="5" class="text-sm-left">
+                        <router-link data-test-id="login-resetPasswordBtn" style="text-decoration: none; color: inherit;"
+                                        class="font-weight-bold" to="/forgot-password">{{ $t('adminLogin.resetPasswordBtn') }}</router-link>
+                    </v-col>
+                    </v-row>
+                </v-container>
                 <button hidden @click.enter.prevent="processing = true; submit()" />
             </v-card-text>
         </v-card>

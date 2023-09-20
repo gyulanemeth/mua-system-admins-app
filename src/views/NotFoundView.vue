@@ -13,7 +13,7 @@ const appIcon = window.config.appIcon
           </v-avatar>
       </v-card-text>
       <v-card-title class="justify-center py-0">
-          <h4 class="text-h4"> {{ title }} </h4>
+          <h4 class="text-h4 text-center"> {{ title }} </h4>
       </v-card-title>
     </v-card>
     <v-card class="pa-5 ma-5 elevation-4" width="80%" max-width="800px">

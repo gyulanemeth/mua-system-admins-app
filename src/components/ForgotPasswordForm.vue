@@ -19,7 +19,7 @@ const appIcon = window.config.appIcon
                 </v-avatar>
             </v-card-text>
             <v-card-title class="justify-center py-0">
-                <h4 class="text-h4"> {{ title }} </h4>
+                <h4 class="text-h4 text-center"> {{ title }} </h4>
             </v-card-title>
         </v-card>
         <v-card class="ma-2 pa-2  rounded-xl  elevation-2" width="80%" max-width="600px">
@@ -46,11 +46,17 @@ const appIcon = window.config.appIcon
                     </v-btn>
                     <button hidden :disabled="!checkbox"
                         @click.enter.prevent="processing = true; $emit('passwordRecoveryEventHandler', data, (res) => { if (res) { cb = res } processing = false; })" />
-
-                    <p class="mt-4 pa-4">{{ $t('forgotPasswordForm.redirectToLoginMessage') }}
+                    <v-container class="mt-4 pa-4 pl-sm-0 w-100">
+                    <v-row no-gutters class="justify-center align-center">
+                    <v-col cols="12" sm="6" class="text-sm-right pr-sm-1 ">
+                        <p>{{ $t('forgotPasswordForm.redirectToLoginMessage') }}</p>
+                    </v-col>
+                    <v-col cols="12" sm="5" class="text-sm-left">
                         <router-link style="text-decoration: none; color: inherit;" class="font-weight-bold" to="/">{{
                             $t('forgotPasswordForm.redirectToLoginBtn') }}</router-link>
-                    </p>
+                    </v-col>
+                    </v-row>
+                </v-container>
                 </div>
                 <div v-if="cb">
 
