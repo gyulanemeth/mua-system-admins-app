@@ -54,7 +54,7 @@ const previewImage = (file) => {
                 {{ btnTitle }}
             </v-btn>
         </template>
-        <v-card min-width="800" class="d-flex flex-column justify-center">
+        <v-card width="50%" max-width="800" class=" ma-auto d-flex flex-column justify-center">
             <v-toolbar color="white" align="center">
                 <v-toolbar-title class="font-weight-bold">{{ props.header }}</v-toolbar-title>
             </v-toolbar>
@@ -73,7 +73,7 @@ const previewImage = (file) => {
                             <p>{{ input.placeholder }}</p>
                         </v-card>
                         <v-text-field v-else hide-details density="compact" :data-test-id="`formDialog-field-${i}`"
-                            class=" elevation-2 my-5 pl-3 rounded" color="info" variant="plain"
+                            class=" my-5 rounded" color="info" variant="solo"
                             :placeholder="input.placeholder" :name="input.name" v-model="data[input.name]"
                             :type="input.type" required />
                     </v-col>
@@ -89,7 +89,7 @@ const previewImage = (file) => {
 
                     {{ !processing ? operation : '' }}
 
-                    <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+                    <v-progress-circular v-if="processing" :size="20"
                         indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                 </v-btn>
@@ -98,7 +98,7 @@ const previewImage = (file) => {
                 <v-btn color="info" v-else data-test-id="formDialog-inviteAnotherBtn"
                     @click="processing = true; $emit('inviteEventHandler', data, (res) => { if(res){ cb = res} processing = false; resetForm() })">
                     {{ !processing ? operation : '' }}
-                    <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+                    <v-progress-circular v-if="processing" :size="20"
                         indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                 </v-btn>

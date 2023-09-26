@@ -27,7 +27,7 @@ const appIcon = window.config.appIcon
                 <h6 class="text-h6">{{ $t('forgotPasswordForm.header') }}</h6>
 
                 <v-text-field hide-details data-test-id="forgotPassword-emailField" density="compact"
-                    class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email"
+                    class=" my-5 rounded" color="info" variant="solo" name="email"
                     :label="$t('forgotPasswordForm.emailLabel')" type="email" :disabled="cb"
                     :placeholder="data || $t('forgotPasswordForm.emailPlaceHolder')" :value="data"
                     @update:modelValue="res => data = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')" required />
@@ -40,7 +40,7 @@ const appIcon = window.config.appIcon
 
                         {{ !processing ? $t('forgotPasswordForm.submitBtn') : '' }}
 
-                        <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+                        <v-progress-circular v-if="processing" :size="20"
                             indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                     </v-btn>

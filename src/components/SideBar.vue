@@ -12,9 +12,9 @@ const route = useRoute()
     <v-navigation-drawer color="grey-lighten-2" class="rounded-te-lg" rail rail-width="65" permanent>
         <v-list bg-color="grey-lighten-2" class="h-100 d-flex flex-column rounded-te-lg align-center" density="compact" nav>
             <v-list-item class="justify-center align-center" width="36" height="36" active active-class=" elevation-4 active-item text-white bg-white">
-                <v-list-item-icon class="text-black">
+                <v-icon class="text-black" size="20">
                     mdi-shield-account-variant-outline
-                </v-list-item-icon>
+                </v-icon>
             </v-list-item>
         </v-list>
 

@@ -99,7 +99,7 @@ const openFileInput = () => {
       <v-divider />
       <v-col align="center" class="mt-3">
         <v-hover v-slot="{ isHovering, props }">
-          <v-progress-circular v-if="processing" :size="180" class="pa-3 ma-3" indeterminate>{{ $t('processing')
+          <v-progress-circular v-if="processing" :size="180" indeterminate>{{ $t('processing')
           }}</v-progress-circular>
           <v-avatar v-else v-bind="props" class="elevation-3 " size="180">
             <v-img :src="profilePicture" class="align-self-stretch" cover />

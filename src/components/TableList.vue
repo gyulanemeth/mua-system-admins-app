@@ -62,7 +62,7 @@ const appIcon = window.config.appIcon
 
 <template>
 
-<v-container class="elevation-2 mx-10 pt-0 rounded">
+<div class="elevation-2 mx-10 pa-3 pt-0 rounded">
     <v-layout class="d-flex flex-wrap">
         <v-col cols="2" class="pt-3">
             <p class="text-h6">{{route.name === 'admins'?  $t('cardsList.header.admin') : $t('cardsList.header.account')}} </p>
@@ -176,6 +176,6 @@ const appIcon = window.config.appIcon
         </v-col>
     </v-layout>
 </div>
-</v-container>
+</div>
 
 </template>
