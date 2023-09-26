@@ -68,7 +68,7 @@ const appIcon = window.config.appIcon
             <p class="text-h6">{{route.name === 'admins'?  $t('cardsList.header.admin') : $t('cardsList.header.account')}} </p>
         </v-col>
         <v-spacer />
-        <v-col cols="5">
+        <v-col cols="5" class="mt-3">
             <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="info"  @input="loading = true; debouncedFn()"></v-text-field>
         </v-col>
 
