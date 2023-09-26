@@ -64,7 +64,7 @@ const appIcon = window.config.appIcon
 
 <div class="elevation-2 mx-10 pa-3 pt-0 rounded">
     <v-layout class="d-flex flex-wrap">
-        <v-col cols="2" class="pt-3">
+        <v-col cols="2" class="pt-3 d-flex align-center">
             <p class="text-h6">{{route.name === 'admins'?  $t('cardsList.header.admin') : $t('cardsList.header.account')}} </p>
         </v-col>
         <v-spacer />
@@ -72,7 +72,7 @@ const appIcon = window.config.appIcon
             <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="info"  @input="loading = true; debouncedFn()"></v-text-field>
         </v-col>
 
-        <v-col cols="2" class="pt-3">
+        <v-col cols="2" class="pt-3 d-flex align-center">
             <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
             <div v-if="filter.length === 0 && props.items.length === 0 && !loading">
                 <v-col cols="5">
