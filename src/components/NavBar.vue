@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
 
-<v-app-bar height="100" class="elevation-0 pl-0 ml-0">
+<v-app-bar height="100" class="elevation-0 pl-1 pr-5 ml-0">
     <v-avatar size="60" >
       <v-img :src="appIcon" cover></v-img>
     </v-avatar>
@@ -45,9 +45,9 @@ onMounted(async () => {
         </template>
         <v-list>
             <v-list-item data-test-id="navbarMenu-logout" @click="store.logout()">
-                <v-list-item-icon>
-                    mdi-logout
-                </v-list-item-icon>
+                <template v-slot:prepend>
+                  <v-icon icon=" mdi-logout"></v-icon>
+                </template>
                 <v-list-item-title> {{$t('navBar.logoutBtn')}} </v-list-item-title>
             </v-list-item>
         </v-list>

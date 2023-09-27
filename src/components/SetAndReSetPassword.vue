@@ -40,24 +40,24 @@ email.value = jwtDecode(route.query.token).user.email
                 <h6 class="text-h6">{{ props.formData.text }}</h6>
 
                 <v-text-field v-if="operation === 'setPassword'" hide-details density="compact"
-                    class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email" type="text"
+                    class=" my-5 rounded" color="info" variant="solo" name="email" type="text"
                     :value="email" :placeholder="email" disabled required />
 
                 <v-text-field v-if="operation === 'setPassword'" data-test-id="setAndRestPassword-nameField" hide-details
-                    density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="name"
+                    density="compact" class=" my-5 rounded" color="info" variant="solo" name="name"
                     :label="$t('setAndReSetPassword.nameLabel')" type="text"
                     :placeholder="data.name || $t('setAndReSetPassword.namePlaceHolder')" :value="data.name"
                     @update:modelValue="res => data.name = res.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, '')" required />
 
-                <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info"
-                    variant="plain" name="newPassword" data-test-id="setAndRestPassword-newPasswordField"
+                <v-text-field hide-details density="compact" class="my-5 rounded" color="info"
+                    variant="solo" name="newPassword" data-test-id="setAndRestPassword-newPasswordField"
                     :label="$t('setAndReSetPassword.newPasswordLabel')" type="password"
                     :placeholder="data.newPassword || $t('setAndReSetPassword.newPasswordPlaceholder')"
                     :value="data.newPassword"
                     @update:modelValue="res => data.newPassword = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')" required />
 
-                <v-text-field hide-details density="compact" class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info"
-                    variant="plain" name="newPasswordAgain" data-test-id="setAndRestPassword-newPasswordAgainField"
+                <v-text-field hide-details density="compact" class=" my-5 rounded" color="info"
+                    variant="solo" name="newPasswordAgain" data-test-id="setAndRestPassword-newPasswordAgainField"
                     :label="$t('setAndReSetPassword.confirmNewPasswordLabel')" type="password"
                     :placeholder="data.newPasswordAgain || $t('setAndReSetPassword.confirmNewPasswordPlaceholder')"
                     :value="data.newPasswordAgain"
@@ -73,7 +73,7 @@ email.value = jwtDecode(route.query.token).user.email
 
                         {{ !processing ? props.formData.text : '' }}
 
-                        <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+                        <v-progress-circular v-if="processing" :size="20"
                             indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                     </v-btn>
@@ -85,7 +85,7 @@ email.value = jwtDecode(route.query.token).user.email
                         @click="processing = true; $emit('setPasswordEventHandler', { token: route.query.token, ...data }); processing = true">
                         {{ !processing ? props.formData.text : '' }}
 
-                        <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+                        <v-progress-circular v-if="processing" :size="20"
                             indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
 
                     </v-btn>

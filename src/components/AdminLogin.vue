@@ -37,18 +37,18 @@ async function submit () {
             <v-card-text align="center">
                 <h6 class="text-h6">{{ $t('adminLogin.header') }}</h6>
                 <v-text-field hide-details density="compact" data-test-id="login-emailField"
-                    class=" elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="email"
+                    class="my-5 rounded" color="info" variant="solo" name="email"
                     :label="$t('adminLogin.emailLabel')" id="email" type="email" :placeholder="email || 'your@email.com'"
                     :value="email" @update:modelValue="res => email = res.replace(/[^a-z0-9+@ \.,_-]/gim, '')" required />
                 <v-text-field hide-details density="compact" data-test-id="login-passwordField"
-                    class="elevation-2 my-5 pt-2 pl-3 rounded" color="info" variant="plain" name="password"
+                    class="my-5 rounded" color="info" variant="solo" name="password"
                     :label="$t('adminLogin.passwordLabel')" id="password" type="password"
                     :placeholder="password || '********'" :value="password"
                     @update:modelValue="res => password = res.replace(/[^a-z0-9!@#$%^&* \.,_-]/gim, '')" active required />
                 <v-btn color="info" data-test-id="login-submitBtn" @click="processing = true; submit()">
                     {{ !processing ? $t('adminLogin.submitBtn') : '' }}
 
-                    <v-progress-circular v-if="processing" :size="20" class="pa-3 ma-3"
+                    <v-progress-circular v-if="processing" :size="20"
                         indeterminate></v-progress-circular>{{ processing ? $t('processing') : '' }}
                 </v-btn>
                 <v-container class="mt-4 pa-4 pl-sm-0 w-100">
