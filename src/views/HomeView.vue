@@ -3,14 +3,13 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CardList from '../components/TableList.vue'
-import alerts from '../alerts/alert.js'
+import useSystemMessagesStore from '../stores/systemMessages.js'
 import { useCurrentUserStore, useAdminsStore, useAccountStore } from '../stores/index.js'
 
 import { useI18n } from 'vue-i18n'
 const { tm } = useI18n()
 
 const route = useRoute()
-const alert = alerts()
 
 const data = ref()
 const numOfPages = ref()
@@ -74,11 +73,12 @@ async function handleDetailsEvent (params) {
   window.location.href = `${window.config.accountsAppBaseUrl}${params.urlFriendlyName}?token=${getToken}&accountId=${params.id}`
 }
 
-async function handleDeleteEvent (params) {
+async function handleDeleteEvent (params, statusCallBack) {
   const res = await store.deleteOne(params)
+  statusCallBack(!res.message)
   if (!res.message) {
     loadData()
-    alert.message('Deleted successfully')
+    useSystemMessagesStore().addSuccess({ message: tm('createDialog.successfullyDeletedAlert') })
   }
 }
 
@@ -93,7 +93,7 @@ async function handleReInviteEvent (params) {
   store = useCurrentUserStore()
   const res = await store.reSendInvitation(params.email)
   if (!res.message) {
-    alert.message('Invitation sent successfully')
+    useSystemMessagesStore().addSuccess({ message: tm('createDialog.invitationAlert') })
   }
 }
 
@@ -101,7 +101,7 @@ async function handleCreateEvent (params, statusCallBack) {
   const res = await store.createOne(params)
   statusCallBack(!res.message)
   if (!res.message) {
-    await alert.message('Account Created successfully')
+    useSystemMessagesStore().addSuccess({ message: tm('createDialog.createAlert') })
     loadData()
   }
 }

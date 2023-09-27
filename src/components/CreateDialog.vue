@@ -24,6 +24,10 @@ const logo = ref(import.meta.env.BASE_URL + 'placeholder.jpg')
 const previewUrl = ref(null)
 const showCropperDialog = ref(false)
 
+const show = () => {
+  dialog.value = true
+}
+
 const resetForm = () => {
   Object.keys(data.value).forEach(key => {
     data.value[key] = null
@@ -45,15 +49,16 @@ const previewImage = (file) => {
   reader.readAsDataURL(file)
 }
 
+defineExpose({
+  dialog,
+  show,
+  hide: resetForm
+})
 </script>
 
 <template>
-    <v-dialog v-model="dialog" persistent>
-        <template v-slot:activator="{ props }">
-            <v-btn variant="outlined" data-test-id="open-formDialog" color="info" v-bind="props">
-                {{ btnTitle }}
-            </v-btn>
-        </template>
+    <v-dialog v-model="dialog" tabindex="1" @keydown.esc="resetForm" @keydown.enter="processing = true; $emit('inviteEventHandler', data, (res) => { if(res){ cb = res} processing = false; resetForm() })" >
+
         <v-card width="50%" max-width="800" class=" ma-auto d-flex flex-column justify-center">
             <v-toolbar color="white" align="center">
                 <v-toolbar-title class="font-weight-bold">{{ props.header }}</v-toolbar-title>

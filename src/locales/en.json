@@ -22,7 +22,9 @@
     "header": {
       "admin" : "Administrators",
       "account": "Accounts"
-    },
+    }, 
+    "createAccountBtn": "Create Account",
+    "createAdminBtn": "Invite Admin",
     "tableHeader": {
       "nameLabel": "Name",
       "emailLabel": "E-mail Address",
@@ -57,9 +59,13 @@
     "newPasswordPlaceholder": "********",
     "confirmNewPasswordLabel": "Confirm New Password",
     "confirmNewPasswordPlaceholder": "********",
-    "submitBtn": "Change my Password"
+    "submitBtn": "Change my Password",
+    "successAlert": "Password updated successfully"
   },
   "createDialog" : {
+    "successfullyDeletedAlert": "Deleted successfully",
+    "invitationAlert": "Invitation sent successfully",
+    "createAlert": "Account Created successfully",
     "operation":{
         "admins": "Invite",
         "accounts": "Create"
@@ -136,6 +142,7 @@
     "logoutBtn": "Logout"
   },
   "setAndReSetPassword": {
+    "registeredAlert" :"Admin registered successfully",
     "acceptHeader": "Set up your account",
     "forgotHeader": "Reset your password",
     "nameLabel": "Name",
@@ -184,5 +191,9 @@
     "addFirstAccount": "Add Your first Account.",
     "searchNoResult": "There are no results for the search term:",
     "NoElementsYet": "There Are No { name } yet"    
+  },
+  "meView": {
+    "nameUpdateAlert": "Name updated successfully",
+    "deleteAccountAlert":"Account Deleted successfully"
   }
 }
