@@ -9,19 +9,18 @@ const props = defineProps({
 const route = useRoute()
 
 const password = ref()
-const dialog = ref()
+const dialogShown = ref()
 
 const resetForm = () => {
   password.value = null
-  dialog.value = false
+  dialogShown.value = false
 }
 
 const show = () => {
-  dialog.value = true
+    dialogShown.value = true
 }
 
 defineExpose({
-  dialog,
   show,
   hide: resetForm
 })
@@ -31,7 +30,7 @@ const profilePicture = ref(props.data.profilePicture || import.meta.env.BASE_URL
 
 <template>
 
-<v-dialog v-model="dialog" tabindex="1" @keydown.esc="resetForm" @keydown.enter="$emit('deleteEventHandler',{id:props.data._id, password});resetForm()" >
+<v-dialog v-model="dialogShown" tabindex="1" @keydown.esc="resetForm" @keydown.enter="$emit('deleteEventHandler',{id:props.data._id, password});resetForm()" >
     <template  v-slot:activator="{ props }">
         <v-btn v-if="route.name === 'admins'" color="grey" variant="text" data-test-id="open-deleteAccount-dialog" class="ma-2" icon="mdi-delete" size="small" v-bind="props" />
     </template>

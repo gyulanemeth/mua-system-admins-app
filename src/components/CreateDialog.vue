@@ -16,7 +16,7 @@ const props = defineProps({
 const route = useRoute()
 const operation = computed(() => route.name === 'admins' ? tm('createDialog.operation.admins') : tm('createDialog.operation.accounts'))
 
-const dialog = ref(false)
+const dialogShown = ref(false)
 const processing = ref(false)
 const data = ref({})
 const cb = ref()
@@ -25,7 +25,7 @@ const previewUrl = ref(null)
 const showCropperDialog = ref(false)
 
 const show = () => {
-  dialog.value = true
+  dialogShown.value = true
 }
 
 const resetForm = () => {
@@ -50,14 +50,13 @@ const previewImage = (file) => {
 }
 
 defineExpose({
-  dialog,
   show,
   hide: resetForm
 })
 </script>
 
 <template>
-    <v-dialog v-model="dialog" tabindex="1" @keydown.esc="resetForm" @keydown.enter="processing = true; $emit('inviteEventHandler', data, (res) => { if(res){ cb = res} processing = false; resetForm() })" >
+    <v-dialog v-model="dialogShown" tabindex="1" @keydown.esc="resetForm" @keydown.enter="processing = true; $emit('inviteEventHandler', data, (res) => { if(res){ cb = res} processing = false; resetForm() })" >
 
         <v-card width="50%" max-width="800" class=" ma-auto d-flex flex-column justify-center">
             <v-toolbar color="white" align="center">
@@ -90,7 +89,7 @@ defineExpose({
             <v-card-actions>
                 <v-btn color="info" v-if="operation === $t('createDialog.operation.accounts')"
                     data-test-id="formDialog-submitBtn"
-                    @click="processing = true; $emit('createEventHandler', data, () => { processing = false; dialog = false }); resetForm()">
+                    @click="processing = true; $emit('createEventHandler', data, () => { processing = false; dialogShown = false }); resetForm()">
 
                     {{ !processing ? operation : '' }}
 
@@ -108,7 +107,7 @@ defineExpose({
 
                 </v-btn>
                 <v-btn color="info" data-test-id="formDialog-cancelBtn"
-                    @click="dialog = false; cb = undefined; resetForm()">{{ $t('createDialog.cb.closeBtn') }}</v-btn>
+                    @click="dialogShown = false; cb = undefined; resetForm()">{{ $t('createDialog.cb.closeBtn') }}</v-btn>
             </v-card-actions>
         </v-card>
         <ImgCropper v-if="showCropperDialog" @uploadProfilePictureHandler="previewImage" @closeCropperHandler="processing = false; showCropperDialog = false" />
