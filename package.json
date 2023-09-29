@@ -19,7 +19,6 @@
     "pinia-system-messages-store": "^0.0.1",
     "roboto-fontface": "*",
     "standard-json-api-connectors": "^0.2.0",
-    "sweetalert2": "^11.4.23",
     "vue": "^3.2.36",
     "vue-i18n": "^9.2.2",
     "vue-image-crop-upload": "^3.0.3",

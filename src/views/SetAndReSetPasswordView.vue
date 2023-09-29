@@ -5,15 +5,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import SetAndReSetPassword from '../components/SetAndReSetPassword.vue'
-import alerts from '../alerts/alert.js'
+import useSystemMessagesStore from '../stores/systemMessages.js'
 import { useCurrentUserStore } from '../stores/index.js'
 
 const store = useCurrentUserStore()
 const route = useRoute()
 const router = useRouter()
 const { tm } = useI18n()
-
-const alert = alerts()
 
 const formData = ref()
 
@@ -33,7 +31,7 @@ async function loadData () {
 async function handleSetPasswordEvent (params) {
   const res = await store.acceptInvitation(params.token, params.newPassword, params.newPasswordAgain, params.name)
   if (!res.message) {
-    await alert.message('Admin registered successfully')
+    useSystemMessagesStore().addSuccess({ message: tm('setAndReSetPassword.registeredAlert') })
   }
 }
 

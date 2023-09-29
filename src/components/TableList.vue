@@ -19,6 +19,7 @@ const filter = ref('')
 const rows = ref(10)
 const page = ref(1)
 const loading = ref()
+const createAccountDialog = ref()
 
 const debouncedFn = useDebounceFn(() => {
   loading.value = true
@@ -71,9 +72,11 @@ const appIcon = window.config.appIcon
         <v-col cols="5" class="mt-3">
             <v-text-field density="compact" label="Search" data-test-id="tableList-searchBar" variant="underlined" append-inner-icon="mdi-magnify" v-model.lazy="filter" color="info"  @input="loading = true; debouncedFn()"></v-text-field>
         </v-col>
-
         <v-col cols="2" class="pt-3 d-flex align-center">
-            <Dialog :header="props.btn.header" :btnTitle="route.name === 'admins'? 'Invite Admin' : 'Create Account'" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
+          <v-btn variant="outlined" color="info" @click="createAccountDialog.show()">
+                {{ route.name === 'admins'? $t('cardsList.createAdminBtn'): $t('cardsList.createAccountBtn') }}
+            </v-btn>
+            <Dialog ref="createAccountDialog" :header="props.btn.header" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
             <div v-if="filter.length === 0 && props.items.length === 0 && !loading">
                 <v-col cols="5">
                 <v-icon  class="ml-10" color="info" icon="mdi-arrow-up" size="x-large" />

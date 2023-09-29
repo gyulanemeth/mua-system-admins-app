@@ -1,17 +1,16 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-
+import { useI18n } from 'vue-i18n'
 import MeDetails from '../components/MeDetails.vue'
 
-import alerts from '../alerts/alert.js'
+import useSystemMessagesStore from '../stores/systemMessages.js'
 import { useCurrentUserStore, useAdminsStore } from '../stores/index.js'
 
+const { tm } = useI18n()
 let store = useCurrentUserStore()
 const route = useRoute()
 const router = useRouter()
-
-const alert = alerts()
 
 const data = ref()
 
@@ -29,7 +28,7 @@ data.value = store.user
 async function handleUpdateNameEvent (params) {
   const res = await store.patchName(params)
   if (!res.message) {
-    await alert.message('Name updated successfully')
+    useSystemMessagesStore().addSuccess({ message: tm('meView.nameUpdateAlert') })
   }
 }
 
@@ -45,7 +44,7 @@ async function handleDeleteEvent (params) {
   store = useAdminsStore()
   const res = await store.deleteOne(params)
   if (!res.message) {
-    alert.message('Account Deleted successfully')
+    useSystemMessagesStore().addSuccess({ message: tm('meView.deleteAccountAlert') })
     store = useCurrentUserStore()
     await store.logout()
   }

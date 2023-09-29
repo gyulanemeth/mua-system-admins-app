@@ -1,4 +1,5 @@
 <script setup >
+import { ref } from 'vue'
 import DeleteMyAccount from './DeleteMyAccount.vue'
 
 const emit = defineEmits(['deleteEventHandler'])
@@ -6,6 +7,7 @@ const emit = defineEmits(['deleteEventHandler'])
 const props = defineProps({
   data: Object
 })
+const deleteMyAccountDialog = ref()
 
 function redirectDeleteHandler (data) {
   emit('deleteEventHandler', data)
@@ -49,7 +51,9 @@ function redirectDeleteHandler (data) {
                         <h3 class="font-weight-bold">{{ $t('adminSettings.noteFooter') }}</h3>
                 </v-banner-text>
             </v-banner>
-                <DeleteMyAccount @deleteEventHandler="redirectDeleteHandler" :data="props.data" />
+                <v-btn data-test-id="open-deleteAccount-dialog" @click="deleteMyAccountDialog.show()" color="error" variant="outlined" class="text-white">{{$t('deleteMyAccount.openBtn')}}</v-btn>
+
+                <DeleteMyAccount ref="deleteMyAccountDialog" @deleteEventHandler="redirectDeleteHandler" :data="props.data" />
             </v-col>
 
         </v-layout>
