@@ -195,5 +195,16 @@
   "meView": {
     "nameUpdateAlert": "Name updated successfully",
     "deleteAccountAlert":"Account Deleted successfully"
-  }
+  },
+  "networkChecker": {
+    "offline": {
+      "header": "Website Offline",
+      "body": "Please check your internet connection and try again"
+    },
+    "online": {
+      "header": "Website Back Online",
+      "body": "You're now connected to the internet."
+    },
+    "closeBtn": "Close"
+  } 
 }
