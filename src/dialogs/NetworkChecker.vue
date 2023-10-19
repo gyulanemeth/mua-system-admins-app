@@ -11,6 +11,7 @@ window.addEventListener('offline', (e) => {
 
 window.addEventListener('online', async (e) => {
   status.value = 'online'
+  snackbar.value = true
   await new Promise(resolve => setTimeout(resolve, 5000))
   snackbar.value = false
 })
