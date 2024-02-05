@@ -77,7 +77,12 @@ const appIcon = window.config.appIcon
                 {{ route.name === 'admins'? $t('cardsList.createAdminBtn'): $t('cardsList.createAccountBtn') }}
             </v-btn>
             <Dialog ref="createAccountDialog" :header="props.btn.header" @createEventHandler='redirectCreateEventHandler' @inviteEventHandler='redirectInviteEventHandler' :inputs="props.btn.input" />
-            <div v-if="filter.length === 0 && props.items.length === 0 && !loading">
+        </v-col>
+    </v-layout>
+    <v-layout v-if="filter.length === 0 && props.items.length === 0 && !loading" class="d-flex flex-wrap ma-0 pa-0">
+        <v-spacer />
+        <v-col cols="2" class="d-flex align-center ma-0 pa-0">
+           <div >
                 <v-col cols="5">
                 <v-icon  class="ml-10" color="info" icon="mdi-arrow-up" size="x-large" />
               </v-col>
