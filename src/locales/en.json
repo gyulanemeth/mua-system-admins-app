@@ -81,10 +81,10 @@
     "confirmEmailLabel":  "Confirm New E-mail Address",
     "confirmEmailPlaceHolder":  "your@email.com",
     "detailsHeader": "Create a new account!",
-    "nameLabel":"Account Names",
+    "nameLabel":"Account Name",
     "namePlaceHolder":"Your Account’s Name",
     "urlFriendlyNameLabel":"URL Friendly Name",
-    "urlFriendlyNamePlaceHolder":"./youraccountname",
+    "urlFriendlyNamePlaceHolder":"your-account-name",
     "logoLabel":"Logo",
     "logoPlaceHolder":"Upload"
   },
