@@ -116,7 +116,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/redirectToLoginMessage',
+      path: '/redirect-to-login-message',
       name: 'redirectToLoginMessage',
       component: RedirectToLoginMessage,
       meta: {
@@ -141,12 +141,12 @@ router.beforeEach((to, from, next) => {
     next({ path: '/' })
   }
 
-  if (localStorage.getItem('accessToken') && to.path !== '/redirectToLoginMessage') {
+  if (localStorage.getItem('accessToken') && to.path !== '/redirect-to-login-message') {
     const decoded = jwtDecode(localStorage.getItem('accessToken'))
     const now = Date.now().valueOf() / 1000
     if (typeof decoded.exp !== 'undefined' && decoded.exp < now) {
       localStorage.removeItem('accessToken')
-      window.location.href = '/redirectToLoginMessage'
+      window.location.href = '/redirect-to-login-message'
       return
     }
   }
